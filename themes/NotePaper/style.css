@@ -1,0 +1,208 @@
+/*
+NotePaper v1.3.2
+http://development.sjmcdougall.com/pico-themes/NotePaper/
+*/
+
+/* Global */
+body {
+	background-color: #222222;
+	background: url(images/body-background.jpg);
+	background-attachment: fixed;
+}
+
+a {
+	color: black;
+	text-decoration: none;
+	font-weight: bold;
+	border: none;
+}
+
+a:hover{
+	color: #333;
+}
+
+.site_logo {
+	border: none;
+	margin: 0;
+}
+
+hr {
+	border: 0;
+	height: 1px;
+	background: linear-gradient(90deg, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+}
+
+hr.separator {
+	margin-bottom: 0;
+}
+
+/* Header & Footer */
+
+header, footer {
+	width: 902px;
+	margin: 0 auto;
+	color: white;
+}
+
+.site_title {
+	font-family: Kalam;
+	font-size: 3em;
+}
+
+.site_title a {
+	color: inherit;
+}
+
+.copyright {
+	text-align: center;
+	font-size: .85em;
+}
+
+.credit {
+	text-align: center;
+	font-size: .45em;
+	font-family: sans-serif;
+	letter-spacing: .1em;
+}
+.credit a {
+	color: inherit;
+}
+
+.credit a:hover {
+	color: #ccc;
+}
+
+/* Content Area */
+
+nav h2 {
+	text-align: center;
+	text-decoration: underline;
+	font-size: 1.25em;
+}
+
+.widgets {
+	float: right;
+	padding-left: 26px;
+	margin-right: -85px;
+}
+
+nav {
+
+	width: 250px;
+	margin-bottom: 15px;
+	clear: both;
+	background: linear-gradient(PaleGoldenrod 20%,Khaki 80%);
+	background-color: Khaki;
+	border-radius: 2px;
+	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.75);
+	transform: rotateZ(-1deg);
+	padding: 2px 10px;
+	font-family: Kalam, cursive;
+	font-size: 1.25em;
+
+}
+
+nav.odd {
+	transform: rotateZ(1deg);
+}
+
+nav.doodle {
+	transform: none;
+	width: 206px;
+	margin-left: -15px;
+	background: none;
+	background-color: transparent;
+	border-radius: initial;
+	box-shadow: none;
+}
+
+
+nav:first-of-type ul {
+	list-style-type: none;
+}
+
+main, #disqus_thread {
+	display: block; /* Main Support Fix */
+	width: 850px;
+	margin: 0 auto;
+	background-color: #f1f1f1;
+	background: url(images/main-background.jpg);
+	border: 1px solid black;
+	border-radius: 5px;
+	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.75);
+	padding: 10px 26px 10px 26px; /* 16px margin on <p> plus 10. Plus 200 on right for sidebar */
+	font-family: 'Source Code Pro', sans-serif;
+	line-height: 1.575em;
+	position: relative;
+	z-index: 1;
+}
+
+#disqus_thread {
+	width: 750px;
+	padding: 50px 26px 10px 26px;
+	margin-top: -20px;
+	min-height: 200px;
+	position: relative;
+	z-index: 0;
+}
+
+.overlay {
+	background: url(images/article-overlay.png);
+}
+
+.title {
+	font-size: 1.75em;
+	text-align: center;
+	margin: 25px 0 0 0;
+	font-family: Forum, sans-serif;
+}
+
+.author {
+	font-size: .75em;
+	text-align: center;
+	margin: 0 0 20px 4em;
+	font-family: Forum, sans-serif;
+}
+
+.date {
+	float: left;
+	position: absolute;
+	width: 100px;
+	min-height: 46px;
+	background-color: #A00B0B;
+	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.75);
+	text-align: right;
+	padding: 3px 15px 3px 0;
+	z-index: 1;
+	margin: 0 15px 5px -50px;
+	border-radius: 8px 1px 1px;
+	font-family: Forum, Tahoma, Arial, Helvetica, sans-serif;
+	line-height: 1.25em;
+	text-shadow: 0px 1px 2px #C53D3D;
+}
+
+.date:before {
+	content: "";
+	position: absolute;
+	width: 40px;
+	height: 0;
+	left: -40px;
+	top: 30px;
+	border-style: solid;
+	border-radius: 0 0 10px;
+	border-width: 20px 10px;
+	border-color: #A00B0B #A00B0B #A00B0B transparent;
+}
+
+.date:after {
+	content: "";
+	position: absolute;
+	width: 0;
+	height: 0;
+	left: 0px;
+	top: 100%;
+	border-style: solid;
+	border-radius: 8px 0 0px;
+	border-width: 5px 10px;
+	border-color: #6D0404 #6D0404 transparent transparent;
+}

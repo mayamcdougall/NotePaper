@@ -1,0 +1,127 @@
+{#
+NotePaper v1.3.2
+http://development.sjmcdougall.com/pico-themes/NotePaper/
+#}
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="utf-8">
+	<title>{% if meta.title and not (is_front_page and config.front_page_mode) %}{{ meta.title }} | {% endif %}{{ site_title }}</title>
+		{% if meta.description %}
+			<meta name="description" content="{{ meta.description }}">
+		{% endif %}{% if meta.robots %}
+			<meta name="robots" content="{{ meta.robots }}">
+		{% endif %}
+		<!-- Replace with included version of font? -->
+		<link href='http://fonts.googleapis.com/css?family=Source+Code+Pro%7CForum%7CKalam:400,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="{{ theme_url }}/style.css" type="text/css">
+		{% if config.css_override %}
+		<link rel="stylesheet" href="{{ config.css_override }}" type="text/css">
+		{% endif %}
+	<script src="{{ theme_url }}/scripts/modernizr.js"></script>
+</head>
+<body>
+	<header>
+		<!-- check file instead of var -->
+		<h1 class="site_title{% if config.site_logo %} site_logo{% endif %}">
+			<a href="{{ base_url }}">
+				{% if not config.site_logo %}
+					{{ site_title }}
+				{% else %}
+					<img src="{{ config.site_logo }}" class="site_logo" alt="{{ site_title }}">
+				{% endif %}
+				</a>
+			</h1>
+	</header>
+	<main>
+				<section class="widgets">
+			<nav>
+				<h2>{{ config.ToC  }}</h2>
+				<ul>
+					{% for page in pages if "/widgets/" not in page.url
+						and not (config.front_page_mode and page.url == base_url~"/") %}
+						<li><a href="{{ page.url }}">{{ page.title }}</a></li>
+					{% endfor %}
+				</ul>
+			</nav>
+			{% set widgetnum = 1 %}
+			{% for page in pages if "/widgets/" in page.url and "/disabled/" not in page.url %}
+				<nav class="{% if widgetnum is odd %}odd {% endif %}{% if "/doodles/" in page.url %}doodle{% endif %}">
+					{% if "/doodles/" not in page.url %}{% set widgetnum = widgetnum + 1%}{% endif %}
+					{{ page.content }}
+				</nav>
+			{% endfor %}
+		</section>
+{# Regular Page Code #}
+		{% if not is_front_page or not config.front_page_mode %}
+
+		<article>
+			{% if meta.date %}<h4 class="date">{{ meta.date|date("F<\\b\\r>jS") }}</h4>{% endif %}
+			{% if meta.title %}
+				<h2 class="title"><a href="{{meta.url}}">{{ meta.title }}</a></h2>
+				{% if meta.author %}<h3 class="author"> by: {{ meta.author }}</h3>{% endif %}
+				<hr>
+			{% endif %}
+			{{ content }}
+		</article>
+
+	{#  <!-- Filter widgets. Fix Six goes prev to Six. Don't reverse on Asc/Desc?  Reverse Sides? -->
+		<a href="{% if config.pages_order == "asc" %}{{ next_page.url }}{% else %}{{ prev_page.url }}{% endif %}">&#65513; Prev</a>
+		<a href="#">Back to Top</a>
+		<a href="{% if config.pages_order == "asc" %}{{ prev_page.url }}{% else %}{{ next_page.url }}{% endif %}">Next &#65515;</a> #}
+		{% endif %}
+
+{# Front Page Code #}<!-- Combine with above if/else(elseif) or make only content part differ. keep header the same-->
+		{% if is_front_page and config.front_page_mode %}
+			{% set count = 0 %}
+			{% if config.front_page_limit %}
+				{% set limit = config.front_page_limit %}
+			{% else %}
+				{% set limit = 5 %}
+			{% endif %}
+
+			<!-- Ugly Code for Calculating Number of Pages -->
+			{% set numpages = 0 %}
+			{% for page in pages if "/widgets/" not in page.url and page.url != base_url~"/" and "#" not in page.url %}
+				{% set numpages = numpages+1 %}
+			{% endfor %}
+			<!-- End Ugly Code Block -->
+
+			{% for page in pages if "/widgets/" not in page.url and page.url != base_url~"/"  and "#" not in page.url and count < limit %}
+				{% set count = loop.index %}
+				<article>
+					{% if page.date %}<h4 class="date">{{ page.date|date("F<\\b\\r>jS") }}</h4>{% endif %}
+					{% if page.title %}
+						<h2 class="title"><a href="{{page.url}}">{{ page.title }}</a></h2>
+						{% if page.author %}<h3 class="author"> by: {{ page.author }}</h3>{% endif %}
+						<hr>
+					{% endif %}
+					{{ page.content }}
+				{% if count > 0 and count < limit and count < numpages %}<hr class="separator">{% endif %} <!-- Fix code to skip if last iteration (check agianst fpl) -->
+				</article>
+			{% endfor %}
+		{% endif %}
+
+	</main>
+
+{# Disqus Code #}
+	{% if config.disqus and not is_front_page or "front" in config.disqus %}
+		<section id="disqus_thread"></section>
+		<script type="text/javascript">
+		/* * * CONFIGURATION VARIABLES * * */
+			var disqus_shortname = '{{ config.disqus_shortname }}';
+		/* * * DON'T EDIT BELOW THIS LINE * * */
+			(function() {
+				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			})();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+	{% endif %}
+	<footer>
+			<h2 class="copyright">{{ config.copyright }}</h2>
+			<h3 class="credit"><a href="http://development.sjmcdougall.com/pico-themes/NotePaper/">NotePaper Theme</a> by <a href="malto:simon@sjmcdougall.com">Simon McDougall</a></h3> <!-- Feel free to comment out this line -->
+	</footer>
+</body>
+</html>
