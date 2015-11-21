@@ -1,8 +1,9 @@
-/*
+---
 Title: Stickies Readme One
 Author: Simon McDougall
-Date: 2
-*/
+Date: 1002
+Widget: Sticky
+---
 
 ##Stickies
 * One of two widget types

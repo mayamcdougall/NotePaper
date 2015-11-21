@@ -1,8 +1,9 @@
-/*
+---
 Title: Stickies Readme Two
 Author: Simon McDougall
-Date: 3
-*/
+Date: 1003
+Widget: Sticky
+---
 
 ##More Info
 * Widgets can be written in either markdown or html

@@ -1,8 +1,9 @@
-/*
+---
 Title: Doodle Readme
 Author: Simon McDougall
-Date: 4
-*/
+Date: 1004
+Widget: Doodle
+---
 
 ##Doodles!
 * The second type of widget you can use are called 'Doodles'.

@@ -1,8 +1,9 @@
-/*
+---
 Title: Intro Widget
 Author: Simon McDougall
-Date: 1
-*/
+Date: 1001
+Widget: Sticky
+---
 
 ##Widgets
 * This theme has Widgets!

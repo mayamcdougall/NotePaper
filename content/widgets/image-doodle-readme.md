@@ -1,10 +1,11 @@
-/*
+---
 Title: Image doodle
 Author: Simon McDougall
-Date: 6
-*/
+Date: 1006
+Widget: Doodle
+---
 
 ##Doodle Images
 * The doodle area works well for images, as the name would imply.
 
-![doodle](/content/widgets/doodles/doodle.png)
+![doodle](%base_url%/assets/widgets/doodle.png)

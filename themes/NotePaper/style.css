@@ -1,5 +1,5 @@
 /*
-NotePaper v1.3.2
+NotePaper v1.4 - Testing
 http://development.sjmcdougall.com/pico-themes/NotePaper/
 */
 
@@ -21,9 +21,12 @@ a:hover{
 	color: #333;
 }
 
-.site_logo {
+.site_title {
+	margin: 36px 16px;
+}
+
+.site_title img {
 	border: none;
-	margin: 0;
 }
 
 hr {
@@ -33,7 +36,7 @@ hr {
 }
 
 hr.separator {
-	margin-bottom: 0;
+	margin-bottom: 25px;
 }
 
 /* Header & Footer */
@@ -116,9 +119,26 @@ nav.doodle {
 	box-shadow: none;
 }
 
+nav a.current_page {
+	/* Doesn't work with font */
+	font-weight: bolder;
+}
 
 nav:first-of-type ul {
 	list-style-type: none;
+}
+
+nav:first-of-type ul ul {
+	padding-left: 20px;
+	list-style-type: disc;
+}
+
+nav:first-of-type ul ul ul {
+	list-style-type: circle;
+}
+
+.bottom_links {
+	text-align: center;
 }
 
 main, #disqus_thread {
@@ -205,4 +225,11 @@ main, #disqus_thread {
 	border-radius: 8px 0 0px;
 	border-width: 5px 10px;
 	border-color: #6D0404 #6D0404 transparent transparent;
+}
+
+
+article img {
+	border-radius: 5px;
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.75);
+	max-width: 635px;
 }
