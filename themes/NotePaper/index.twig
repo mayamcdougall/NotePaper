@@ -9,7 +9,6 @@ http://development.sjmcdougall.com/pico-themes/NotePaper/
 Notes for me:
 * Archive old NotePaper
 * One Pico instance on server
-* Use --- instead of <a>?
 * Trim Logos
 	* Beware of .htaccess killing AUR downloads!
 		*.htaccess override... ...
@@ -24,6 +23,7 @@ Next Release:
 	* Assets/css_override.css
 
 * Search?? No idea where to begin, since this would also require url processing.
+* Pico Anchor id on headers
 
 * Meta Description!
 	* og:description from pico-excerpt or self shortening from content
@@ -46,15 +46,15 @@ Next Release:
 <html lang="en" class="no-js">
 <head>
 	<meta charset="utf-8">
-	<title>{% if meta.title and not (is_front_page and config.front_page_mode) %}{{ meta.title }} | {% endif %}{{ site_title }}</title>
+	<title>{% if meta.title and not (is_front_page and config.NotePaper.front_page.enabled) %}{{ meta.title }} | {% endif %}{{ site_title }}</title>
 		{% if meta.description %}<meta name="description" content="{{ meta.description }}">{% endif %}
 		{% if meta.robots %}<meta name="robots" content="{{ meta.robots }}">{% endif %}
-		{% if config.og_image %}<meta property="og:image" content="{{ base_url }}/{{ config.og_image }}">{% endif %}
+		{% if config.NotePaper.og_image %}<meta property="og:image" content="{{ base_url }}/{{ config.NotePaper.og_image }}">{% endif %}
 		{# Replace with included version of font? #}
 		<link href='http://fonts.googleapis.com/css?family=Source+Code+Pro%7CForum%7CKalam:400,700' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="{{ theme_url }}/style.css" type="text/css">
-		{% if config.css_override %}
-		<link rel="stylesheet" href="{{ base_url }}/{{ config.css_override }}" type="text/css">
+		{% if config.NotePaper.css_override %}
+		<link rel="stylesheet" href="{{ base_url }}/{{ config.NotePaper.css_override }}" type="text/css">
 		{% endif %}
 	<script src="{{ theme_url }}/scripts/modernizr.js"></script>
 </head>
@@ -62,8 +62,8 @@ Next Release:
 	<header>
 		<h1 class="site_title">
 			<a href="{{ base_url }}">
-				{% if config.site_logo %}
-					<img src="{{ base_url }}/{{ config.site_logo }}" alt="{{ site_title }}">
+				{% if config.NotePaper.site_logo %}
+					<img src="{{ base_url }}/{{ config.NotePaper.site_logo }}" alt="{{ site_title }}">
 				{% else %}
 					{{ site_title }}
 				{% endif %}
@@ -75,9 +75,9 @@ Next Release:
 		{# Widgets Sidebar #}
 		<section class="widgets">
 			<nav>
-				{% if config.toc %}<h2>{{ config.toc }}</h2>{% endif %}
+				{% if config.NotePaper.toc %}<h2>{{ config.NotePaper.toc }}</h2>{% endif %}
 				<ul>
-					{% for page in pages if not page.meta.widget and not page.meta.blog and not (config.front_page_mode and page.id == "index") %}
+					{% for page in pages if not page.meta.widget and not page.meta.blog and not (config.NotePaper.front_page.enabled and page.id == "index") %}
 						<li>
 							<a {% if page.id == current_page.id %}class="current_page"{% endif %} href="{{ page.url }}">{{ page.title }}</a>
 							{# meta.toc processing code #}
@@ -111,14 +111,9 @@ Next Release:
 				</nav>
 			{% endfor %}
 		</section>
-
 	{# Front Page Code #}
-	{% if is_front_page and config.front_page_mode %}
-		{% if not config.front_page_limit %}
-			{% set config = config|merge({front_page_limit:5}) %}
-		{% endif %}
-
-		{% for page in pages if not page.meta.widget and not stop and not (config.front_page_mode and page.id == "index") %}
+	{% if is_front_page and config.NotePaper.front_page.enabled %}
+		{% for page in pages if not page.meta.widget and not stop and not (config.NotePaper.front_page.enabled and page.id == "index") %}
 			<article>
 				{% if loop.index > 1 %}<hr class="separator">{% endif %}
 				{% if page.date %}<h4 class="date">{{ page.date|date("F<\\b\\r>jS") }}</h4>{% endif %}
@@ -128,7 +123,7 @@ Next Release:
 					<hr>
 				{% endif %}
 				{{ page.id|content }}
-				{% if loop.index == config.front_page_limit %}{% set stop = true %}{% endif %}
+				{% if loop.index == config.NotePaper.front_page.limit %}{% set stop = true %}{% endif %}
 			</article>
 		{% endfor %}
 
@@ -146,9 +141,9 @@ Next Release:
 			</article>
 
 			{# Bottom Links Code #}
-			{% if (config.bottom_links and config.bottom_links != "Blog") or (config.bottom_links == "Blog" and meta.blog) %}
+			{% if (config.NotePaper.bottom_links.enabled and config.NotePaper.bottom_links.enabled != "Blog") or (config.NotePaper.bottom_links.enabled == "Blog" and meta.blog) %}
 				{% set url = "" %}
-				{% for page in pages if not page.meta.widget and not (config.front_page_mode and page.id == "index") %}
+				{% for page in pages if not page.meta.widget and not (config.NotePaper.front_page.enabled and page.id == "index") %}
 					{% if loop.index == 1 %}
 						{% set first_url = page.url %}
 					{% elseif page.id == current_page.id %}
@@ -158,7 +153,33 @@ Next Release:
 					{% endif %}
 					{% set last_url = page.url %}
 					{% set buffer = {id: page.id, url: page.url} %}
-					{% set url = [{url: first_url, text: config.bottom_links_first_text, image: config.bottom_links_first_image},{url: prev_url, text: config.bottom_links_prev_text, image: config.bottom_links_prev_image},{url: "#", text: config.bottom_links_top_text, image: config.bottom_links_top_image},{url: next_url, text: config.bottom_links_next_text, image: config.bottom_links_next_image},{url: last_url, text: config.bottom_links_last_text, image: config.bottom_links_last_image}] %}
+					{% set url = [
+						{
+							url: first_url,
+							text: config.NotePaper.bottom_links.first.text,
+							image: config.NotePaper.bottom_links.first.image
+						},
+						{
+							url: prev_url,
+							text: config.NotePaper.bottom_links.prev.text,
+							image: config.NotePaper.bottom_links.prev.image
+						},
+						{
+							url: "#",
+							text: config.NotePaper.bottom_links.top.text,
+							image: config.NotePaper.bottom_links.top.image
+						},
+						{
+							url: next_url,
+							text: config.NotePaper.bottom_links.next.text,
+							image: config.NotePaper.bottom_links.next.image
+						},
+						{
+							url: last_url,
+							text: config.NotePaper.bottom_links.last.text,
+							image: config.NotePaper.bottom_links.last.image
+						}
+					] %}
 				{% endfor %}
 
 				<section class="bottom_links">
@@ -174,10 +195,10 @@ Next Release:
 							<a href="{{ link.url }}">{{ link.text }}</a>
 						{% endif %}
 						{% if count < precount %}
-							{% if config.bottom_links_separator_image %}
-								<img src="{{ base_url }}/{{ config.bottom_links_separator_image }}" alt="{{ config.bottom_links_separator }}">
+							{% if config.NotePaper.bottom_links.separator.image %}
+								<img src="{{ base_url }}/{{ config.NotePaper.bottom_links.separator.image }}" alt="{{ config.NotePaper.bottom_links.separator.text }}">
 							{% else %}
-								{{ config.bottom_links_separator }}
+								{{ config.NotePaper.bottom_links.separator.text }}
 							{% endif %}
 						{% endif %}
 					{% endfor %}
@@ -186,13 +207,12 @@ Next Release:
 		{% endif %}
 
 	</main>
-
 	{# Disqus Code #}
-		{% if config.disqus and not is_front_page or "front" in config.disqus %}
+		{% if config.NotePaper.disqus.enabled and not is_front_page or "front" in config.NotePaper.disqus.enabled %}
 			<section id="disqus_thread">
 			<script type="text/javascript">
 			/* * * CONFIGURATION VARIABLES * * */
-				var disqus_shortname = '{{ config.disqus_shortname }}';
+				var disqus_shortname = '{{ config.NotePaper.disqus.shortname }}';
 			/* * * DON'T EDIT BELOW THIS LINE * * */
 				(function() {
 					var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -205,7 +225,7 @@ Next Release:
 		{% endif %}
 
 	<footer>
-		{% if config.copyright %}<h2 class="copyright">{{ config.copyright }}</h2>{% endif %}
+		{% if config.NotePaper.copyright %}<h2 class="copyright">{{ config.NotePaper.copyright }}</h2>{% endif %}
 		{# Feel free to comment out this line #} <h3 class="credit"><a href="http://development.sjmcdougall.com/pico-themes/NotePaper/">NotePaper Theme</a> by <a href="malto:simon@sjmcdougall.com">Simon McDougall</a></h3>
 	</footer>
 </body>

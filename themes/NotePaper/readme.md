@@ -3,25 +3,19 @@ Title: NotePaper Theme
 Author: Simon McDougall
 Date: 2015/06/05
 toc:
-  features:
-    _title: Features
-    widgets: Widgets
-    front_page: Front Page
-    disqus: Disqus Comments
-    styles: Custom Styles
+  features: Features
   download: Download
-  installation:
-    _title: Installation
-    config: Custom Config Variables
+  installation: Installation
   changelog: Changelog
   license: License
 ---
 <!--
+* Widgets are out of order... again
 * Better SubNav desc -_-
 * Recheck Config
 * New Feature paragraphs
-* Update toc
 * Hide Config under a collapsed "code" tag
+* Array Configuration. (config and changelog)
 -->
 ## NotePaper Theme
 
@@ -77,7 +71,7 @@ Extract the contents of the download into your Pico folder.  Everything in the "
 
 Finally, don't forget to update your config.php to use the NotePaper theme.  It should read:
 
-> $config['theme'] = 'NotePaper';
+`$config['theme'] = 'NotePaper';`
 
 While you're at it, you may want to add in the custom variables discussed below.  They aren't required for the theme, but I do recommend checking them out as they add quite a few levels of extra customization.
 
@@ -85,52 +79,57 @@ This Readme is also included in the theme's directory in case you need to refres
 
 ### Custom Config Variables
 
-Here is a list of all the custom Pico config options you can utilize in this theme.  I'd recommended adding this entire block to the end of your Pico "config.php" file, then modifying it to fit your preferences.  Also, please note that date_format is now ignored in this theme.  The date format is instead hard-coded to work around the lack of ordinal suffixes in strftime (used by Pico 0.9 and later).
+Here is a list of all the custom Pico config options you can utilize in this theme.  The config options are arranged in a series of nested arrays for readability and ease of use.  I'd recommended adding this entire block to the end of your Pico "config.php" file, then modifying it to fit your preferences.  You can comment out any options you don't wish to use by adding a `//` to the beginning of the line or by wrapping a section in `/* */`.  If you comment out one of the nested arrays, be sure to comment out that *entire array* and not just the header.  Also, please note that date_format is now ignored in this theme.  The date format is instead hard-coded to work around the lack of ordinal suffixes in strftime (used by Pico 0.9 and later).
 
-> $config['site_logo'] = 'assets/site_logo.png';	// Site logo, reletive to base_url.
+<pre style="overflow-x: scroll; line-height: 1.575em;">
+$config['NotePaper'] = array(
+	#Basic Config
+	'site_logo'      => 'assets/site_logo.png',	// Site logo, reletive to base_url.
+	'og_image'       => 'assets/site_logo_og.png',	// Facebook "Open Graph" Image.  Specify an image to be used when sharing a link on Facebook.  Provides a nice workaround for light logos not displaying on Facebook.
+	'toc'            => 'Table of Contents',	// Text for the "Table of Contents" header.
+	'copyright'      => 'Copyright © 20XX - Your Name',	// Copyright or other text for page footer.
+	'css_override    => 'assets/override.css',	// Override theme styles with custom stylesheet, relative to base_url.
 
-> $config['front_page_mode'] = ''; // If defined, your index.md will be ignored for a blog-style front page.
-
-> $config['front_page_limit'] = 5;	// Limit the number of items in Front Page Mode. Defaults to 5 if undefined.
-
-> $config['toc'] = 'Table of Contents';	// Text for the "Table of Contents" header.
-
-> $config['copyright'] = 'Copyright © 20XX - Your Name';	// Copyright or other text for page footer.
-
-> $config['disqus'] = 'yes';	// Enable Disqus. Use "front" if you want Disqus on your front page as well.  Blank is disabled.  Any other value will enabled.
-
-> $config['disqus_shortname'] = 'your-shortname-here';	// The unique identifier given to you by Disqus.
-
-> $config['css_override'] = 'assets/override.css'; // Override theme styles with custom stylesheet, relative to base_url.
-
-> $config['og_image'] = 'assets/site_logo_og.png'; // Facebook "Open Graph" Image.  Specify an image to be used when sharing a link on Facebook.  Provides a nice workaround for light logos not displaying on Facebook.
-
-> $config['bottom_links'] = 'Yes'; // Adds links to page bottoms: First, Prev, Back to Top, Next, Last.  Use "Blog" to only display on pages with meta.blog set.  Blank is disabled. Any other value will enabled.
-
-> $config['bottom_links_first_text'] = '&lt;&lt; First'; //Text for "First" button at the bottom of the page.  Blank to disable any given button.
-
-> $config['bottom_links_first_image'] = 'assets/button_first.png';  //Image for "First" button, relative to base_url.  If defined, the "text" variables will instead be used as Alt and Title attributes.
-
-> $config['bottom_links_prev_text'] = '&lt; Prev'; //Text for "Prev" button.
-
-> $config['bottom_links_prev_image'] = 'assets/button_prev.png'; //Image for "Prev" button.
-
-> $config['bottom_links_next_text'] = 'Next &gt;'; //Text for "Next" button.
-
-> $config['bottom_links_next_image'] = 'assets/button_next.png'; //Image for "Next" button.
-
-> $config['bottom_links_last_text'] = 'Last &gt;&gt;'; //Text for "Last" button.
-
-> $config['bottom_links_last_image'] = 'assets/button_last.png'; //Image for "Last" button.
-
-> $config['bottom_links_top_text'] = 'Back to Top'; //Text for the "Back to Top" button.
-
-> $config['bottom_links_top_image'] = 'assets/button_top.png'; //Image for the "Back to Top" button.
-
-> $config['bottom_links_separator'] = '|'; //Character to use as a separator between buttons.
-
-> $config['bottom_links_separator_image'] = 'assets/button_separator.png'; //Image to use as a separator between buttons.
-
+	#Front Page Mode
+	'front_page'     => array(
+		'enabled'    => '',	// If defined, your index.md will be ignored for a blog-style front page.
+		'limit'      => 5	// Limit the number of items in Front Page Mode. Defaults to 5 if undefined.
+		),
+	#Disqus
+	'disqus'         => array(
+		'enabled'    => 'yes',	// Enable Disqus. Use "front" if you want Disqus on your front page as well.  Blank is disabled.  Any other value will enabled.
+		'shortname'  => 'your-shortname-here'	// The unique identifier given to you by Disqus.
+		),
+	#Bottom Links
+	'bottom_links'   => array(
+		'enabled'    => 'yes',	// Adds links to page bottoms: First, Prev, Back to Top, Next, Last.  Use "Blog" to only display on pages with meta.blog set.  Blank is disabled. Any other value will enabled.
+		'first'      => array(
+			'text'   => '&amp;lt;&amp;lt; First',	//Text for "First" button at the bottom of the page.  Blank to disable any given button.
+			'image'  => 'assets/button_first.png'	//Image for "First" button, relative to base_url.  If defined, the "text" variables will instead be used as Alt and Title attributes.
+		),
+		'prev'       => array(
+			'text'   => '&amp;lt; Prev',	//Text for "Prev" button.
+			'image'  => 'assets/button_prev.png',	//Image for "Prev" button.
+		),
+		'next'       => array(
+			'text'   => 'Next &amp;gt;',	//Text for "Next" button.
+			'image'  => 'assets/button_next.png',	//Image for "Next" button.
+		),
+		'last'       => array(
+			'text'   => 'Last &amp;gt;&amp;gt;',	//Text for "Last" button.
+			'image'  => 'assets/button_last.png', //Image for "Last" button.
+		),
+		'top'        => array(
+			'text'   => 'Back to Top',	//Text for the "Back to Top" button.
+			'image'  => 'assets/button_top.png',	//Image for the "Back to Top" button.
+		),
+		'separator'  => array(
+			'text'   => '|',	//Character to use as a separator between buttons.
+			'image'  => 'assets/button_separator.png'	//Image to use as a separator between buttons.
+		)
+	)
+);
+</pre>
 #### site_logo
 
 If this variable is defined, your site's title will be replaced with this image file.  It must be defined as an absolute path from your base_url (eg "assets/site_logo.png").
@@ -187,6 +186,7 @@ For example, you could try changing the page background using CSS.  By doing thi
 * "Blog" Meta Header hides pages from Navigation.
 * First, Prev, Next, Last link options for the bottom of your pages.
 * Added styles to inline images (a max-width and rounded corners).
+* Optimized Config using arrays.
 
 ### 1.3.2 - 10/31/15
 * Last version to support Pico 0.9.  [Download](assets/NotePaper_1.3.2.zip).
