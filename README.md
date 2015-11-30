@@ -11,6 +11,8 @@ toc:
 ---
 <!--
 * replace anchors.... somehow
+* list > header is incompatible with GitHub
+* change date on this file
 -->
 ## NotePaper Theme
 
@@ -114,27 +116,27 @@ $config['NotePaper'] = array(
 		'enabled'    => 'yes',	// Adds links to page bottoms: First, Prev, Back to Top, Next, Last.  Use "Blog" to only display on pages with meta.blog set.  Blank is disabled. Any other value will enabled.
 		'first'      => array(
 			'text'   => '&amp;lt;&amp;lt; First',	//Text for "First" button at the bottom of the page.  Blank to disable any given button.
-			'image'  => 'assets/button_first.png'	//Image for "First" button, relative to base_url.  If defined, the "text" variables will instead be used as Alt and Title attributes.
+			'image'  => 'assets/NotePaper/button_first.png'	//Image for "First" button, relative to base_url.  If defined, the "text" variables will instead be used as Alt and Title attributes.
 		),
 		'prev'       => array(
 			'text'   => '&amp;lt; Prev',	//Text for "Prev" button.
-			'image'  => 'assets/button_prev.png',	//Image for "Prev" button.
+			'image'  => 'assets/NotePaper/button_prev.png',	//Image for "Prev" button.
 		),
 		'next'       => array(
 			'text'   => 'Next &amp;gt;',	//Text for "Next" button.
-			'image'  => 'assets/button_next.png',	//Image for "Next" button.
+			'image'  => 'assets/NotePaper/button_next.png',	//Image for "Next" button.
 		),
 		'last'       => array(
 			'text'   => 'Last &amp;gt;&amp;gt;',	//Text for "Last" button.
-			'image'  => 'assets/button_last.png', //Image for "Last" button.
+			'image'  => 'assets/NotePaper/button_last.png', //Image for "Last" button.
 		),
 		'top'        => array(
 			'text'   => 'Back to Top',	//Text for the "Back to Top" button.
-			'image'  => 'assets/button_top.png',	//Image for the "Back to Top" button.
+			'image'  => 'assets/NotePaper/button_top.png',	//Image for the "Back to Top" button.
 		),
 		'separator'  => array(
 			'text'   => '|',	//Character to use as a separator between buttons.
-			'image'  => 'assets/button_separator.png'	//Image to use as a separator between buttons.
+			'image'  => 'assets/NotePaper/button_separator.png'	//Image to use as a separator between buttons.
 		)
 	)
 );
