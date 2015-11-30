@@ -10,7 +10,6 @@ toc:
   license: License
 ---
 <!--
-* replace anchors.... somehow
 * list > header is incompatible with GitHub
 * change date on this file
 -->
@@ -184,7 +183,7 @@ For example, you could try changing the page background using CSS.  By doing thi
 <a name="changelog"></a>
 ## Changelog
 
-### 1.4 - 11/XX/15
+### 1.4.0 - 11/XX/15
 * Updated for Pico 1.0.  Older versions unsupported, stick to 1.3.2.
 * Major Rewrite.  Cleaned up a large amount of code.
 * Removed "#" code from 1.3.2 because this url hack has been fixed in Pico 1.0.
@@ -209,17 +208,17 @@ For example, you could try changing the page background using CSS.  By doing thi
 * My original intention was to just remove the index.md file altogether, but that caused the page title to reference 404.md.
 * In my efforts to make it ignore everything about index.md however, I've indirectly made it work either way (with or without an index.md).  How about that.
 
-### 1.3 - 06/19/15
+### 1.3.0 - 06/19/15
 * Changed front_page_mode to a config option to prevent empty list item created in Table of Contents when using the old method (having an empty index.md).
 
-### 1.2 - 06/12/15
+### 1.2.0 - 06/12/15
 * Added support for custom CSS stylesheets
 * Fixed errors in Readme about subfolders and needing to use absolute paths.
 
-### 1.1 - 06/06/15
+### 1.1.0 - 06/06/15
 * Updated for Pico 0.9
 
-### 1.0 - 06/05/15
+### 1.0.0 - 06/05/15
 * Initial Release
 
 ---
