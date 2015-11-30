@@ -115,27 +115,27 @@ $config['NotePaper'] = array(
 		'enabled'    => 'yes',	// Adds links to page bottoms: First, Prev, Back to Top, Next, Last.  Use "Blog" to only display on pages with meta.blog set.  Blank is disabled. Any other value will enabled.
 		'first'      => array(
 			'text'   => '&amp;lt;&amp;lt; First',	//Text for "First" button at the bottom of the page.  Blank to disable any given button.
-			'image'  => 'assets/NotePaper/button_first.png'	//Image for "First" button, relative to base_url.  If defined, the "text" variables will instead be used as Alt and Title attributes.
+			'image'  => 'default'	//Image for "First" button, relative to base_url.  If defined, the "text" variables will instead be used as Alt and Title attributes.  Use "default" for internal button images.
 		),
 		'prev'       => array(
 			'text'   => '&amp;lt; Prev',	//Text for "Prev" button.
-			'image'  => 'assets/NotePaper/button_prev.png',	//Image for "Prev" button.
+			'image'  => 'default',	//Image for "Prev" button.
 		),
 		'next'       => array(
 			'text'   => 'Next &amp;gt;',	//Text for "Next" button.
-			'image'  => 'assets/NotePaper/button_next.png',	//Image for "Next" button.
+			'image'  => 'default',	//Image for "Next" button.
 		),
 		'last'       => array(
 			'text'   => 'Last &amp;gt;&amp;gt;',	//Text for "Last" button.
-			'image'  => 'assets/NotePaper/button_last.png', //Image for "Last" button.
+			'image'  => 'default', //Image for "Last" button.
 		),
 		'top'        => array(
 			'text'   => 'Back to Top',	//Text for the "Back to Top" button.
-			'image'  => 'assets/NotePaper/button_top.png',	//Image for the "Back to Top" button.
+			'image'  => 'default',	//Image for the "Back to Top" button.
 		),
 		'separator'  => array(
 			'text'   => '|',	//Character to use as a separator between buttons.
-			'image'  => 'assets/NotePaper/button_separator.png'	//Image to use as a separator between buttons.
+			'image'  => 'default'	//Image to use as a separator between buttons.
 		)
 	)
 );
@@ -177,7 +177,7 @@ For example, you could try changing the page background using CSS.  By doing thi
 	* ###### text
 		Here you can customize the text for each button.  If you leave this blank, it will disable that button.  When using images, this text becomes the hover text for each button.  If you do not wish to have any hover text, use a space " " instead of leaving blank so that the button stays enabled.  Don't forget to escape any html entities you might be using, such as &lt; or &gt;.
 	* ###### image
-		You can optionally provide an image for each button, relative to base_url.  If defined, the "text" variables will instead be used as Alt and Title attributes of your image.
+		You can optionally provide an image for each button, relative to base_url.  If defined, the "text" variables will instead be used as Alt and Title attributes of your image.  If you use the value of "default", NotePaper will use it's own internal button images.
 
 ---
 <a name="changelog"></a>

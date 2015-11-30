@@ -114,40 +114,48 @@ http://github.com/smcdougall/NotePaper
 					{% endif %}
 					{% set last_url = page.url %}
 					{% set buffer = {id: page.id, url: page.url} %}
-					{% set url = [
-						{
+					{% set url = {
+						first: {
 							url: first_url,
 							text: config.NotePaper.bottom_links.first.text,
 							image: config.NotePaper.bottom_links.first.image
 						},
-						{
+						prev: {
 							url: prev_url,
 							text: config.NotePaper.bottom_links.prev.text,
 							image: config.NotePaper.bottom_links.prev.image
 						},
-						{
+						top: {
 							url: "#",
 							text: config.NotePaper.bottom_links.top.text,
 							image: config.NotePaper.bottom_links.top.image
 						},
-						{
+						next: {
 							url: next_url,
 							text: config.NotePaper.bottom_links.next.text,
 							image: config.NotePaper.bottom_links.next.image
 						},
-						{
+						last: {
 							url: last_url,
 							text: config.NotePaper.bottom_links.last.text,
 							image: config.NotePaper.bottom_links.last.image
+						},
+						separator: {
+							text: config.NotePaper.bottom_links.separator.text,
+							image: config.NotePaper.bottom_links.separator.image
 						}
-					] %}
+					} %}
+				{% endfor %}
+
+				{% for key,link in url if link.image == "default" %}
+					{% set url = url|merge({(key): link|merge({image: theme_url|slice(base_url|length) ~ "/images/buttons/button_" ~ key ~ ".png"})}) %}
 				{% endfor %}
 
 				<section class="bottom_links">
-					{% for link in url if link.text %}
+					{% for key,link in url if link.text and key != "separator" %}
 						{% if loop.index == 1 %}
 							{% set precount = "" %}
-							{% for link in url if link.text %}{% set precount = precount + 1 %}{% endfor %}
+							{% for key,link in url if link.text and key != "separator" %}{% set precount = precount + 1 %}{% endfor %}
 						{% endif %}
 						{% set count = count + 1 %}
 						{% if link.image %}
@@ -156,10 +164,10 @@ http://github.com/smcdougall/NotePaper
 							<a href="{{ link.url }}">{{ link.text }}</a>
 						{% endif %}
 						{% if count < precount %}
-							{% if config.NotePaper.bottom_links.separator.image %}
-								<img src="{{ base_url }}/{{ config.NotePaper.bottom_links.separator.image }}" alt="{{ config.NotePaper.bottom_links.separator.text }}">
+							{% if url.separator.image %}
+								<img src="{{ base_url }}/{{ url.separator.image }}" alt="{{ url.separator.text }}">
 							{% else %}
-								{{ config.NotePaper.bottom_links.separator.text }}
+								{{ url.separator.text }}
 							{% endif %}
 						{% endif %}
 					{% endfor %}
