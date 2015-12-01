@@ -1,7 +1,7 @@
 ---
 Title: NotePaper Theme
 Author: Simon McDougall
-Date: 2015/06/05
+Date: 2015/12/01
 toc:
   features: Features
   download: Download
@@ -9,15 +9,10 @@ toc:
   changelog: Changelog
   license: License
 ---
-<!--
-* list > header is incompatible with GitHub
-* change date on this file
--->
 ## NotePaper Theme
 
 Thank you for using my [NotePaper](http://development.sjmcdougall.com/pico-themes/NotePaper) theme for [Pico](http://picocms.org/).  This theme was originally inspired by the [Anarcho Notepad](https://wordpress.org/themes/anarcho-notepad/) theme for WordPress.  This is my first Pico theme, so the coding might be rough in spots, but overall I'm pleased with how it's turned out.  If you have any suggestions on how I can improve this theme, or if you discover any bugs, please create a [New Issue](https://github.com/smcdougall/NotePaper/issues) on GitHub.
 
----
 <a name="features"></a>
 ## Features
 
@@ -70,12 +65,10 @@ I've integrated Disqus comments into the theme.  They can be enabled them in you
 
 You can override the default CSS styles of the theme by specifying an overriding stylesheet in your Pico config.  Your stylesheet will be linked after the theme's original stylesheet, so you only need to style the elements you'd like to change.
 
----
 <a name="download"></a>
 ## Download
 You can download the NotePaper theme [on GitHub](https://github.com/smcdougall/NotePaper/releases).
 
----
 <a name="installation"></a>
 ## Installation
 
@@ -159,31 +152,45 @@ You can override the default styles of this theme by entering in the path to a c
 For example, you could try changing the page background using CSS.  By doing this in the override file, you don't have to overwrite the original background image.  I'd recommend trying any of the wood textures [here](http://webtreats.mysitemyway.com/8-tileable-dark-wood-texture-patterns/) or [here](http://webtreats.mysitemyway.com/tileable-light-wood-textures/) for and quick and seamless change.  One of them is already being used as the default background.  You may also want to resave them with a higher level of jpg compression, as they're quite large.
 
 #### front_page
-* ##### enabled
+
+* **enabled**
+
 	If this variable is defined, your site's main index.md will be ignored in favor of a blog-style front page.
-* ##### limit
+
+* **limit**
+
 	This is the number of articles that will be displayed on your front page, should you use the optional front page feature.
 
 #### disqus
-* ##### enabled
+
+* **enabled**
+
 	If this variable is defined, Disqus support will be enabled.  If this variable is set to "front", Disqus will also be enabled on your front page.  This works regardless of whether you are using a normal front page or the theme's front page feature.  Leaving this variable blank will disable Disqus integration.
-* ##### shortname
+
+* **shortname**
+
 	This is a unique identifier given to you by Disqus.  Enter it here to link your site to your Discus account.  You don't need to copy any other code that Disqus provides you with, it is already included in the theme.
 
 #### bottom_links
-* ##### enabled
+
+* **enabled**
+
 	Enables additional navigation links (First, Prev, Back to Top, Next, Last) at the bottom of pages.  At the moment, due to the lack of proper pagination, these are not enabled on the Front Page when using Front Page Mode. Use "Blog" to only display on pages with meta.blog set.  Blank is disabled. Any other value will enabled.
-* ##### first, prev, next, last, top, separator
-	* ###### text
+
+* **first, prev, next, last, top, separator**
+
+	* **text**
+
 		Here you can customize the text for each button.  If you leave this blank, it will disable that button.  When using images, this text becomes the hover text for each button.  If you do not wish to have any hover text, use a space " " instead of leaving blank so that the button stays enabled.  Don't forget to escape any html entities you might be using, such as &lt; or &gt;.
-	* ###### image
+
+	* **image**
+
 		You can optionally provide an image for each button, relative to base_url.  If defined, the "text" variables will instead be used as Alt and Title attributes of your image.  If you use the value of "default", NotePaper will use it's own internal button images.
 
----
 <a name="changelog"></a>
 ## Changelog
 
-### 1.4.0 - 11/XX/15
+### 1.4.0 - 12/01/15
 * Updated for Pico 1.0.  Older versions unsupported, stick to 1.3.2.
 * Major Rewrite.  Cleaned up a large amount of code.
 * Removed "#" code from 1.3.2 because this url hack has been fixed in Pico 1.0.
@@ -221,7 +228,6 @@ For example, you could try changing the page background using CSS.  By doing thi
 ### 1.0.0 - 06/05/15
 * Initial Release
 
----
 <a name="license"></a>
 ## License
 
