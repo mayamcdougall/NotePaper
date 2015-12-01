@@ -5,6 +5,6 @@ Date: 1001
 Widget: Sticky
 ---
 
-##Widgets
+## Widgets
 * This theme has Widgets!
-* Just place any .md file into the widgets subfolders!
+* Just add the Widget meta header into any .md file!

@@ -79,7 +79,7 @@ You can download the NotePaper theme [on GitHub](https://github.com/smcdougall/N
 <a name="installation"></a>
 ## Installation
 
-Selectively extract the contents of the download into your Pico folder.  Everything in the "themes" folder is required for the theme to function.  The "content" folder holds the sample widgets you see here.  You can install these as well and use them as a template for your own widgets, or you can leave them out and write yours from scratch.  The assets folder holds several button images for the optional navigation at the bottom of your page.
+Selectively extract the contents of the download into your Pico folder.  Everything in the "themes" folder is required for the theme to function.  The "content" folder holds the sample widgets you see here.  You can install these as well and use them as a template for your own widgets, or you can leave them out and write yours from scratch.
 
 Finally, don't forget to update your config.php to use the NotePaper theme.  It should read:
 

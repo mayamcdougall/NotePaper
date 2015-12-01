@@ -5,7 +5,6 @@ Date: 1005
 Widget: Sticky
 ---
 
-<!-- Sample affiliate widget.  Written in html because I couldn't find a way to center text using markdown, without the need for writing extra styles in the theme  -->
 <p style='text-align: center;'>
 Check out my<br>
 other website at:<br>

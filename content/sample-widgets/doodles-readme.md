@@ -5,7 +5,7 @@ Date: 1004
 Widget: Doodle
 ---
 
-##Doodles!
+## Doodles!
 * The second type of widget you can use are called 'Doodles'.
 * These are styled like they were written right on the page.
 * Try making some of your own widgets!
