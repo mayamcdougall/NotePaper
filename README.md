@@ -195,7 +195,7 @@ For example, you could try changing the page background using CSS.  By doing thi
 * Major Rewrite.  Cleaned up a large amount of code.
 * Removed "#" code from 1.3.2 because this url hack has been fixed in Pico 1.0.
 * Sub-Navigation support now supplements the removed "#" code.
-* Replaced "ToC" in config with "toc" for consistency.
+* Renamed "ToC" in config to "toc" for consistency.
 * Open Graph image option for Facebook Shares.
 * Widgets are now tagged with the "Widget" Meta Header.  Folder location is now irrelevant.
 * "Blog" Meta Header hides pages from Navigation.
