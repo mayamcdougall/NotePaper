@@ -5,7 +5,7 @@ Date: 1006
 Widget: Doodle
 ---
 
-##Doodle Images
+## Doodle Images
 * The doodle area works well for images, as the name would imply.
 <!--
 Originally, this example was an actual image, however it was easier to just replace it with transformed text than include a pointless sample image with the theme.
