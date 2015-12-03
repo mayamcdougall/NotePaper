@@ -192,7 +192,7 @@ For example, you could try changing the page background using CSS.  By doing thi
 <a name="changelog"></a>
 ## Changelog
 
-### 1.4.0 - 12/01/15
+### 1.4.0 - 12/03/15
 * Updated for Pico 1.0.  Older versions unsupported, stick to 1.3.2.
 * Major Rewrite.  Cleaned up a large amount of code.
 * Removed "#" code from 1.3.2 because this url hack has been fixed in Pico 1.0.
