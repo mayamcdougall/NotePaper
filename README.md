@@ -1,7 +1,7 @@
 ---
 Title: NotePaper Theme
 Author: Simon McDougall
-Date: 2015/12/01
+Date: 2015/12/03
 toc:
   features: Features
   download: Download
@@ -18,9 +18,9 @@ Thank you for using my [NotePaper](http://development.sjmcdougall.com/pico-theme
 
 ### Widgets
 
-The biggest thing I've tried to bring to this theme is Widget Support.  By defining a custom Meta Header in your markdown files, you can generate themed widgets that run down the right side of the page.  There are two types of widgets, named Stickies and Doodles, as well as a third, "disabled" option for those you'd like to hide temporarily.  Sticky Widgets are themed as sticky notes, while Doodle widgets are depicted as if they were drawn onto the page.  To make a widget, add "Widget: Sticky", "Widget: Doodle", or "Widget: Disabled" to the header of any markdown file in your content folder.
+The biggest feature I've brought to this theme is Widget Support.  By defining a custom Meta Header in your markdown files, you can generate themed widgets that run down the right side of the page.  There are two types of widgets, named Stickies and Doodles, as well as a third, "disabled" option for those you'd like to hide temporarily.  Sticky Widgets are themed as sticky notes, while Doodle widgets are depicted as if they were drawn onto the page.  To make a widget, add "Widget: Sticky", "Widget: Doodle", or "Widget: Disabled" to the header of any markdown file in your content folder.
 
-Widgets are organized by Pico's built-in page ordering.  If, for example, you sort your content by ascending date, then I would recommend organizing your widgets using date values (Date: 1001, Date: 1002, Date: 1003) to organize your widgets.  If you're using alphabetical page ordering, you could order them by changing the internal names of the widgets to start with letters (A,B,C).  If your pages are in descending order, then just reverse the numbering or lettering you use (C,B,A / Z,Y,X / 1003, 1002, 1001 / etc).
+Widgets are organized by Pico's built-in page ordering.  If, for example, you sort your content by ascending date, then I would recommend organizing your widgets using date values (Date: 1001, Date: 1002, Date: 1003) to organize your widgets.  If you're using alphabetical page ordering, you could order them by changing the meta names of the widgets to start with letters (A,B,C).  If your pages are in descending order, then just reverse the numbering or lettering you use (C,B,A / Z,Y,X / 1003, 1002, 1001 / etc).
 
 The "Doodle" area is 200px wide, and works great for images, just be sure to size them accordingly.  If your image is less than 200px wide, you may want to pad the image to 200px or use html + css to center it.
 
@@ -165,7 +165,7 @@ For example, you could try changing the page background using CSS.  By doing thi
 
 * **enabled**
 
-	If this variable is defined, Disqus support will be enabled.  If this variable is set to "front", Disqus will also be enabled on your front page.  This works regardless of whether you are using a normal front page or the theme's front page feature.  Leaving this variable blank will disable Disqus integration.
+	If this variable is defined, Disqus support will be enabled.  If this variable is set to "front", Disqus will also be enabled on your front page.  This works regardless of whether you are using a normal front page or the front page mode feature.  Leaving this variable blank will disable Disqus integration.
 
 * **shortname**
 
@@ -202,6 +202,7 @@ For example, you could try changing the page background using CSS.  By doing thi
 * First, Prev, Next, Last link options for the bottom of your pages.
 * Added styles to inline images (a max-width and rounded corners).
 * Added styles to the &lt;pre&gt; tag.
+* Added margins to site title/logo
 * Optimized Config using arrays.
 
 ### 1.3.2 - 10/31/15
