@@ -17,5 +17,5 @@ desktop.ini
 !/content/sample-widgets/*
 !/themes/NotePaper/*
 !/README.md
-!/LICENSE
+!/LICENSE.md
 !/.gitignore
