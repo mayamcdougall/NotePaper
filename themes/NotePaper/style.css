@@ -142,7 +142,7 @@ nav:first-of-type ul ul ul {
 	text-align: center;
 }
 
-main, #disqus_thread {
+main, .comments {
 	display: block; /* Main Support Fix */
 	width: 850px;
 	margin: 0 auto;
@@ -158,13 +158,14 @@ main, #disqus_thread {
 	z-index: 1;
 }
 
-#disqus_thread {
+.comments {
 	width: 750px;
 	padding: 50px 26px 10px 26px;
 	margin-top: -20px;
 	min-height: 200px;
 	position: relative;
 	z-index: 0;
+	display: block !important;
 }
 
 .overlay {
