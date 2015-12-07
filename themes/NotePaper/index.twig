@@ -17,16 +17,19 @@ http://github.com/smcdougall/NotePaper
 	<link rel="stylesheet" href="{{ base_url }}/{{ config.NotePaper.css_override }}" type="text/css">
 	{% endif %}
 	<script src="{{ theme_url }}/scripts/modernizr.js"></script>
-	{% if config.NotePaper.comments.type == "facebook" and config.NotePaper.comments.admin_type == "user" %}
-		{% if config.NotePaper.comments.admin_id is iterable %}
-			{% for users in config.NotePaper.comments.admin_id %}
-				<meta property="fb:admins" content="{{ users }}">
-			{% endfor %}
-		{% else %}
-		<meta property="fb:admins" content="{{ config.NotePaper.comments.admin_id }}">
+	{% if config.NotePaper.comments.type == "facebook" %}
+		{% if config.NotePaper.comments.admin_type == "user" %}
+			{% if config.NotePaper.comments.admin_id is iterable %}
+				{% for users in config.NotePaper.comments.admin_id %}
+					<meta property="fb:admins" content="{{ users }}">
+				{% endfor %}
+			{% else %}
+			<meta property="fb:admins" content="{{ config.NotePaper.comments.admin_id }}">
+			{% endif %}
+		{% elseif config.NotePaper.comments.admin_type == "app" %}
+			<meta property="fb:app_id" content="{{ config.NotePaper.comments.admin_id }}">
 		{% endif %}
-	{% elseif config.NotePaper.comments.type == "facebook" and config.NotePaper.comments.admin_type == "app" %}
-		<meta property="fb:app_id" content="{{ config.NotePaper.comments.admin_id }}">
+		<noscript><style>.fb-comments:before {content: 'Please enable JavaScript to view the Facebook Comments.';} .fb-comments {text-align: center;}</style></noscript>
 	{% endif %}
 </head>
 <body>
@@ -219,9 +222,7 @@ http://github.com/smcdougall/NotePaper
 					fjs.parentNode.insertBefore(js, fjs);
 				}(document, 'script', 'facebook-jssdk'));
 			</script>
-			<section class="fb-comments comments" data-href="{{ current_page.url }}" data-width="100%" data-numposts="{{ config.NotePaper.comments.limit }}">
-				{# <noscript>Please enable JavaScript to view the <a href="https://developers.facebook.com/docs/plugins/comments/" rel="nofollow">Facebook Comments.</a></noscript> #}
-			</section>
+			<section class="fb-comments comments" data-colorscheme="{{ config.NotePaper.comments.colorscheme }}" data-href="{{ current_page.url }}" data-width="100%" data-numposts="{{ config.NotePaper.comments.limit }}"></section>
 		{% endif %}
 
 	<footer>
