@@ -140,7 +140,8 @@ $config['NotePaper'] = array(
 If this variable is defined, your site's title will be replaced with this image file.  It must be defined as an absolute path from your base_url (eg "assets/site_logo.png").
 
 #### og_image
-"Open Graph" Image.  You can specify an image to be used when sharing a link on Facebook and other sites that support it.  Since this theme has a dark background by default, this provides a nice workaround for light logos not displaying against Facebook's white background.
+"Open Graph" Image.  You can specify an image to be used when sharing a link on Facebook and other sites that support it.  Since this theme has a dark background by default, this provides a nice workaround for light logos not displaying against Facebook's white background.  You can use Facebook's [Debugging Tool](https://developers.facebook.com/tools/debug/) to help diagnose any issues using this feature.
+<!-- These features -->
 
 #### toc
 Table of Contents.  This is the text that will display above your navigation (the sticky note in the top right).
