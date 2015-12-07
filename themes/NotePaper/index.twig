@@ -35,35 +35,39 @@ http://github.com/smcdougall/NotePaper
 
 		{# Widgets Sidebar #}
 		<section class="widgets">
-			<nav>
-				{% if config.NotePaper.toc %}<h2>{{ config.NotePaper.toc }}</h2>{% endif %}
-				<ul>
-					{% for page in pages if not page.meta.widget and not page.meta.blog and not (config.NotePaper.front_page.enabled and page.id == "index") %}
-						<li>
-							<a {% if page.id == current_page.id %}class="current_page"{% endif %} href="{{ page.url }}">{{ page.title }}</a>
-							{# meta.toc processing code #}
-							{% if page.id == current_page.id and page.meta.toc %}
-								<ul>
-									{% for anchor, name in page.meta.toc %}
-										<li>
-											{% if name._title %}
-												<a href="#{{ anchor }}">{{ name._title }}</a>
-												<ul>
-													{% for sub_anchor, sub_name in name if sub_anchor != "_title" %}
-														<li><a href="#{{ sub_anchor }}">{{ sub_name }}</a></li>
-													{% endfor %}
-												</ul>
-											{% else %}
-												<a href="#{{ anchor }}">{{ name }}</a>
-											{% endif %}
-										</li>
-									{% endfor %}
-								</ul>
-							{% endif %}
-						</li>
-					{% endfor %}
-				</ul>
-			</nav>
+			{% if not config.NotePaper.toc.disabled %}
+				<nav>
+					{% if config.NotePaper.toc.text %}<h2>{{ config.NotePaper.toc.text }}</h2>{% endif %}
+					<ul>
+						{% for page in pages if not page.meta.widget and not page.meta.blog and not (config.NotePaper.front_page.enabled and page.id == "index") %}
+							<li>
+								<a {% if page.id == current_page.id %}class="current_page"{% endif %} href="{{ page.url }}">{{ page.title }}</a>
+								{# meta.toc processing code #}
+								{% if page.id == current_page.id and page.meta.toc %}
+									<ul>
+										{% for anchor, name in page.meta.toc %}
+											<li>
+												{% if name._title %}
+													<a href="#{{ anchor }}">{{ name._title }}</a>
+													<ul>
+														{% for sub_anchor, sub_name in name if sub_anchor != "_title" %}
+															<li><a href="#{{ sub_anchor }}">{{ sub_name }}</a></li>
+														{% endfor %}
+													</ul>
+												{% else %}
+													<a href="#{{ anchor }}">{{ name }}</a>
+												{% endif %}
+											</li>
+										{% endfor %}
+									</ul>
+								{% endif %}
+							</li>
+						{% endfor %}
+					</ul>
+				</nav>
+			{% else %}
+				{% set sticky_num = 1 %}
+			{% endif %}
 
 			{% for page in pages if page.meta.widget and page.meta.widget != "Disabled" %}
 				{% if page.meta.widget == "Sticky" %}{% set sticky_num = sticky_num + 1 %}{% endif %}
