@@ -6,17 +6,29 @@ http://github.com/smcdougall/NotePaper
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
+
+	{# Metadata #}
 	<meta charset="utf-8">
 	<title>{% if meta.title and not (is_front_page and config.NotePaper.front_page.enabled) %}{{ meta.title }} | {% endif %}{{ site_title }}</title>
 	{% if meta.description %}<meta name="description" content="{{ meta.description }}">{% endif %}
 	{% if meta.robots %}<meta name="robots" content="{{ meta.robots }}">{% endif %}
-	{% if config.NotePaper.og_image %}<meta property="og:image" content="{{ base_url }}/{{ config.NotePaper.og_image }}">{% endif %}
+
+	{# Styles #}
 	<link href='http://fonts.googleapis.com/css?family=Source+Code+Pro%7CForum%7CKalam:400,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="{{ theme_url }}/style.css" type="text/css">
 	{% if config.NotePaper.css_override %}
-	<link rel="stylesheet" href="{{ base_url }}/{{ config.NotePaper.css_override }}" type="text/css">
+		<link rel="stylesheet" href="{{ base_url }}/{{ config.NotePaper.css_override }}" type="text/css">
 	{% endif %}
 	<script src="{{ theme_url }}/scripts/modernizr.js"></script>
+
+	{# Open Graph #}
+	<meta property="og:url" content="{{ current_page.url }}">
+	<meta property="og:site_name" content="{{ site_title }}">
+	{% if meta.title %}<meta property="og:title" content="{{ meta.title }}">{% endif %}
+	{% if meta.description %}<meta property="og:description" content="{{ meta.description }}">{% endif %}
+	{% if config.NotePaper.og_image %}<meta property="og:image" content="{{ base_url }}/{{ config.NotePaper.og_image }}">{% endif %}
+
+	{# Facebook Coments Administration #}
 	{% if config.NotePaper.comments.type == "facebook" %}
 		{% if config.NotePaper.comments.admin_type == "user" %}
 			{% if config.NotePaper.comments.admin_id is iterable %}
@@ -31,6 +43,7 @@ http://github.com/smcdougall/NotePaper
 		{% endif %}
 		<noscript><style>.fb-comments:before {content: 'Please enable JavaScript to view the Facebook Comments.';} .fb-comments {text-align: center;}</style></noscript>
 	{% endif %}
+
 </head>
 <body>
 	<header>
@@ -89,7 +102,8 @@ http://github.com/smcdougall/NotePaper
 				</nav>
 			{% endfor %}
 		</section>
-	{# Front Page Code #}
+
+	{# Front Page #}
 	{% if is_front_page and config.NotePaper.front_page.enabled %}
 		{% for page in pages if not page.meta.widget and not stop and not (config.NotePaper.front_page.enabled and page.id == "index") %}
 			<article>
@@ -107,9 +121,8 @@ http://github.com/smcdougall/NotePaper
 			</article>
 		{% endfor %}
 
-	{# Regular Page Code #}
+	{# Regular Page #}
 		{% else %}
-
 			<article>
 				{% if not config.NotePaper.disable_header %}
 					{% if meta.date %}<h4 class="date">{{ meta.date|date("F<\\b\\r>jS") }}</h4>{% endif %}
@@ -122,7 +135,7 @@ http://github.com/smcdougall/NotePaper
 				{{ content }}
 			</article>
 
-			{# Bottom Links Code #}
+			{# Bottom Links #}
 			{% if (config.NotePaper.bottom_links.enabled and config.NotePaper.bottom_links.enabled != "Blog") or (config.NotePaper.bottom_links.enabled == "Blog" and meta.blog) %}
 				{% set url = "" %}
 				{% for page in pages if not page.meta.widget and not (config.NotePaper.front_page.enabled and page.id == "index") %}
@@ -197,33 +210,36 @@ http://github.com/smcdougall/NotePaper
 		{% endif %}
 
 	</main>
-	{# Disqus Code #}
-		{% if config.NotePaper.comments.type == "disqus" and (not is_front_page or config.NotePaper.comments.front) %}
-			<section id="disqus_thread" class="comments">
-				<script type="text/javascript">
-				/* * * CONFIGURATION VARIABLES * * */
-					var disqus_shortname = '{{ config.NotePaper.comments.shortname }}';
-				/* * * DON'T EDIT BELOW THIS LINE * * */
-					(function() {
-						var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-						dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-						(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-					})();
-				</script>
-				<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-			</section>
-		{% elseif config.NotePaper.comments.type == "facebook" and (not is_front_page or config.NotePaper.comments.front) %}
-			<script>
-				(function(d, s, id) {
-					var js, fjs = d.getElementsByTagName(s)[0];
-					if (d.getElementById(id)) return;
-					js = d.createElement(s); js.id = id;
-					js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
-					fjs.parentNode.insertBefore(js, fjs);
-				}(document, 'script', 'facebook-jssdk'));
+
+	{# Disqus Comments #}
+	{% if config.NotePaper.comments.type == "disqus" and (not is_front_page or config.NotePaper.comments.front) %}
+		<section id="disqus_thread" class="comments">
+			<script type="text/javascript">
+			/* * * CONFIGURATION VARIABLES * * */
+				var disqus_shortname = '{{ config.NotePaper.comments.shortname }}';
+			/* * * DON'T EDIT BELOW THIS LINE * * */
+				(function() {
+					var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+					dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+					(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				})();
 			</script>
-			<section class="fb-comments comments" data-colorscheme="{{ config.NotePaper.comments.colorscheme }}" data-href="{{ current_page.url }}" data-width="100%" data-numposts="{{ config.NotePaper.comments.limit }}" data-order-by="{{ config.NotePaper.comments.order }}"></section>
-		{% endif %}
+			<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+		</section>
+
+	{# Facebook Comments #}
+	{% elseif config.NotePaper.comments.type == "facebook" and (not is_front_page or config.NotePaper.comments.front) %}
+		<script>
+			(function(d, s, id) {
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) return;
+				js = d.createElement(s); js.id = id;
+				js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+				fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
+		</script>
+		<section class="fb-comments comments" data-colorscheme="{{ config.NotePaper.comments.colorscheme }}" data-href="{{ current_page.url }}" data-width="100%" data-numposts="{{ config.NotePaper.comments.limit }}" data-order-by="{{ config.NotePaper.comments.order }}"></section>
+	{% endif %}
 
 	<footer>
 		{% if config.NotePaper.copyright %}<h2 class="copyright">{{ config.NotePaper.copyright }}</h2>{% endif %}
