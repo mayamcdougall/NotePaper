@@ -22,14 +22,6 @@ a:hover{
 	color: #333;
 }
 
-.site_title {
-	margin: 36px 16px;
-}
-
-.site_title img {
-	border: none;
-}
-
 hr {
 	border: 0;
 	height: 1px;
@@ -42,15 +34,20 @@ hr.separator {
 
 /* Header & Footer */
 
-header, footer {
+.site_title, footer {
 	width: 902px;
 	margin: 0 auto;
 	color: white;
 }
 
-.site_title {
+.site_title h1 {
+	margin: 36px 16px;
 	font-family: Kalam;
 	font-size: 3em;
+}
+
+.site_title img {
+	border: none;
 }
 
 .site_title a {
