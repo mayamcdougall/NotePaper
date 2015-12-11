@@ -110,7 +110,7 @@ http://github.com/smcdougall/NotePaper
 	{% if is_front_page and config.NotePaper.front_page.enabled %}
 		{% for page in pages if not page.meta.widget and not stop and not (config.NotePaper.front_page.enabled and page.id == "index") %}
 			<article>
-				{% if loop.index > 1 %}<hr class="separator">{% endif %}
+				{% if loop.index > 1 %}<hr>{% endif %}
 				{% if not config.NotePaper.disable_header %}
 					<header>
 						{% if page.date %}<h4 class="date">{{ page.date|date("F<\\b\\r>jS") }}</h4>{% endif %}
