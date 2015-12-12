@@ -108,6 +108,7 @@ http://github.com/smcdougall/NotePaper
 
 	{# Front Page #}
 	{% if is_front_page and config.NotePaper.front_page.enabled %}
+
 		{# Page Math #}
 		{% set offset = config.NotePaper.front_page.limit * (TwigGetUrl.page - 1) %}
 		{% if offset < 0 %}{% set offset = 0 %}{% endif %}
@@ -143,10 +144,11 @@ http://github.com/smcdougall/NotePaper
 							{% if meta.author %}<h3 class="author"> by: {{ meta.author }}</h3>{% endif %}
 						{% endif %}
 					</header>
-					{% if page.title %}<hr>{% endif %}
+					{% if meta.title %}<hr>{% endif %}
 				{% endif %}
 				{{ content }}
 			</article>
+		{% endif %}
 
 			{# Bottom Links #}
 			{% if (config.NotePaper.bottom_links.enabled and config.NotePaper.bottom_links.enabled != "Blog") or (config.NotePaper.bottom_links.enabled == "Blog" and meta.blog) %}
@@ -194,9 +196,41 @@ http://github.com/smcdougall/NotePaper
 					} %}
 				{% endfor %}
 
+				{# Load Default Images #}
 				{% for key,link in url if link.image == "default" %}
 					{% set url = url|merge({(key): link|merge({image: theme_url|slice(base_url|length) ~ "/images/buttons/button_" ~ key ~ ".png"})}) %}
 				{% endfor %}
+
+				{# Front Page URLs #}
+				{% if config.NotePaper.front_page.enabled and is_front_page %}
+
+					{# Determine Operand #}
+					{% if rewrite_url %} {# Not needed yet because On main page, but maybe later on subfolder #}
+						{% set operand = '?' %}
+					{% else %}
+						{% set operand = '?' ~ current_page.id ~ '&' %}
+					{% endif %}
+
+					{# Page Math #}
+					{% if (TwigGetUrl.page - 1) > 0 %}
+						{% set prev_url = (base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page - 1) ) %}
+					{% else %}
+						{% set prev_url = base_url %}
+					{% endif %}
+
+					{% set last_url = (TwigGetUrl.page + 2) %}{# this line for testing only! #}
+					{% if (TwigGetUrl.page + 1) < last_url %}{# fill in with last_url #}
+						{% set next_url = (base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page + 1) ) %}
+					{% else %}
+						{% set next_url = last_url %}
+					{% endif %}
+
+					{# Set URLs #}
+					{% set url = url|merge({first: url.first|merge({url: base_url })}) %}
+					{% set url = url|merge({prev: url.prev|merge({url: prev_url })}) %}
+					{% set url = url|merge({next: url.next|merge({url: next_url })}) %}
+					{% set url = url|merge({last: url.last|merge({url: last_url })}) %} {# Still Need A Last url #}
+				{% endif %}
 
 				<section class="bottom_links">
 					{% for key,link in url if link.text and key != "separator" %}
@@ -220,7 +254,7 @@ http://github.com/smcdougall/NotePaper
 					{% endfor %}
 				</section>
 			{% endif %}
-		{% endif %}
+
 
 	</main>
 
