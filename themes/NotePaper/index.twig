@@ -108,23 +108,28 @@ http://github.com/smcdougall/NotePaper
 
 	{# Front Page #}
 	{% if is_front_page and config.NotePaper.front_page.enabled %}
-		{% for page in pages if not page.meta.widget and not stop and not (config.NotePaper.front_page.enabled and page.id == "index") %}
-			<article>
-				{% if loop.index > 1 %}<hr>{% endif %}
-				{% if not config.NotePaper.disable_header %}
-					<header>
-						{% if page.date %}<h4 class="date">{{ page.date|date("F<\\b\\r>jS") }}</h4>{% endif %}
-						{% if page.title %}
-							<h2 class="title"><a href="{{page.url}}">{{ page.title }}</a></h2>
-							{% if page.author %}<h3 class="author"> by: {{ page.author }}</h3>
-						{% endif %}
-					</header>
-						<hr>
+		{# Page Math #}
+		{% set offset = config.NotePaper.front_page.limit * (TwigGetUrl.page - 1) %}
+		{% if offset < 0 %}{% set offset = 0 %}{% endif %}
+
+		{% for page in pages if not page.meta.widget and page.id != "index" and not stop %}
+			{% if loop.index > offset %}
+				<article>
+					{% if loop.index > offset + 1 %}<hr>{% endif %}
+					{% if not config.NotePaper.disable_header %}
+						<header>
+							{% if page.date %}<h4 class="date">{{ page.date|date("F<\\b\\r>jS") }}</h4>{% endif %}
+							{% if page.title %}
+								<h2 class="title"><a href="{{page.url}}">{{ page.title }}</a></h2>
+								{% if page.author %}<h3 class="author"> by: {{ page.author }}</h3>{% endif %}
+							{% endif %}
+						</header>
+						{% if page.title %}<hr>{% endif %}
 					{% endif %}
-				{% endif %}
-				{{ page.id|content }}
-				{% if loop.index == config.NotePaper.front_page.limit %}{% set stop = true %}{% endif %}
-			</article>
+					{{ page.id|content }}
+					{% if loop.index == config.NotePaper.front_page.limit %}{% set stop = true %}{% endif %}
+				</article>
+			{% endif %}
 		{% endfor %}
 
 	{# Regular Page #}
@@ -135,11 +140,10 @@ http://github.com/smcdougall/NotePaper
 						{% if meta.date %}<h4 class="date">{{ meta.date|date("F<\\b\\r>jS") }}</h4>{% endif %}
 						{% if meta.title %}
 							<h2 class="title"><a href="{{ meta.url }}">{{ meta.title }}</a></h2>
-							{% if meta.author %}<h3 class="author"> by: {{ meta.author }}</h3>
+							{% if meta.author %}<h3 class="author"> by: {{ meta.author }}</h3>{% endif %}
 						{% endif %}
 					</header>
-							<hr>
-						{% endif %}
+					{% if page.title %}<hr>{% endif %}
 				{% endif %}
 				{{ content }}
 			</article>
