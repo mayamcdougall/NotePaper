@@ -151,7 +151,7 @@ http://github.com/smcdougall/NotePaper
 		{% endif %}
 
 			{# Bottom Links #}
-			{% if (config.NotePaper.bottom_links.enabled and config.NotePaper.bottom_links.enabled != "Blog") or (config.NotePaper.bottom_links.enabled == "Blog" and meta.blog) %}
+			{% if (config.NotePaper.bottom_links.enabled and config.NotePaper.bottom_links.enabled != "blog") or (config.NotePaper.bottom_links.enabled == "blog" and meta.blog) %}
 				{% set url = "" %}
 				{% for page in pages if not page.meta.widget and not (config.NotePaper.front_page.enabled and page.id == "index") %}
 					{% if loop.index == 1 %}
