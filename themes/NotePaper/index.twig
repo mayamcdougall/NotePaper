@@ -107,13 +107,13 @@ http://github.com/smcdougall/NotePaper
 		</section>
 
 	{# Front Page #}
-	{% if is_front_page and config.NotePaper.front_page.enabled %}
+	{% if is_front_page and config.NotePaper.front_page.enabled and not TwigGetUrl.search %}
 
 		{# Page Math #}
 		{% set offset = config.NotePaper.front_page.limit * (TwigGetUrl.page - 1) %}
 		{% if offset < 0 %}{% set offset = 0 %}{% endif %}
 
-		{% for page in pages if not page.meta.widget and page.id != "index" and not stop %}
+		{% for page in pages if not page.meta.widget and page.id != "index" %}
 			{% if loop.index > offset %}
 				<article>
 					{% if loop.index > offset + 1 %}<hr>{% endif %}
@@ -128,10 +128,49 @@ http://github.com/smcdougall/NotePaper
 						{% if page.title %}<hr>{% endif %}
 					{% endif %}
 					{{ page.id|content }}
-					{% if loop.index == config.NotePaper.front_page.limit %}{% set stop = true %}{% endif %}
 				</article>
 			{% endif %}
 		{% endfor %}
+
+
+
+
+		{# Search #}
+		{% elseif is_front_page and TwigGetUrl.search %}
+
+			{# Page Math #}
+			{% set offset = config.NotePaper.front_page.limit * (TwigGetUrl.page - 1) %}
+			{% if offset < 0 %}{% set offset = 0 %}{% endif %}
+
+			{# Search Math #}
+			{% set numresults = '' %}
+			{% for page in pages if not page.meta.widget and (TwigGetUrl.search|lower in page.title|lower or TwigGetUrl.search|lower in page.description|lower or TwigGetUrl.search|lower in page.id|content|lower) %}
+				{% set numresults = loop.index %}
+			{% endfor %}
+
+			{% for page in pages if not page.meta.widget and (TwigGetUrl.search|lower in page.title|lower or TwigGetUrl.search|lower in page.description|lower or TwigGetUrl.search|lower in page.id|content|lower) %}
+				{% if loop.index > offset %}
+					<article>
+						{% if loop.index > offset + 1 %}<hr>{% endif %}
+						{% if not config.NotePaper.disable_header %}
+							<header>
+								{% if page.date %}<h4 class="date">{{ page.date|date("F<\\b\\r>jS") }}</h4>{% endif %}
+								{% if page.title %}
+									<h2 class="title"><a href="{{page.url}}">{{ page.title }}</a></h2>
+									{% if page.author %}<h3 class="author"> by: {{ page.author }}</h3>{% endif %}
+								{% endif %}
+							</header>
+							{% if page.title %}<hr>{% endif %}
+						{% endif %}
+						{{ page.description }}
+						{{ loop.index }}{{ config.NotePaper.front_page.limit }} Showing (start)-{{ loop.index }} of {{ numresults }} results. {# Debugging #}
+					</article>
+				{% endif %}
+			{% endfor %}
+
+
+
+
 
 	{# Regular Page #}
 		{% else %}
