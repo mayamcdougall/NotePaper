@@ -205,11 +205,17 @@ http://github.com/smcdougall/NotePaper
 				{% if config.NotePaper.front_page.enabled and is_front_page %}
 
 					{# Determine Operand #}
-					{% if rewrite_url %} {# Not needed yet because On main page, but maybe later on subfolder #}
+					{% if rewrite_url %} {# Not needed yet because On main page, but maybe later on subfolder #}{# Replace with new Link filter #}
 						{% set operand = '?' %}
 					{% else %}
 						{% set operand = '?' ~ current_page.id ~ '&' %}
 					{% endif %}
+
+					{# Page Count #}
+					{% set last_url = '' %}
+					{% for page in pages if not page.meta.widget and page.id != "index" %}
+						{% set last_url = (loop.index / config.NotePaper.front_page.limit)|round(0,'ceil') %}
+					{% endfor %}
 
 					{# Page Math #}
 					{% if (TwigGetUrl.page - 1) > 0 %}
@@ -218,18 +224,19 @@ http://github.com/smcdougall/NotePaper
 						{% set prev_url = base_url %}
 					{% endif %}
 
-					{% set last_url = (TwigGetUrl.page + 2) %}{# this line for testing only! #}
-					{% if (TwigGetUrl.page + 1) < last_url %}{# fill in with last_url #}
+					{% if (TwigGetUrl.page + 1) < last_url %}
 						{% set next_url = (base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page + 1) ) %}
 					{% else %}
-						{% set next_url = last_url %}
+						{% set next_url = (base_url ~ operand ~ 'page=' ~ last_url) %}
 					{% endif %}
+
+					{% set last_url = (base_url ~ operand ~ 'page=' ~ last_url) %}
 
 					{# Set URLs #}
 					{% set url = url|merge({first: url.first|merge({url: base_url })}) %}
 					{% set url = url|merge({prev: url.prev|merge({url: prev_url })}) %}
 					{% set url = url|merge({next: url.next|merge({url: next_url })}) %}
-					{% set url = url|merge({last: url.last|merge({url: last_url })}) %} {# Still Need A Last url #}
+					{% set url = url|merge({last: url.last|merge({url: last_url })}) %}
 				{% endif %}
 
 				<section class="bottom_links">
