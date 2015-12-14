@@ -218,14 +218,18 @@ http://github.com/smcdougall/NotePaper
 					{% endfor %}
 
 					{# Page Math #}
-					{% if (TwigGetUrl.page - 1) > 0 %}
+					{% if (TwigGetUrl.page - 1) > 1 %}
 						{% set prev_url = (base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page - 1) ) %}
 					{% else %}
 						{% set prev_url = base_url %}
 					{% endif %}
 
 					{% if (TwigGetUrl.page + 1) < last_url %}
-						{% set next_url = (base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page + 1) ) %}
+						{% if (TwigGetUrl.page + 1) == 1 %}
+							{% set next_url = (base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page + 2) ) %}
+						{% else %}
+							{% set next_url = (base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page + 1) ) %}
+						{% endif %}
 					{% else %}
 						{% set next_url = (base_url ~ operand ~ 'page=' ~ last_url) %}
 					{% endif %}
