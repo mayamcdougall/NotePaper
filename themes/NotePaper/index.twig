@@ -114,7 +114,8 @@ http://github.com/smcdougall/NotePaper
 		{% if offset < 0 %}{% set offset = 0 %}{% endif %}
 
 		{% for page in pages if not page.meta.widget and page.id != "index" %}
-			{% if loop.index > offset %}
+			{% if loop.index > offset and count < config.NotePaper.front_page.limit %}
+				{% set count = count + 1 %}
 				<article>
 					{% if loop.index > offset + 1 %}<hr>{% endif %}
 					{% if not config.NotePaper.disable_header %}
@@ -137,7 +138,6 @@ http://github.com/smcdougall/NotePaper
 
 		{# Search #}
 		{% elseif is_front_page and TwigGetUrl.search %}
-
 			{# Page Math #}
 			{% set offset = config.NotePaper.front_page.limit * (TwigGetUrl.page - 1) %}
 			{% if offset < 0 %}{% set offset = 0 %}{% endif %}
@@ -149,7 +149,8 @@ http://github.com/smcdougall/NotePaper
 			{% endfor %}
 
 			{% for page in pages if not page.meta.widget and (TwigGetUrl.search|lower in page.title|lower or TwigGetUrl.search|lower in page.description|lower or TwigGetUrl.search|lower in page.id|content|lower) %}
-				{% if loop.index > offset %}
+				{% if loop.index > offset and count < config.NotePaper.front_page.limit %}
+					{% set count = count + 1 %}
 					<article>
 						{% if loop.index > offset + 1 %}<hr>{% endif %}
 						{% if not config.NotePaper.disable_header %}
@@ -163,7 +164,6 @@ http://github.com/smcdougall/NotePaper
 							{% if page.title %}<hr>{% endif %}
 						{% endif %}
 						{{ page.description }}
-						{{ loop.index }}{{ config.NotePaper.front_page.limit }} Showing (start)-{{ loop.index }} of {{ numresults }} results. {# Debugging #}
 					</article>
 				{% endif %}
 			{% endfor %}
@@ -245,9 +245,17 @@ http://github.com/smcdougall/NotePaper
 
 					{# Determine Operand #}
 					{% if rewrite_url %} {# Not needed yet because On main page, but maybe later on subfolder #}{# Replace with new Link filter #}
-						{% set operand = '?' %}
+						{% if TwigGetUrl.search %}
+							{% set operand = '?search=' ~ TwigGetUrl.search ~ '&' %}
+						{% else %}
+							{% set operand = '?' %}
+						{% endif %}
 					{% else %}
-						{% set operand = '?' ~ current_page.id ~ '&' %}
+						{% if TwigGetUrl.search %}
+							{% set operand = '?' ~ current_page.id ~ '&search=' ~ TwigGetUrl.search ~ '&' %}
+						{% else %}
+							{% set operand = '?' ~ current_page.id ~ '&' %}
+						{% endif %}
 					{% endif %}
 
 					{# Page Count #}
@@ -280,6 +288,27 @@ http://github.com/smcdougall/NotePaper
 					{% set url = url|merge({prev: url.prev|merge({url: prev_url })}) %}
 					{% set url = url|merge({next: url.next|merge({url: next_url })}) %}
 					{% set url = url|merge({last: url.last|merge({url: last_url })}) %}
+				{% endif %}
+
+				{# Search Result Math #}
+				{% if TwigGetUrl.search %}
+					{% if TwigGetUrl.page < 2 %}
+						{% set firstresult = 1 %}
+						{% set secondresult = config.NotePaper.front_page.limit %}
+					{% else %}
+						{% set firstresult = (config.NotePaper.front_page.limit * (TwigGetUrl.page -1)+ 1) %}
+						{% set secondresult = (config.NotePaper.front_page.limit * (TwigGetUrl.page -1) + config.NotePaper.front_page.limit) %}
+					{% endif %}
+					{% if secondresult > numresults %}
+						{% set secondresult = numresults %}
+					{% endif %}
+					<section class="bottom_links">
+					{% if numresults %}
+					Showing results {{ firstresult }} - {{ secondresult }} of {{ numresults }} results.
+					{% else %}
+					No Results =(
+					{% endif %}
+					</section>{# Make Proper Tag and Class #}
 				{% endif %}
 
 				<section class="bottom_links">
