@@ -133,41 +133,28 @@ http://github.com/smcdougall/NotePaper
 			</article>
 		{% endmacro %}
 
-		{# Front Page #}
-		{% if is_front_page and config.NotePaper.front_page.enabled and not TwigGetUrl.search %}
+		{# Front Page and Search #}
+		{% if is_front_page and (config.NotePaper.front_page.enabled or TwigGetUrl.search) %}
 
 			{# Page Math #}
 			{% set offset = config.NotePaper.front_page.limit * (TwigGetUrl.page - 1) %}
 			{% if offset < 0 %}{% set offset = 0 %}{% endif %}
 
+			{# Search Math #}
+			{% if TwigGetUrl.search %}
+				{% set numresults = '' %}
+				{% for page in pages if not page.meta.widget and not (config.NotePaper.front_page.enabled and page.id == "index") and (TwigGetUrl.search|lower in page.title|lower or TwigGetUrl.search|lower in page.description|lower or TwigGetUrl.search|lower in page.id|content|lower)  %}
+					{% set numresults = loop.index %}
+				{% endfor %}
+			{% endif %}
+
 			{# Loop #}
-			{% for page in pages if not page.meta.widget and page.id != "index" %}
+			{% for page in pages if not page.meta.widget and not (config.NotePaper.front_page.enabled and page.id == "index") and (not TwigGetUrl.search or TwigGetUrl.search and (TwigGetUrl.search|lower in page.title|lower or TwigGetUrl.search|lower in page.description|lower or TwigGetUrl.search|lower in page.id|content|lower)) %}
 				{% if loop.index > offset and count < config.NotePaper.front_page.limit %}
 					{% set count = count + 1 %}
 					{{ macros.pagecontent(_context, 'page') }}
 				{% endif %}
 			{% endfor %}
-
-			{# Search #}
-			{% elseif is_front_page and TwigGetUrl.search %}
-
-				{# Page Math #}
-				{% set offset = config.NotePaper.front_page.limit * (TwigGetUrl.page - 1) %}
-				{% if offset < 0 %}{% set offset = 0 %}{% endif %}
-
-				{# Search Math #}
-				{% set numresults = '' %}
-				{% for page in pages if not page.meta.widget and (TwigGetUrl.search|lower in page.title|lower or TwigGetUrl.search|lower in page.description|lower or TwigGetUrl.search|lower in page.id|content|lower) %}
-					{% set numresults = loop.index %}
-				{% endfor %}
-
-				{# Loop #}
-				{% for page in pages if not page.meta.widget and (TwigGetUrl.search|lower in page.title|lower or TwigGetUrl.search|lower in page.description|lower or TwigGetUrl.search|lower in page.id|content|lower) %}
-					{% if loop.index > offset and count < config.NotePaper.front_page.limit %}
-						{% set count = count + 1 %}
-						{{ macros.pagecontent(_context, 'page') }}
-					{% endif %}
-				{% endfor %}
 
 		{# Regular Page #}
 		{% else %}
@@ -226,10 +213,10 @@ http://github.com/smcdougall/NotePaper
 			{% endfor %}
 
 			{# Front Page URLs #}
-			{% if config.NotePaper.front_page.enabled and is_front_page %}
+			{% if is_front_page and (config.NotePaper.front_page.enabled or TwigGetUrl.search) %}
 
 				{# Determine Operand #}
-				{% if rewrite_url %} {# Not needed yet because On main page, but maybe later on subfolder #}{# Replace with new Link filter. Proper Search #}
+				{% if rewrite_url %} {# Not needed yet because On main page, but maybe later on subfolder #}{# Replace with new Link filter. Proper Search Buttons (currently tied to regular pages) #}
 					{% if TwigGetUrl.search %}
 						{% set operand = '?search=' ~ TwigGetUrl.search ~ '&' %}
 					{% else %}
