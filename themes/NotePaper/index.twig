@@ -63,6 +63,7 @@ http://github.com/smcdougall/NotePaper
 	<main>
 
 		{# Widgets Sidebar #}
+		{# Navigation #}
 		<section class="widgets">
 			{% if not config.NotePaper.toc.disabled %}
 				<nav>
@@ -98,6 +99,7 @@ http://github.com/smcdougall/NotePaper
 				{% set sticky_num = 1 %}
 			{% endif %}
 
+			{# Widgets #}
 			{% for page in pages if page.meta.widget and page.meta.widget != "Disabled" %}
 				{% if page.meta.widget == "Sticky" %}{% set sticky_num = sticky_num + 1 %}{% endif %}
 				<nav class="{% if page.meta.widget == "Sticky" and sticky_num is odd %}odd {% endif %}{% if page.meta.widget == "Doodle" %}doodle{% endif %}">
@@ -138,6 +140,7 @@ http://github.com/smcdougall/NotePaper
 			{% set offset = config.NotePaper.front_page.limit * (TwigGetUrl.page - 1) %}
 			{% if offset < 0 %}{% set offset = 0 %}{% endif %}
 
+			{# Loop #}
 			{% for page in pages if not page.meta.widget and page.id != "index" %}
 				{% if loop.index > offset and count < config.NotePaper.front_page.limit %}
 					{% set count = count + 1 %}
@@ -147,6 +150,7 @@ http://github.com/smcdougall/NotePaper
 
 			{# Search #}
 			{% elseif is_front_page and TwigGetUrl.search %}
+
 				{# Page Math #}
 				{% set offset = config.NotePaper.front_page.limit * (TwigGetUrl.page - 1) %}
 				{% if offset < 0 %}{% set offset = 0 %}{% endif %}
@@ -157,6 +161,7 @@ http://github.com/smcdougall/NotePaper
 					{% set numresults = loop.index %}
 				{% endfor %}
 
+				{# Loop #}
 				{% for page in pages if not page.meta.widget and (TwigGetUrl.search|lower in page.title|lower or TwigGetUrl.search|lower in page.description|lower or TwigGetUrl.search|lower in page.id|content|lower) %}
 					{% if loop.index > offset and count < config.NotePaper.front_page.limit %}
 						{% set count = count + 1 %}
@@ -291,6 +296,7 @@ http://github.com/smcdougall/NotePaper
 				</section>{# Make Proper Tag and Class #}
 			{% endif %}
 
+			{# Render Bottom Links #}
 			<section class="bottom_links">
 				{% for key,link in url if link.text and key != "separator" %}
 					{% if loop.index == 1 %}
