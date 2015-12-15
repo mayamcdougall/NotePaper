@@ -214,17 +214,14 @@ http://github.com/smcdougall/NotePaper
 
 				{# Determine Operand #} {# determine query string ahead of time, assemble urls afterward. #}
 				{% if rewrite_url %} {# Not needed yet because On main page, but maybe later on subfolder #}{# Replace with new Link filter. Proper Search Buttons (currently tied to regular pages) #}
-					{% if TwigGetUrl.search %}
-						{% set operand = '?search=' ~ TwigGetUrl.search ~ '&' %}
-					{% else %}
 						{% set operand = '?' %}
-					{% endif %}
 				{% else %}
-					{% if TwigGetUrl.search %}
-						{% set operand = '?' ~ current_page.id ~ '&search=' ~ TwigGetUrl.search ~ '&' %}
-					{% else %}
 						{% set operand = '?' ~ current_page.id ~ '&' %}
-					{% endif %}
+				{% endif %}
+
+				{# Search Query #}
+				{% if TwigGetUrl.search %}
+					{% set search = 'search=' ~ TwigGetUrl.search %}
 				{% endif %}
 
 				{# Page Count #}
@@ -235,30 +232,52 @@ http://github.com/smcdougall/NotePaper
 
 				{# Page Math #}
 				{% if TwigGetUrl.search %}
-					{% set first_url = base_url ~ operand %}{# Ugly because of overhaning '&' and because variable is called 'operand' #}
+					{% set first_url = base_url ~ operand ~ search %}
 				{% else %}
 					{% set first_url = base_url %}
 				{% endif %}
 
 				{% if (TwigGetUrl.page - 1) > 1 %}
-					{% set prev_url = (base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page - 1) ) %}
-				{% elseif TwigGetUrl.search %}
-					{% set prev_url = base_url ~ operand %}{# Ugly because of overhaning '&' and because variable is called 'operand' #}
+					{% if TwigGetUrl.search %}
+						{% set prev_url = base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page - 1) ~ '&' ~ search %}
+					{% else %}
+						{% set prev_url = base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page - 1) %}
+					{% endif %}
 				{% else %}
-					{% set prev_url = base_url %}
+					{% if TwigGetUrl.search %}
+						{% set prev_url = base_url ~ operand ~ search %}
+					{% else %}
+						{% set prev_url = base_url %}
+					{% endif %}
 				{% endif %}
 
 				{% if (TwigGetUrl.page + 1) < last_url %}
 					{% if (TwigGetUrl.page + 1) == 1 %}
-						{% set next_url = (base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page + 2) ) %}
+						{% if TwigGetUrl.search %}
+							{% set next_url = base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page + 2) ~ '&' ~ search %}
+						{% else %}
+							{% set next_url = base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page + 2) %}
+						{% endif %}
 					{% else %}
-						{% set next_url = (base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page + 1) ) %}
+						{% if TwigGetUrl.search %}
+							{% set next_url = base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page + 1) ~ '&' ~ search %}
+						{% else %}
+							{% set next_url = base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page + 1) %}
+						{% endif %}
 					{% endif %}
 				{% else %}
-					{% set next_url = (base_url ~ operand ~ 'page=' ~ last_url) %}
+					{% if TwigGetUrl.search %}
+						{% set next_url = base_url ~ operand ~ 'page=' ~ last_url ~ '&' ~ search %}
+					{% else %}
+						{% set next_url = base_url ~ operand ~ 'page=' ~ last_url %}
+					{% endif %}
 				{% endif %}
 
-				{% set last_url = (base_url ~ operand ~ 'page=' ~ last_url) %}
+				{% if TwigGetUrl.search %}
+					{% set last_url = base_url ~ operand ~ 'page=' ~ last_url ~ '&' ~ search %}
+				{% else %}
+					{% set last_url = base_url ~ operand ~ 'page=' ~ last_url %}
+				{% endif %}
 
 				{# Set URLs #}
 				{% for key,link in url if key != "separator" and key != "top" %}
@@ -272,8 +291,8 @@ http://github.com/smcdougall/NotePaper
 					{% set firstresult = 1 %}
 					{% set secondresult = config.NotePaper.front_page.limit %}
 				{% else %}
-					{% set firstresult = (config.NotePaper.front_page.limit * (TwigGetUrl.page -1)+ 1) %}
-					{% set secondresult = (config.NotePaper.front_page.limit * (TwigGetUrl.page -1) + config.NotePaper.front_page.limit) %}
+					{% set firstresult = config.NotePaper.front_page.limit * (TwigGetUrl.page - 1)+ 1 %}
+					{% set secondresult = config.NotePaper.front_page.limit * (TwigGetUrl.page - 1) + config.NotePaper.front_page.limit %}
 				{% endif %}
 				{% if secondresult > numresults %}
 					{% set secondresult = numresults %}
