@@ -212,76 +212,43 @@ http://github.com/smcdougall/NotePaper
 			{# Front Page URLs #}
 			{% if is_front_page and (config.NotePaper.front_page.enabled or TwigGetUrl.search) %}
 
-				{# Determine Operand #} {# determine query string ahead of time, assemble urls afterward. #}
-				{% if rewrite_url %} {# Not needed yet because On main page, but maybe later on subfolder #}{# Replace with new Link filter. Proper Search Buttons (currently tied to regular pages) #}
-						{% set operand = '?' %}
-				{% else %}
-						{% set operand = '?' ~ current_page.id ~ '&' %}
-				{% endif %}
-
 				{# Search Query #}
 				{% if TwigGetUrl.search %}
 					{% set search = 'search=' ~ TwigGetUrl.search %}
 				{% endif %}
 
 				{# Page Count #}
-				{% set last_url = '' %}
+				{% set last_page = '' %}
 				{% for page in pages if not page.meta.widget and not (config.NotePaper.front_page.enabled and page.id == "index") and (not TwigGetUrl.search or TwigGetUrl.search and (TwigGetUrl.search|lower in page.title|lower or TwigGetUrl.search|lower in page.description|lower or TwigGetUrl.search|lower in page.id|content|lower)) %}
-					{% set last_url = (loop.index / config.NotePaper.front_page.limit)|round(0,'ceil') %}
+					{% set last_page = (loop.index / config.NotePaper.front_page.limit)|round(0,'ceil') %}
 				{% endfor %}
 
 				{# Page Math #}
-				{% if TwigGetUrl.search %}
-					{% set first_url = base_url ~ operand ~ search %}
-				{% else %}
-					{% set first_url = base_url %}
+				{% if TwigGetUrl.page > 2 %}
+					{% set prev_url = 'page=' ~ (TwigGetUrl.page - 1) %}
 				{% endif %}
 
-				{% if (TwigGetUrl.page - 1) > 1 %}
-					{% if TwigGetUrl.search %}
-						{% set prev_url = base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page - 1) ~ '&' ~ search %}
+				{% if (TwigGetUrl.page + 1) < last_page %}
+					{% if TwigGetUrl.page < 2 %}
+						{% set next_url = 'page=' ~ (TwigGetUrl.page + 2) %}
 					{% else %}
-						{% set prev_url = base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page - 1) %}
+						{% set next_url = 'page=' ~ (TwigGetUrl.page + 1) %}
 					{% endif %}
 				{% else %}
-					{% if TwigGetUrl.search %}
-						{% set prev_url = base_url ~ operand ~ search %}
-					{% else %}
-						{% set prev_url = base_url %}
-					{% endif %}
+					{% set next_url = 'page=' ~ last_page %}
 				{% endif %}
 
-				{% if (TwigGetUrl.page + 1) < last_url %}
-					{% if (TwigGetUrl.page + 1) == 1 %}
-						{% if TwigGetUrl.search %}
-							{% set next_url = base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page + 2) ~ '&' ~ search %}
-						{% else %}
-							{% set next_url = base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page + 2) %}
-						{% endif %}
-					{% else %}
-						{% if TwigGetUrl.search %}
-							{% set next_url = base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page + 1) ~ '&' ~ search %}
-						{% else %}
-							{% set next_url = base_url ~ operand ~ 'page=' ~ (TwigGetUrl.page + 1) %}
-						{% endif %}
-					{% endif %}
-				{% else %}
-					{% if TwigGetUrl.search %}
-						{% set next_url = base_url ~ operand ~ 'page=' ~ last_url ~ '&' ~ search %}
-					{% else %}
-						{% set next_url = base_url ~ operand ~ 'page=' ~ last_url %}
-					{% endif %}
-				{% endif %}
-
-				{% if TwigGetUrl.search %}
-					{% set last_url = base_url ~ operand ~ 'page=' ~ last_url ~ '&' ~ search %}
-				{% else %}
-					{% set last_url = base_url ~ operand ~ 'page=' ~ last_url %}
-				{% endif %}
+				{% set last_url = 'page=' ~ last_page %}
 
 				{# Set URLs #}
 				{% for key,link in url if key != "separator" and key != "top" %}
-					{% set url = url|merge({(key): url[key]|merge({url: _context[key ~ "_url"] })}) %}
+					{% if _context[key ~ '_url'] or search %}
+						{% set operand = '?' %}
+					{% endif %}
+					{% if _context[key ~ '_url'] and search %}
+						{% set ampersand = '&' %}
+					{% endif %}
+					{% set url = url|merge({(key): url[key]|merge({url: (base_url ~ operand ~ _context[key ~ '_url'] ~ ampersand ~ search) })}) %}
 				{% endfor %}
 			{% endif %}
 
