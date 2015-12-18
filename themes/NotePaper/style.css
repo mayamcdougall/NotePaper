@@ -83,6 +83,14 @@ nav h2 {
 	margin-right: -85px;
 }
 
+.mirrorwidgets {
+	float: left;
+	padding-left: initial;
+	margin-right: initial;
+	padding-right: 26px;
+	margin-left: -85px;
+}
+
 nav {
 	width: 250px;
 	margin-bottom: 15px;
@@ -109,6 +117,10 @@ nav.doodle {
 	background-color: transparent;
 	border-radius: initial;
 	box-shadow: none;
+}
+
+.mirrorwidgets .doodle {
+	float: right;
 }
 
 nav a.current_page {
@@ -214,7 +226,7 @@ article header {
 	position: absolute;
 	width: 0;
 	height: 0;
-	left: 0px;
+	left: 0;
 	top: 100%;
 	border-style: solid;
 	border-radius: 8px 0 0px;
@@ -222,6 +234,27 @@ article header {
 	border-color: #6D0404 #6D0404 transparent transparent;
 }
 
+.mirrordate {
+	text-align: left;
+	padding: 3px 0 3px 15px;
+	margin: 0 -25px 5px 15px;
+	border-radius: 1px 8px 1px 1px;
+	right: 0;
+}
+
+.mirrordate:before {
+	left: auto;
+	right: -40px;
+	border-radius: 0 0 0 10px;
+	border-color: #A00B0B transparent #A00B0B #A00B0B;
+}
+
+.mirrordate:after {
+	left: auto;
+	right: 0;
+	border-radius: 0 8px 0 0;
+	border-color: #6D0404 transparent transparent #6D0404;
+}
 
 article img {
 	border-radius: 5px;

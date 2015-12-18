@@ -65,9 +65,12 @@ http://github.com/smcdougall/NotePaper
 		{# Widgets Sidebar #}
 
 		{# Navigation #}
-		<section class="widgets">
+		<section class="widgets{% if config.NotePaper.mirrorwidgets %} mirrorwidgets{% endif %}">
+			{% if config.NotePaper.toc.disabled or config.NotePaper.mirrorwidgets %}
+				{% set sticky_num = 1 %}
+			{% endif %}
 			{% if not config.NotePaper.toc.disabled %}
-				<nav>
+				<nav {% if sticky_num is odd %}class="odd"{% endif %}>
 					{% if config.NotePaper.toc.text %}<h2>{{ config.NotePaper.toc.text }}</h2>{% endif %}
 					<ul>
 						{% for page in pages if not page.meta.widget and not page.meta.blog and not (config.NotePaper.front_page.enabled and page.id == "index") %}
@@ -96,8 +99,6 @@ http://github.com/smcdougall/NotePaper
 						{% endfor %}
 					</ul>
 				</nav>
-			{% else %}
-				{% set sticky_num = 1 %}
 			{% endif %}
 
 			{# Widgets #}
@@ -121,7 +122,7 @@ http://github.com/smcdougall/NotePaper
 			{% endfor %}
 
 			{# Out of Bounds Check #}
-			{% if TwigGetUrl.page not in range(2, total_pages) %}
+			{% if TwigGetUrl and TwigGetUrl.page not in range(2, total_pages) %}
 				{% set TwigGetUrl = TwigGetUrl|merge({page: ''}) %}
 			{% endif %}
 
@@ -142,6 +143,7 @@ http://github.com/smcdougall/NotePaper
 		{% endif %}
 
 		{# Loop #}
+		{% set regularpage = '' %}
 		{% for page in pages if not regularpage and not page.meta.widget and not (config.NotePaper.front_page.enabled and page.id == "index") and (not TwigGetUrl.search or TwigGetUrl.search and (TwigGetUrl.search|lower in page.title|lower or TwigGetUrl.search|lower in page.description|lower or TwigGetUrl.search|lower in page.id|content|lower)) %}
 			{% if loop.index > offset and count < config.NotePaper.front_page.limit %}
 				{% set count = count + 1 %}
@@ -155,7 +157,7 @@ http://github.com/smcdougall/NotePaper
 					{% if loop.index > offset + 1 %}<hr>{% endif %}
 					{% if not config.NotePaper.disable_header %}
 						<header>
-							{% if _context[pagetype].date %}<h4 class="date">{{ _context[pagetype].date|date("F<\\b\\r>jS") }}</h4>{% endif %}
+							{% if _context[pagetype].date %}<h4 class="date{% if config.NotePaper.mirrorwidgets %} mirrordate{% endif %}">{{ _context[pagetype].date|date("F<\\b\\r>jS") }}</h4>{% endif %}
 							{% if _context[pagetype].title %}
 								<h2 class="title"><a href="{{ _context[pagetype].url }}">{{ _context[pagetype].title }}</a></h2>
 								{% if _context[pagetype].author %}<h3 class="author"> by: {{ _context[pagetype].author }}</h3>{% endif %}
@@ -175,7 +177,7 @@ http://github.com/smcdougall/NotePaper
 		{% endfor %}
 
 		{# Bottom Links #}
-		{% if (config.NotePaper.bottom_links.enabled and config.NotePaper.bottom_links.enabled != "blog") or (config.NotePaper.bottom_links.enabled == "blog" and meta.blog) or (is_front_page and ((config.NotePaper.front_page.enabled and not config.NotePaper.disable.front_page_buttons) or TwigGetUrl.search))%}
+		{% if ((config.NotePaper.bottom_links.enabled and config.NotePaper.bottom_links.enabled != "blog") or (config.NotePaper.bottom_links.enabled == "blog" and meta.blog)) and regularpage or is_front_page and ((config.NotePaper.front_page.enabled and TwigGetUrlEnabled and not config.NotePaper.disable.front_page_buttons) or TwigGetUrl.search) %}
 			{% set url = "" %}
 			{% for page in pages if not page.meta.widget and not (config.NotePaper.front_page.enabled and page.id == "index") %}
 				{% if loop.index == 1 %}
