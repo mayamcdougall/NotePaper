@@ -70,16 +70,16 @@ http://github.com/smcdougall/NotePaper
 				{% import _self as macros %}
 			<ul>
 				{% for sectionKey, section in toc %}
-					<li>
 						{% if section._title %}
+						<li>
 							<a href="#{{ sectionKey }}">{{ section._title }}</a>
-							<ul>
 								{{ macros.rnav(section) }}
-							</ul>
-						{% else %}
+						</li>
+						{% elseif sectionKey != '_title' %}
+						<li>
 							<a href="#{{ sectionKey }}">{{ section }}</a>
+						</li>
 						{% endif %}
-					</li>
 				{% endfor %}
 			</ul>
 		{% endmacro %}
