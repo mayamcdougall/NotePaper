@@ -67,19 +67,19 @@ http://github.com/smcdougall/NotePaper
 		{# Recursive Navigation #}
 		{% import _self as macros %}
 		{% macro rnav(toc) %}
-				{% import _self as macros %}
+			{% import _self as macros %}
 			<ul>
 				{% for sectionKey, section in toc %}
-						{% if section._title %}
+					{% if section._title %}
 						<li>
 							<a href="#{{ sectionKey }}">{{ section._title }}</a>
-								{{ macros.rnav(section) }}
+							{{ macros.rnav(section) }}
 						</li>
-						{% elseif sectionKey != '_title' %}
+					{% elseif sectionKey != '_title' %}
 						<li>
 							<a href="#{{ sectionKey }}">{{ section }}</a>
 						</li>
-						{% endif %}
+					{% endif %}
 				{% endfor %}
 			</ul>
 		{% endmacro %}
