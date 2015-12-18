@@ -64,6 +64,26 @@ http://github.com/smcdougall/NotePaper
 
 		{# Widgets Sidebar #}
 
+		{# Recursive Navigation #}
+		{% import _self as macros %}
+		{% macro rnav(toc) %}
+				{% import _self as macros %}
+			<ul>
+				{% for sectionKey, section in toc %}
+					<li>
+						{% if section._title %}
+							<a href="#{{ sectionKey }}">{{ section._title }}</a>
+							<ul>
+								{{ macros.rnav(section) }}
+							</ul>
+						{% else %}
+							<a href="#{{ sectionKey }}">{{ section }}</a>
+						{% endif %}
+					</li>
+				{% endfor %}
+			</ul>
+		{% endmacro %}
+
 		{# Navigation #}
 		<section class="widgets{% if config.NotePaper.mirrorwidgets %} mirrorwidgets{% endif %}">
 			{% if config.NotePaper.toc.disabled or config.NotePaper.mirrorwidgets %}
@@ -76,24 +96,8 @@ http://github.com/smcdougall/NotePaper
 						{% for page in pages if not page.meta.widget and not page.meta.blog and not (config.NotePaper.front_page.enabled and page.id == "index") %}
 							<li>
 								<a {% if page.id == current_page.id %}class="current_page"{% endif %} href="{{ page.url }}">{{ page.title }}</a>
-								{# meta.toc processing code #}
 								{% if page.id == current_page.id and page.meta.toc %}
-									<ul>
-										{% for anchor, name in page.meta.toc %}
-											<li>
-												{% if name._title %}
-													<a href="#{{ anchor }}">{{ name._title }}</a>
-													<ul>
-														{% for sub_anchor, sub_name in name if sub_anchor != "_title" %}
-															<li><a href="#{{ sub_anchor }}">{{ sub_name }}</a></li>
-														{% endfor %}
-													</ul>
-												{% else %}
-													<a href="#{{ anchor }}">{{ name }}</a>
-												{% endif %}
-											</li>
-										{% endfor %}
-									</ul>
+									{{ macros.rnav(page.meta.toc) }}
 								{% endif %}
 							</li>
 						{% endfor %}
