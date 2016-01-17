@@ -12,6 +12,8 @@ desktop.ini
 
 # Ignore Pico Files
 /*
+/content/*
+/themes/*
 
 # Include NotePaper Files
 !/content/sample-widgets/*
