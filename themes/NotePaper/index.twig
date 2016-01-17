@@ -27,8 +27,15 @@ http://github.com/smcdougall/NotePaper
 	{# Open Graph #}
 	<meta property="og:url" content="{{ current_page.url }}">
 	<meta property="og:site_name" content="{{ site_title }}">
+	<meta property="og:type" content="website">
 	{% if meta.title %}<meta property="og:title" content="{{ meta.title }}">{% endif %}
-	{% if meta.description %}<meta property="og:description" content="{{ meta.description }}">{% endif %}
+	<meta property="og:description" content="
+		{% if meta.description %}
+			{{ meta.description }}
+		{% else %}
+			{{ content|striptags|slice(0,255)|split(' ',-1)|join(' ') ~ "..." }}
+		{% endif %}
+	">
 	{% if config.NotePaper.og_image %}<meta property="og:image" content="{{ base_url }}/{{ config.NotePaper.og_image }}">{% endif %}
 
 	{# Facebook Coments Administration #}
@@ -161,7 +168,7 @@ http://github.com/smcdougall/NotePaper
 					{% if loop.index > offset + 1 %}<hr>{% endif %}
 					{% if not config.NotePaper.disable_header %}
 						<header>
-							{% if _context[pagetype].date %}<h4 class="date{% if config.NotePaper.mirrorwidgets %} mirrordate{% endif %}">{{ _context[pagetype].date|date("F<\\b\\r>jS") }}</h4>{% endif %}
+							{% if _context[pagetype].date and not config.NotePaper.disable_date %}<h4 class="date{% if config.NotePaper.mirrorwidgets %} mirrordate{% endif %}">{{ _context[pagetype].date|date("F<\\b\\r>jS") }}</h4>{% endif %}
 							{% if _context[pagetype].title %}
 								<h2 class="title"><a href="{{ _context[pagetype].url }}">{{ _context[pagetype].title }}</a></h2>
 								{% if _context[pagetype].author %}<h3 class="author"> by: {{ _context[pagetype].author }}</h3>{% endif %}
@@ -172,7 +179,11 @@ http://github.com/smcdougall/NotePaper
 					{% if pagetype == "page" and not TwigGetUrl.search %}
 						{{ page.id|content }}
 					{% elseif TwigGetUrl.search %}
-						{{ page.description }}
+						{% if page.description %}
+							{{ page.description }}
+						{% else %}
+							{{ page.id|content|striptags|slice(0,255)|split(' ',-1)|join(' ') ~ "..." }}
+						{% endif %}
 					{% else %}
 						{{ content }}
 					{% endif %}
