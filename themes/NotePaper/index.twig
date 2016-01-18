@@ -16,10 +16,10 @@ http://github.com/smcdougall/NotePaper
 	{# Styles #}
 	<link href='http://fonts.googleapis.com/css?family=Source+Code+Pro%7CForum%7CKalam:400,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="{{ theme_url }}/style.css" type="text/css">
-	{% if config.NotePaper.css_override and not meta.theme %}
-		<link rel="stylesheet" href="{{ base_url }}/{{ config.NotePaper.css_override }}/override.css" type="text/css">
+	{% if config.NotePaper.css_theme and not meta.theme %}
+		<link rel="stylesheet" href="{{ base_url }}/assets/NotePaper_Themes/{{ config.NotePaper.css_theme }}/theme.css" type="text/css">
 	{% elseif meta.theme and meta.theme != "default" %}
-		<link rel="stylesheet" href="{{ base_url }}/{{ meta.theme }}/override.css" type="text/css">
+		<link rel="stylesheet" href="{{ base_url }}/assets/NotePaper_Themes/{{ meta.theme }}/theme.css" type="text/css">
 	{% endif %}
 
 	<script src="{{ theme_url }}/scripts/modernizr.js"></script>
