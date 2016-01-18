@@ -28,14 +28,13 @@ http://github.com/smcdougall/NotePaper
 	<meta property="og:url" content="{{ current_page.url }}">
 	<meta property="og:site_name" content="{{ site_title }}">
 	<meta property="og:type" content="website">
-	{% if meta.title %}<meta property="og:title" content="{{ meta.title }}">{% endif %}
-	<meta property="og:description" content="
-		{% if meta.description %}
-			{{ meta.description }}
-		{% else %}
-			{{ content|striptags|slice(0,255)|split(' ',-1)|join(' ') ~ "..." }}
-		{% endif %}
-	">
+	{% if meta.title and not (is_front_page and config.NotePaper.front_page.enabled) %}<meta property="og:title" content="{{ meta.title }}">{% endif %}
+	{% if meta.description %}
+		<meta property="og:description" content="{{ meta.description }}">
+	{% elseif not (is_front_page and config.NotePaper.front_page.enabled) %}
+		<meta property="og:description" content="{{ content|striptags|slice(0,255)|split(' ',-1)|join(' ') ~ "..." }}">
+	{% endif %}
+
 	{% if config.NotePaper.og_image %}<meta property="og:image" content="{{ base_url }}/{{ config.NotePaper.og_image }}">{% endif %}
 
 	{# Facebook Coments Administration #}
