@@ -90,16 +90,61 @@ http://github.com/smcdougall/NotePaper
 			</ul>
 		{% endmacro %}
 
+		{# Experimental Recursive Folder Navigation #}
+		{% macro rfol(ToC,pages) %}
+			{% import _self as macros %}
+			{% set next_level = [] %}
+			{% set current_level = [] %}
+			{% for page in pages if not page.meta.widget and not page.meta.blog and not (config.NotePaper.front_page.enabled and page.id == "index") and page.id starts with ToC %}
+				{% set current_level = current_level|merge([page.id|slice(ToC|length + 1)]) %}
+			{% endfor %}
+
+			{% for page in current_level %}
+				{% if '/' in page and (ToC ~ '/' ~ page|split('/')|first) not in next_level %}
+					{% set next_level = next_level|merge([ToC ~ '/' ~ page|split('/')|first]) %}
+				{% endif %}
+			{% endfor %}
+
+			{% for nToC in next_level %}
+							<li class="menu-header">
+								{{ nToC|split('/')|last }}
+								<ul class="menu">
+									{{ macros.rfol(nToC,pages) }}
+								</ul>
+							</li>
+			{% endfor %}
+			{% for page in pages if not page.meta.widget and not page.meta.blog and not (config.NotePaper.front_page.enabled and page.id == "index") and page.id starts with ToC %}
+				{% if next_level %}
+					{% for nToC in next_level if not (page.id starts with nToC) %}
+					<li><a href="{{ page.url }}">{{ page.title }}</a></li>
+					{% endfor %}
+				{% else %}
+					<li><a href="{{ page.url }}">{{ page.title }}</a></li>
+				{% endif %}
+			{% endfor %}
+		{% endmacro %}
+
+		{# Experimental Folder Navigation #}
+		{% if config.NotePaper.toc.folder %}
+			{# First Level Calculation #}
+			{% set first_level = [] %}
+			{% for page in pages if not page.meta.widget and not page.meta.blog and not (config.NotePaper.front_page.enabled and page.id == "index") %}
+				{% if '/' in page.id and (page.id|split('/')|first) not in first_level %}
+					{% set first_level = first_level|merge([page.id|split('/')|first]) %}
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+
 		{# Navigation #}
 		<section class="widgets{% if config.NotePaper.mirrorwidgets %} mirrorwidgets{% endif %}">
-			{% if config.NotePaper.toc.disabled or config.NotePaper.mirrorwidgets %}
+			{% if config.NotePaper.mirrorwidgets %}
 				{% set sticky_num = 1 %}
 			{% endif %}
 			{% if not config.NotePaper.toc.disabled %}
-				<nav {% if sticky_num is odd %}class="odd"{% endif %}>
+				<nav class="toc{% if sticky_num is odd %} odd{% endif %}">
 					{% if config.NotePaper.toc.text %}<h2>{{ config.NotePaper.toc.text }}</h2>{% endif %}
 					<ul>
-						{% for page in pages if not page.meta.widget and not page.meta.blog and not (config.NotePaper.front_page.enabled and page.id == "index") %}
+						{% for page in pages if not page.meta.widget and not page.meta.blog and not (config.NotePaper.front_page.enabled and page.id == "index") and not (config.NotePaper.toc.folder and page.id|split('/')|first in first_level) %}
 							<li>
 								<a {% if page.id == current_page.id %}class="current_page"{% endif %} href="{{ page.url }}">{{ page.title }}</a>
 								{% if page.id == current_page.id and page.meta.toc %}
@@ -109,6 +154,19 @@ http://github.com/smcdougall/NotePaper
 						{% endfor %}
 					</ul>
 				</nav>
+			{% endif %}
+
+			{# Experimental Folder Navigation #}
+			{% if config.NotePaper.toc.folder %}
+				{% for ToC in first_level %}
+					<nav class="toc{% if sticky_num is odd %} odd{% endif %}">
+						<h2>{{ ToC }}</h2>
+						<ul>
+							{{ macros.rfol(ToC,pages) }}
+						</ul>
+					</nav>
+					{% set sticky_num = sticky_num + 1 %}
+				{% endfor %}
 			{% endif %}
 
 			{# Widgets #}

@@ -128,16 +128,16 @@ nav a.current_page {
 	font-weight: bolder;
 }
 
-nav:first-of-type ul {
+nav.toc ul {
 	list-style-type: none;
 }
 
-nav:first-of-type ul ul {
+nav.toc ul ul {
 	padding-left: 20px;
 	list-style-type: disc;
 }
 
-nav:first-of-type ul ul ul {
+nav.toc ul ul ul {
 	list-style-type: circle;
 }
 
@@ -264,4 +264,12 @@ article img {
 
 article pre {
 	line-height: 1.575em;
+}
+
+.menu { /* move up when ready */
+	display: none;
+}
+
+.menu-header:hover .menu {
+	display: block;
 }
