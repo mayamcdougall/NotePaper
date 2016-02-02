@@ -302,3 +302,11 @@ article pre {
 .menu-header:hover>.menu {
 	display: block;
 }
+
+.menu-title {
+	list-style-type: none;
+}
+
+.menu-title h2 {
+	margin-top: 0;
+}

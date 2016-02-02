@@ -110,15 +110,20 @@ http://github.com/smcdougall/NotePaper
 							<li class="menu-header">
 								{{ nToC|split('/')|last }}
 								<ul class="menu{% if sticky_num is odd %} odd{% endif %}{% if config.NotePaper.mirrorwidgets %} mirrorwidgets{% endif %}">
+									<li class="menu-title"><h2>{{ nToC|split('/')|last }}</h2></li>
 									{{ macros.rfol(nToC,pages,sticky_num,config) }}
 								</ul>
 							</li>
 			{% endfor %}
 			{% for page in pages if not page.meta.widget and not page.meta.blog and not (config.NotePaper.front_page.enabled and page.id == "index") and page.id starts with ToC %}
 				{% if next_level %}
-					{% for nToC in next_level if not (page.id starts with nToC) %}
-					<li><a href="{{ page.url }}">{{ page.title }}</a></li>
+					{% set pass = true %}
+					{% for nToC in next_level %}{#<hr><br>nToC:{{nToC}}<br>ID:{{page.id}}<hr>#}
+						{% if (page.id starts with nToC) %}{% set pass = false %}{% endif %}
 					{% endfor %}
+					{% if pass == true %}
+						<li><a href="{{ page.url }}">{{ page.title }}</a></li>
+					{% endif %}
 				{% else %}
 					<li><a href="{{ page.url }}">{{ page.title }}</a></li>
 				{% endif %}
