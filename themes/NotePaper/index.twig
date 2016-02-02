@@ -91,8 +91,9 @@ http://github.com/smcdougall/NotePaper
 		{% endmacro %}
 
 		{# Experimental Recursive Folder Navigation #}
-		{% macro rfol(ToC,pages) %}
+		{% macro rfol(ToC,pages,sticky_num,config) %}
 			{% import _self as macros %}
+			{% set sticky_num = sticky_num + 1 %}
 			{% set next_level = [] %}
 			{% set current_level = [] %}
 			{% for page in pages if not page.meta.widget and not page.meta.blog and not (config.NotePaper.front_page.enabled and page.id == "index") and page.id starts with ToC %}
@@ -108,8 +109,8 @@ http://github.com/smcdougall/NotePaper
 			{% for nToC in next_level %}
 							<li class="menu-header">
 								{{ nToC|split('/')|last }}
-								<ul class="menu">
-									{{ macros.rfol(nToC,pages) }}
+								<ul class="menu{% if sticky_num is odd %} odd{% endif %}{% if config.NotePaper.mirrorwidgets %} mirrorwidgets{% endif %}">
+									{{ macros.rfol(nToC,pages,sticky_num,config) }}
 								</ul>
 							</li>
 			{% endfor %}
@@ -159,13 +160,13 @@ http://github.com/smcdougall/NotePaper
 			{# Experimental Folder Navigation #}
 			{% if config.NotePaper.toc.folder %}
 				{% for ToC in first_level %}
+					{% set sticky_num = sticky_num + 1 %}
 					<nav class="toc{% if sticky_num is odd %} odd{% endif %}">
 						<h2>{{ ToC }}</h2>
 						<ul>
-							{{ macros.rfol(ToC,pages) }}
+							{{ macros.rfol(ToC,pages,sticky_num,config) }}
 						</ul>
 					</nav>
-					{% set sticky_num = sticky_num + 1 %}
 				{% endfor %}
 			{% endif %}
 

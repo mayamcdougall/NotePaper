@@ -91,7 +91,7 @@ nav h2 {
 	margin-left: -85px;
 }
 
-nav {
+nav,.menu {
 	width: 250px;
 	margin-bottom: 15px;
 	clear: both;
@@ -133,8 +133,11 @@ nav.toc ul {
 }
 
 nav.toc ul ul {
-	padding-left: 20px;
 	list-style-type: disc;
+}
+
+nav.toc ul ul:not(.menu) {
+	padding-left: 20px;
 }
 
 nav.toc ul ul ul {
@@ -267,9 +270,35 @@ article pre {
 }
 
 .menu { /* move up when ready */
+	color: black;
 	display: none;
+	position: absolute;
+	border-top: 1px solid rgba(0, 0, 0, 0.15);
+	border-left: 1px solid rgba(0, 0, 0, 0.15);
+	margin-top: -.5em;
+	margin-left: -100px;
+	padding: 20px 40px;
+	width: 200px;
+	font-size: inherit;
+	transform: rotateZ(-2deg);
 }
 
-.menu-header:hover .menu {
+.menu.odd {
+	transform: rotateZ(2deg);
+}
+
+.menu.mirrorwidgets {
+	margin-left: 5px;
+}
+
+.menu-header {
+	font-weight: bold;
+}
+
+.menu-header:hover {
+	color: #333;
+}
+
+.menu-header:hover>.menu {
 	display: block;
 }
