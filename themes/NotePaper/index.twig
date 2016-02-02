@@ -108,9 +108,9 @@ http://github.com/smcdougall/NotePaper
 
 			{% for nToC in next_level %}
 							<li class="menu-header">
-								{{ nToC|split('/')|last }}
+								{{ nToC|split('/')|last|replace({"_": " "}) }}
 								<ul class="menu{% if sticky_num is odd %} odd{% endif %}{% if config.NotePaper.mirrorwidgets %} mirrorwidgets{% endif %}">
-									<li class="menu-title"><h2>{{ nToC|split('/')|last }}</h2></li>
+									<li class="menu-title"><h2>{{ nToC|split('/')|last|replace({"_": " "}) }}</h2></li>
 									{{ macros.rfol(nToC,pages,sticky_num,config) }}
 								</ul>
 							</li>
@@ -118,7 +118,7 @@ http://github.com/smcdougall/NotePaper
 			{% for page in pages if not page.meta.widget and not page.meta.blog and not (config.NotePaper.front_page.enabled and page.id == "index") and page.id starts with ToC %}
 				{% if next_level %}
 					{% set pass = true %}
-					{% for nToC in next_level %}{#<hr><br>nToC:{{nToC}}<br>ID:{{page.id}}<hr>#}
+					{% for nToC in next_level %}
 						{% if (page.id starts with nToC) %}{% set pass = false %}{% endif %}
 					{% endfor %}
 					{% if pass == true %}
@@ -167,7 +167,7 @@ http://github.com/smcdougall/NotePaper
 				{% for ToC in first_level %}
 					{% set sticky_num = sticky_num + 1 %}
 					<nav class="toc{% if sticky_num is odd %} odd{% endif %}">
-						<h2>{{ ToC }}</h2>
+						<h2>{{ ToC|replace({"_": " "}) }}</h2>
 						<ul>
 							{{ macros.rfol(ToC,pages,sticky_num,config) }}
 						</ul>
