@@ -108,9 +108,9 @@ http://github.com/smcdougall/NotePaper
 
 			{% for nToC in next_level %}
 							<li class="menu-header">
-								{{ nToC|split('/')|last|replace({"_": " "}) }}
+								{{ nToC|split('/')|last|replace({"_": " "})|title }}
 								<ul class="menu{% if sticky_num is odd %} odd{% endif %}{% if config.NotePaper.mirrorwidgets %} mirrorwidgets{% endif %}">
-									<li class="menu-title"><h2>{{ nToC|split('/')|last|replace({"_": " "}) }}</h2></li>
+									<li class="menu-title"><h2>{{ nToC|split('/')|last|replace({"_": " "})|title }}</h2></li>
 									{{ macros.rfol(nToC,pages,sticky_num,config) }}
 								</ul>
 							</li>
@@ -167,7 +167,7 @@ http://github.com/smcdougall/NotePaper
 				{% for ToC in first_level %}
 					{% set sticky_num = sticky_num + 1 %}
 					<nav class="toc{% if sticky_num is odd %} odd{% endif %}">
-						<h2>{{ ToC|replace({"_": " "}) }}</h2>
+						<h2>{{ ToC|replace({"_": " "})|title }}</h2>
 						<ul>
 							{{ macros.rfol(ToC,pages,sticky_num,config) }}
 						</ul>
