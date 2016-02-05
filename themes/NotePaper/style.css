@@ -310,3 +310,8 @@ article pre {
 .menu-title h2 {
 	margin-top: 0;
 }
+
+.tag_cloud {
+	list-style-type: none;
+	display: inline-block;
+}

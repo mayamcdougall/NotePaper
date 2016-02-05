@@ -148,6 +148,7 @@ http://github.com/smcdougall/NotePaper
 			{% endif %}
 			{% if not config.NotePaper.toc.disabled %}
 				<nav class="toc{% if sticky_num is odd %} odd{% endif %}">
+					{% set sticky_num = sticky_num + 1 %}
 					{% if config.NotePaper.toc.text %}<h2>{{ config.NotePaper.toc.text }}</h2>{% endif %}
 					<ul>
 						{% for page in pages if not page.meta.widget and not page.meta.blog and not (config.NotePaper.front_page.enabled and page.id == "index") and not (config.NotePaper.toc.folder and page.id|split('/')|first in first_level) %}
@@ -165,8 +166,8 @@ http://github.com/smcdougall/NotePaper
 			{# Experimental Folder Navigation #}
 			{% if config.NotePaper.toc.folder %}
 				{% for ToC in first_level %}
-					{% set sticky_num = sticky_num + 1 %}
 					<nav class="toc{% if sticky_num is odd %} odd{% endif %}">
+						{% set sticky_num = sticky_num + 1 %}
 						<h2>{{ ToC|replace({"_": " "})|title }}</h2>
 						<ul>
 							{{ macros.rfol(ToC,pages,sticky_num,config) }}
@@ -175,10 +176,99 @@ http://github.com/smcdougall/NotePaper
 				{% endfor %}
 			{% endif %}
 
+			{# Tag Data #}
+			{% if config.NotePaper.tags.list or config.NotePaper.tags.cloud %}
+				{% set tag_cloud = {} %}
+				{% for page in pages if not page.meta.widget and not page.meta.blog and not (config.NotePaper.front_page.enabled and page.id == "index") and page.meta.tags %}
+					{% for tag in page.meta.tags|split(',') %}
+						{% set tag_cloud = tag_cloud|merge({(tag): (tag_cloud[tag] + 1)}) %}
+					{% endfor %}
+
+					{# Alphabetical Order #}
+					{% if config.NotePaper.tags.sort.method == 'alphabetical' %}
+						{% set tag_cloud_alphabetical = {} %}
+						{% for tag in tag_cloud|keys|sort %}
+							{% set tag_cloud_alphabetical = tag_cloud_alphabetical|merge({(tag): tag_cloud[tag] }) %}
+							{% if loop.last %}
+								{% if not config.NotePaper.tags.sort.reverse %}
+									{% set tag_cloud = tag_cloud_alphabetical %}
+								{% else %}
+									{% set tag_cloud = tag_cloud_alphabetical|reverse %}
+								{% endif %}
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+
+					{# Numerical Order #}
+					{% if config.NotePaper.tags.sort.method == 'numerical' %}
+						{% set tag_cloud_numerical = {} %}
+						{% for tag,total in tag_cloud|sort %}
+							{% set tag_cloud_numerical = tag_cloud_numerical|merge({(tag): total }) %}
+							{% if loop.last %}
+								{% if not config.NotePaper.tags.sort.reverse %}
+									{% set tag_cloud = tag_cloud_numerical %}
+								{% else %}
+									{% set tag_cloud = tag_cloud_numerical|reverse %}
+								{% endif %}
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+
+				{% endfor %}
+			{% endif %}
+
+			{# Tag List #}
+			{% if config.NotePaper.tags.list.enabled %}
+				<nav class="{% if sticky_num is odd %}odd{% endif %}">
+					{% set sticky_num = sticky_num + 1 %}
+					{% if config.NotePaper.tags.list.title %}<h2>{{ config.NotePaper.tags.list.title }}</h2>{% endif %}
+					<ul>
+						{% for tag,total in tag_cloud %}
+							<li>
+								<a href="{{ base_url ~ '?tag=' ~ tag }}">{{ tag }}
+									{% if config.NotePaper.tags.list.total %}
+										({{ total }})
+									{% endif %}
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</nav>
+			{% endif %}
+
+			{# Tag Cloud #}
+			{% if config.NotePaper.tags.cloud.enabled %}{# Protects against too few tag instances #}
+				{% if max(tag_cloud) < config.NotePaper.tags.cloud.levels %}
+					{% set levels = max(tag_cloud) %}
+				{% else %}
+					{% set levels = config.NotePaper.tags.cloud.levels %}
+				{% endif %}
+				{% set level_range = (max(tag_cloud) / levels)|round(0,'ceil') %}
+				<nav class="{% if sticky_num is odd %}odd{% endif %}">
+					{% set sticky_num = sticky_num + 1 %}
+					{% if config.NotePaper.tags.cloud.title %}<h2>{{ config.NotePaper.tags.cloud.title }}</h2>{% endif %}
+					<ul>
+						{% for tag,total in tag_cloud %}
+							{% for i in range(levels, 0) %}
+								{% if total in range(max(tag_cloud) - (level_range * (loop.index0)), max(tag_cloud) - (level_range * (loop.index)) + 1) %}
+									<li class="tag_cloud" style="font-size:{{ 2 - (loop.index0 * (1.5 / levels)) }}em;">
+										<a href="{{ base_url ~ '?tag=' ~ tag }}">{{ tag }}
+											{% if config.NotePaper.tags.cloud.total %}
+												({{ total }})
+											{% endif %}
+										</a>
+									</li>
+								{% endif %}
+							{% endfor %}
+						{% endfor %}
+					</ul>
+				</nav>
+			{% endif %}
+
 			{# Widgets #}
 			{% for page in pages if page.meta.widget and page.meta.widget != "Disabled" %}
-				{% if page.meta.widget == "Sticky" %}{% set sticky_num = sticky_num + 1 %}{% endif %}
 				<nav class="{% if page.meta.widget == "Sticky" and sticky_num is odd %}odd {% endif %}{% if page.meta.widget == "Doodle" %}doodle{% endif %}">
+					{% if page.meta.widget == "Sticky" %}{% set sticky_num = sticky_num + 1 %}{% endif %}
 					{{ page.id|content }}
 				</nav>
 			{% endfor %}
@@ -187,11 +277,11 @@ http://github.com/smcdougall/NotePaper
 		{# Content Rendering #}
 
 		{# Pagination Math #}
-		{% if is_front_page and (config.NotePaper.front_page.enabled or TwigGetUrl.search) %}
+		{% if is_front_page and (config.NotePaper.front_page.enabled or TwigGetUrl.search or TwigGetUrl.tag) %}
 
 			{# Page Count #}
 			{% set total_pages = '' %}
-			{% for page in pages if not page.meta.widget and not (config.NotePaper.front_page.enabled and page.id == "index") and (not TwigGetUrl.search or TwigGetUrl.search and (TwigGetUrl.search|lower in page.title|lower or TwigGetUrl.search|lower in page.description|lower or TwigGetUrl.search|lower in page.id|content|lower)) %}
+			{% for page in pages if not page.meta.widget and not (config.NotePaper.front_page.enabled and page.id == "index") and (not TwigGetUrl.search or TwigGetUrl.search and (TwigGetUrl.search|lower in page.title|lower or TwigGetUrl.search|lower in page.description|lower or TwigGetUrl.search|lower in page.id|content|lower)) and (not TwigGetUrl.tag or TwigGetUrl.tag in page.meta.tags|split(',')) %}
 				{% set total_pages = (loop.index / config.NotePaper.front_page.limit)|round(0,'ceil') %}
 			{% endfor %}
 
@@ -208,20 +298,20 @@ http://github.com/smcdougall/NotePaper
 			{% endif %}
 		{% endif %}
 
-		{# Search Math #}
-		{% if TwigGetUrl.search %}
+		{# Search and Tag - Number of Results #}
+		{% if TwigGetUrl.search or TwigGetUrl.tag %}
 			{% set numresults = '' %}
-			{% for page in pages if not page.meta.widget and not (config.NotePaper.front_page.enabled and page.id == "index") and (TwigGetUrl.search|lower in page.title|lower or TwigGetUrl.search|lower in page.description|lower or TwigGetUrl.search|lower in page.id|content|lower)  %}
+			{% for page in pages if not page.meta.widget and not (config.NotePaper.front_page.enabled and page.id == "index") and (not TwigGetUrl.search or TwigGetUrl.search|lower in page.title|lower or TwigGetUrl.search|lower in page.description|lower or TwigGetUrl.search|lower in page.id|content|lower) and (not TwigGetUrl.tag or TwigGetUrl.tag in page.meta.tags|split(','))  %}
 				{% set numresults = loop.index %}
 			{% endfor %}
 		{% endif %}
 
 		{# Loop #}
 		{% set regularpage = '' %}
-		{% for page in pages if not regularpage and not page.meta.widget and not (config.NotePaper.front_page.enabled and page.id == "index") and (not TwigGetUrl.search or TwigGetUrl.search and (TwigGetUrl.search|lower in page.title|lower or TwigGetUrl.search|lower in page.description|lower or TwigGetUrl.search|lower in page.id|content|lower)) %}
+		{% for page in pages if not regularpage and not page.meta.widget and not (config.NotePaper.front_page.enabled and page.id == "index") and (not TwigGetUrl.search or TwigGetUrl.search and (TwigGetUrl.search|lower in page.title|lower or TwigGetUrl.search|lower in page.description|lower or TwigGetUrl.search|lower in page.id|content|lower)) and (not TwigGetUrl.tag or TwigGetUrl.tag in page.meta.tags|split(',')) %}
 			{% if loop.index > offset and count < config.NotePaper.front_page.limit %}
 				{% set count = count + 1 %}
-				{% if not is_front_page or is_front_page and not (config.NotePaper.front_page.enabled or TwigGetUrl.search) %}
+				{% if not is_front_page or is_front_page and not (config.NotePaper.front_page.enabled or TwigGetUrl.search or TwigGetUrl.tag) %}
 					{% set pagetype = 'meta' %}
 					{% set regularpage = true %}
 				{% else %}
@@ -239,9 +329,9 @@ http://github.com/smcdougall/NotePaper
 						</header>
 						{% if _context[pagetype].title %}<hr>{% endif %}
 					{% endif %}
-					{% if pagetype == "page" and not TwigGetUrl.search %}
+					{% if pagetype == "page" and not TwigGetUrl.search and not TwigGetUrl.tag %}
 						{{ page.id|content }}
-					{% elseif TwigGetUrl.search %}
+					{% elseif TwigGetUrl.search or TwigGetUrl.tag %}
 						{% if page.description %}
 							{{ page.description }}
 						{% else %}
@@ -255,7 +345,7 @@ http://github.com/smcdougall/NotePaper
 		{% endfor %}
 
 		{# Bottom Links #}
-		{% if ((config.NotePaper.bottom_links.enabled and config.NotePaper.bottom_links.enabled != "blog") or (config.NotePaper.bottom_links.enabled == "blog" and meta.blog)) and regularpage or is_front_page and ((config.NotePaper.front_page.enabled and TwigGetUrlEnabled and not config.NotePaper.disable.front_page_buttons) or TwigGetUrl.search) %}
+		{% if ((config.NotePaper.bottom_links.enabled and config.NotePaper.bottom_links.enabled != "blog") or (config.NotePaper.bottom_links.enabled == "blog" and meta.blog)) and regularpage or is_front_page and ((config.NotePaper.front_page.enabled and TwigGetUrlEnabled and not config.NotePaper.disable.front_page_buttons) or TwigGetUrl.search or TwigGetUrl.tag) %}
 			{% set url = "" %}
 			{% for page in pages if not page.meta.widget and not (config.NotePaper.front_page.enabled and page.id == "index") %}
 				{% if loop.index == 1 %}
@@ -306,11 +396,16 @@ http://github.com/smcdougall/NotePaper
 			{% endfor %}
 
 			{# Front Page URLs #}
-			{% if is_front_page and (config.NotePaper.front_page.enabled or TwigGetUrl.search) %}
+			{% if is_front_page and (config.NotePaper.front_page.enabled or TwigGetUrl.search or TwigGetUrl.tag) %}
 
 				{# Search Query #}
 				{% if TwigGetUrl.search %}
 					{% set search = 'search=' ~ TwigGetUrl.search %}
+				{% endif %}
+
+				{# Tag Query #}
+				{% if TwigGetUrl.tag %}
+					{% set tag = 'tag=' ~ TwigGetUrl.tag %}
 				{% endif %}
 
 				{# Page Math #}
@@ -332,18 +427,21 @@ http://github.com/smcdougall/NotePaper
 
 				{# Set URLs #}
 				{% for key,link in url if key != "separator" and key != "top" %}
-					{% if _context[key ~ '_url'] or search %}
+					{% if _context[key ~ '_url'] or search or tag %}
 						{% set operand = '?' %}
 					{% endif %}
 					{% if _context[key ~ '_url'] and search %}
 						{% set ampersand = '&' %}
 					{% endif %}
-					{% set url = url|merge({(key): url[key]|merge({url: (base_url ~ operand ~ _context[key ~ '_url'] ~ ampersand ~ search) })}) %}
+					{% if _context[key ~ '_url'] and tag %}
+						{% set ampersand2 = '&' %}{# Kind of awful #}
+					{% endif %}
+					{% set url = url|merge({(key): url[key]|merge({url: (base_url ~ operand ~ _context[key ~ '_url'] ~ ampersand ~ search ~ ampersand2 ~ tag) })}) %}
 				{% endfor %}
 			{% endif %}
 
-			{# Search Result Math #}
-			{% if TwigGetUrl.search %}
+			{# Search Result And Tag Math #}
+			{% if TwigGetUrl.search or TwigGetUrl.tag %}
 				{% if TwigGetUrl.page < 2 %}
 					{% set firstresult = 1 %}
 					{% set secondresult = config.NotePaper.front_page.limit %}
