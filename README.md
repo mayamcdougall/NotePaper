@@ -42,18 +42,18 @@ At the moment this feature is a bit limited though.  There is currently no way t
 ### Sub-Navigation
 This feature takes a Markdown table of contents and generates a sub-navigation for the current page.  This table of contents is defined as a Meta Header named "toc" in your markdown file.  This is an experimental feature at the moment.  Use it with caution, as it **will break your site if you format the toc incorrectly**.  (A future version will hopefully address this issue and/or supply an error message instead of breaking entirely).  The formatting is simple: Using spaces, indent each item of the toc by the same amount.  Tabs will *not* work, and will cause your site to break.  The header of each item must match the name of its corresponding html anchor, but its value can be anything you want.  This value will become the text displayed for your link.  You may also have a second level of items, indented further, within another item.  Just label the first entry of the second level "&#95;title".  Here is an example of the proper formatting, as used in this readme.  Note that I added a second level under "installation" for the sake of the example.
 
-<pre>
+```
 toc:
   features: Features
   download: Download
   installation:
-    &#95;title: Installation
+    _title: Installation
     step-1: Step 1
     step-2: Step 2
     step-3: Step 3
   changelog: Changelog
   license: License
-</pre>
+```
 
 ### Bottom Navigation Links
 There are optional navigation links you can enable for the bottom of your page.  These are enabled using a custom config option, and are incredibly customizable.  There are five links total, First, Prev, Back to Top, Next, and Last.  You can set the text or an image for each one, or disable them individually.  You can also define a text character or image to use as a separator between them.
@@ -84,7 +84,7 @@ While you're at it, you'll likely want to add in the custom variables discussed 
 
 Here is a list of all the custom Pico config options you can utilize in this theme.  The config options are arranged in a series of nested arrays for readability and ease of use.  I'd recommended adding this entire block to the end of your Pico "config.php" file, then modifying it to fit your preferences.  You can comment out any options you don't wish to use by adding a `//` to the beginning of the line or by wrapping a section in `/* */`.  If you comment out one of the nested arrays, be sure to comment out that *entire array* and not just the header.  Also, please note that date_format is now ignored in this theme.  The date format is instead hard-coded to work around the lack of ordinal suffixes in strftime (used by Pico 0.9 and later).
 
-<pre style="overflow-x: scroll;">
+<pre style="overflow-x: scroll;"><code>
 $config['NotePaper'] = array(
 	#Basic Config
 	'site_logo'      => 'assets/site_logo.png',	// Site logo, reletive to base_url.
@@ -132,7 +132,7 @@ $config['NotePaper'] = array(
 		)
 	)
 );
-</pre>
+</code></pre>
 
 #### site_logo
 If this variable is defined, your site's title will be replaced with this image file.  It must be defined as an absolute path from your base_url (eg "assets/site_logo.png").
