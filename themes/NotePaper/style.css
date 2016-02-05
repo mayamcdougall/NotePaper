@@ -271,7 +271,7 @@ article pre {
 
 .menu { /* move up when ready */
 	color: black;
-	display: none;
+	/* display: none; */
 	position: absolute;
 	border-top: 1px solid rgba(0, 0, 0, 0.15);
 	border-left: 1px solid rgba(0, 0, 0, 0.15);
@@ -280,11 +280,14 @@ article pre {
 	padding: 20px 40px;
 	width: 200px;
 	font-size: inherit;
-	transform: rotateZ(-2deg);
+	transform: rotateZ(2deg);
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0.15s, opacity 0.15s linear;
 }
 
 .menu.odd {
-	transform: rotateZ(2deg);
+	transform: rotateZ(-2deg);
 }
 
 .menu.mirrorwidgets {
@@ -300,7 +303,9 @@ article pre {
 }
 
 .menu-header:hover>.menu {
-	display: block;
+	/* display: block; */
+	visibility: visible;
+	opacity: 1;
 }
 
 .menu-title {
