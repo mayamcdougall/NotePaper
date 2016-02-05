@@ -15,8 +15,7 @@ Thank you for using my [NotePaper](http://development.sjmcdougall.com/pico-theme
 
 If you're viewing this on GitHub, please check out the [NotePaper Site](http://development.sjmcdougall.com/pico-themes/NotePaper) for a live example of the theme.
 
-<a name="features"></a>
-## Features
+## Features {#features}
 
 ### Widgets
 
@@ -67,12 +66,11 @@ I've integrated Disqus comments into the theme.  They can be enabled them in you
 
 You can override the default CSS styles of the theme by specifying an overriding stylesheet in your Pico config.  Your stylesheet will be linked after the theme's original stylesheet, so you only need to style the elements you'd like to change.
 
-<a name="download"></a>
-## Download
+## Download {#download}
 You can download the NotePaper theme [on GitHub](https://github.com/smcdougall/NotePaper/releases).
 
-<a name="installation"></a>
-## Installation
+
+## Installation {#installation}
 
 Selectively extract the contents of the download into your Pico folder.  Everything in the "themes" folder is required for the theme to function.  The "content" folder holds the sample widgets you see here.  You can install these as well and use them as a template for your own widgets, or you can leave them out and write yours from scratch.
 
@@ -140,8 +138,7 @@ $config['NotePaper'] = array(
 If this variable is defined, your site's title will be replaced with this image file.  It must be defined as an absolute path from your base_url (eg "assets/site_logo.png").
 
 #### og_image
-"Open Graph" Image.  You can specify an image to be used when sharing a link on Facebook and other sites that support it.  Since this theme has a dark background by default, this provides a nice workaround for light logos not displaying against Facebook's white background.  You can use Facebook's [Debugging Tool](https://developers.facebook.com/tools/debug/) to help diagnose any issues using this feature.
-<!-- These features -->
+"Open Graph" Image.  You can specify an image to be used when sharing a link on Facebook and other sites that support it.  Since this theme has a dark background by default, this provides a nice workaround for light logos not displaying against Facebook's white background.  You can use Facebook's [Debugging Tool](https://developers.facebook.com/tools/debug/) to help diagnose any issues using these features.
 
 #### toc
 Table of Contents.  This is the text that will display above your navigation (the sticky note in the top right).
@@ -190,8 +187,7 @@ For example, you could try changing the page background using CSS.  By doing thi
 
 		You can optionally provide an image for each button, relative to base_url.  If defined, the "text" variables will instead be used as Alt and Title attributes of your image.  If you use the value of "default", NotePaper will use it's own internal button images.
 
-<a name="changelog"></a>
-## Changelog
+## Changelog {#changelog}
 
 ### 1.4.0 - 12/03/15
 * Updated for Pico 1.0.  Older versions unsupported, stick to 1.3.2.
@@ -232,8 +228,7 @@ For example, you could try changing the page background using CSS.  By doing thi
 ### 1.0.0 - 06/05/15
 * Initial Release
 
-<a name="license"></a>
-## License
+## License {#license}
 
 This theme is free software under the terms of the GNU General Public License v3.  Please see the included LICENSE file for details.
 
