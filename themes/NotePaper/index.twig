@@ -21,8 +21,18 @@ http://github.com/smcdougall/NotePaper
 	{% elseif meta.theme and meta.theme != "default" %}
 		<link rel="stylesheet" href="{{ base_url }}/assets/NotePaper_Themes/{{ meta.theme }}/theme.css" type="text/css">
 	{% endif %}
+	{% if config.NotePaper.css_override %}
+		<link rel="stylesheet" href="{{ base_url }}/{{ config.NotePaper.css_override }}" type="text/css">
+	{% endif %}
 
 	<script src="{{ theme_url }}/scripts/modernizr.js"></script>
+
+	{# Description Length #}
+	{% if config.NotePaper.description_length %}
+		{% set description_length = config.NotePaper.description_length %}
+	{% else %}
+		{% set description_length = 255 %}
+	{% endif %}
 
 	{# Open Graph #}
 	<meta property="og:url" content="{{ current_page.url }}">
@@ -335,7 +345,7 @@ http://github.com/smcdougall/NotePaper
 						{% if page.description %}
 							{{ page.description }}
 						{% else %}
-							{{ page.id|content|striptags|slice(0,255)|split(' ',-1)|join(' ') ~ "..." }}
+							{{ page.id|content|striptags|slice(0,description_length)|split(' ',-1)|join(' ') ~ "..." }}
 						{% endif %}
 					{% else %}
 						{{ content }}
