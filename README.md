@@ -93,7 +93,7 @@ $config['NotePaper'] = array(
 	'og_image'       => 'assets/site_logo_og.png',	// Facebook "Open Graph" Image.  Specify an image to be used when sharing a link on Facebook.  Provides a nice workaround for light logos not displaying on Facebook.
 	'toc'            => 'Table of Contents',	// Text for the "Table of Contents" header.
 	'copyright'      => 'Copyright © 20XX - Your Name',	// Copyright or other text for page footer.
-	'css_override    => 'assets/override.css',	// Override theme styles with custom stylesheet, relative to base_url.
+	'css_override'    => 'assets/override.css',	// Override theme styles with custom stylesheet, relative to base_url.
 
 	#Front Page Mode
 	'front_page'     => array(
