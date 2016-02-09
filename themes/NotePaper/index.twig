@@ -166,7 +166,7 @@ http://github.com/smcdougall/NotePaper
 			{# Experimental Folder Navigation #}
 			{% if config.NotePaper.toc.folder %}
 				{% for ToC in first_level %}
-					<nav class="toc{% if sticky_num is odd %} odd{% endif %}">
+					<nav class="toc foldertoc{% if sticky_num is odd %} odd{% endif %}">
 						{% set sticky_num = sticky_num + 1 %}
 						<h2>{{ ToC|replace({"_": " "})|title }}</h2>
 						<ul>

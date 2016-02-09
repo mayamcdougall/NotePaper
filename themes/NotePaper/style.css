@@ -270,6 +270,10 @@ article pre {
 	line-height: 1.575em;
 }
 
+.foldertoc:hover {
+	z-index: 2;
+}
+
 .menu { /* move up when ready */
 	color: black;
 	/* display: none; */
@@ -285,7 +289,6 @@ article pre {
 	visibility: hidden;
 	opacity: 0;
 	transition: visibility 0s linear 0.15s, opacity 0.15s linear;
-	z-index: 2;
 }
 
 .menu.odd {
