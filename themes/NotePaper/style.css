@@ -283,7 +283,7 @@ article pre {
 	transform: rotateZ(2deg);
 	visibility: hidden;
 	opacity: 0;
-	transition: visibility 0.15s, opacity 0.15s linear;
+	transition: visibility 0s linear 0.15s, opacity 0.15s linear;
 }
 
 .menu.odd {
@@ -306,6 +306,7 @@ article pre {
 	/* display: block; */
 	visibility: visible;
 	opacity: 1;
+	transition-delay: 0s;
 }
 
 .menu-title {
