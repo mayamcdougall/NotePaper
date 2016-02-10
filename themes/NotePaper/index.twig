@@ -14,17 +14,33 @@ http://github.com/smcdougall/NotePaper
 	{% if meta.robots %}<meta name="robots" content="{{ meta.robots }}">{% endif %}
 
 	{# Styles #}
+
+	{# Google Fonts #}
 	<link href='http://fonts.googleapis.com/css?family=Source+Code+Pro%7CForum%7CKalam:400,700' rel='stylesheet' type='text/css'>
+
+	{# Custom Fonts #}
+	{% if config.NotePaper.fonts %}
+		{% for url in config.NotePaper.fonts %}
+			<link href='{{ url }}' rel='stylesheet' type='text/css'>
+		{% endfor %}
+	{% endif %}
+
+	{# Main Stylesheet #}
 	<link rel="stylesheet" href="{{ theme_url }}/style.css" type="text/css">
+
+	{# Custom NotePaper Themes #}
 	{% if config.NotePaper.css_theme and not meta.theme %}
 		<link rel="stylesheet" href="{{ base_url }}/assets/NotePaper_Themes/{{ config.NotePaper.css_theme }}/theme.css" type="text/css">
 	{% elseif meta.theme and meta.theme != "default" %}
 		<link rel="stylesheet" href="{{ base_url }}/assets/NotePaper_Themes/{{ meta.theme }}/theme.css" type="text/css">
 	{% endif %}
+
+	{# User Style Overrides #}
 	{% if config.NotePaper.css_override %}
 		<link rel="stylesheet" href="{{ base_url }}/{{ config.NotePaper.css_override }}" type="text/css">
 	{% endif %}
 
+	{# Modernizr #}
 	<script src="{{ theme_url }}/scripts/modernizr.js"></script>
 
 	{# Description Length #}
@@ -44,19 +60,14 @@ http://github.com/smcdougall/NotePaper
 	{% elseif not (is_front_page and config.NotePaper.front_page.enabled) %}
 		<meta property="og:description" content="{{ content|striptags|slice(0,255)|split(' ',-1)|join(' ') ~ "..." }}">
 	{% endif %}
-
 	{% if config.NotePaper.og_image %}<meta property="og:image" content="{{ base_url }}/{{ config.NotePaper.og_image }}">{% endif %}
 
 	{# Facebook Coments Administration #}
 	{% if config.NotePaper.comments.type == "facebook" %}
 		{% if config.NotePaper.comments.admin_type == "user" %}
-			{% if config.NotePaper.comments.admin_id is iterable %}
-				{% for users in config.NotePaper.comments.admin_id %}
-					<meta property="fb:admins" content="{{ users }}">
-				{% endfor %}
-			{% else %}
-			<meta property="fb:admins" content="{{ config.NotePaper.comments.admin_id }}">
-			{% endif %}
+			{% for users in config.NotePaper.comments.admin_id %}
+				<meta property="fb:admins" content="{{ users }}">
+			{% endfor %}
 		{% elseif config.NotePaper.comments.admin_type == "app" %}
 			<meta property="fb:app_id" content="{{ config.NotePaper.comments.admin_id }}">
 		{% endif %}
