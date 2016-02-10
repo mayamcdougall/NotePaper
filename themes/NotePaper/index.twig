@@ -102,9 +102,8 @@ http://github.com/smcdougall/NotePaper
 			{% set np_pages = np_pages|merge([page]) %}
 		{% endfor %}
 
-		{# Experimental Folder Navigation #}
+		{# Experimental Folder Navigation - First Level Calculation #}
 		{% if config.NotePaper.toc.folder %}
-			{# First Level Calculation #}
 			{% set first_level = [] %}
 			{% for page in np_pages if not page.meta.blog %}
 				{% if '/' in page.id and (page.id|split('/')|first) not in first_level %}
