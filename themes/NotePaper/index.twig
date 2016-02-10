@@ -76,6 +76,13 @@ http://github.com/smcdougall/NotePaper
 
 </head>
 <body>
+
+	{# Show YAML Errors #}
+	{% for page in pages if page.meta.YAML_ParseError %}
+		<p class="yaml_error">Header Error in <a href="{{ page.url }}">{{ page.id }}</a>, {{ page.meta.YAML_ParseError }}</p>
+	{% endfor %}
+
+	{# Header #}
 	<header class="site_title">
 		<h1>
 			<a href="{{ base_url }}">
@@ -95,7 +102,18 @@ http://github.com/smcdougall/NotePaper
 			{% set np_pages = np_pages|merge([page]) %}
 		{% endfor %}
 
-		{# Widgets Sidebar #}
+		{# Experimental Folder Navigation #}
+		{% if config.NotePaper.toc.folder %}
+			{# First Level Calculation #}
+			{% set first_level = [] %}
+			{% for page in np_pages if not page.meta.blog %}
+				{% if '/' in page.id and (page.id|split('/')|first) not in first_level %}
+					{% set first_level = first_level|merge([page.id|split('/')|first]) %}
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+
+		{# Macros #}
 
 		{# Recursive Navigation #}
 		{% import _self as macros %}
@@ -157,16 +175,7 @@ http://github.com/smcdougall/NotePaper
 			{% endfor %}
 		{% endmacro %}
 
-		{# Experimental Folder Navigation #}
-		{% if config.NotePaper.toc.folder %}
-			{# First Level Calculation #}
-			{% set first_level = [] %}
-			{% for page in np_pages if not page.meta.blog %}
-				{% if '/' in page.id and (page.id|split('/')|first) not in first_level %}
-					{% set first_level = first_level|merge([page.id|split('/')|first]) %}
-				{% endif %}
-			{% endfor %}
-		{% endif %}
+		{# Widgets Sidebar #}
 
 		{# Navigation #}
 		<section class="widgets{% if config.NotePaper.mirrorwidgets %} mirrorwidgets{% endif %}">
@@ -555,9 +564,11 @@ http://github.com/smcdougall/NotePaper
 		<section class="fb-comments comments" data-colorscheme="{{ config.NotePaper.comments.colorscheme }}" data-href="{{ current_page.url }}" data-width="100%" data-numposts="{{ config.NotePaper.comments.limit }}" data-order-by="{{ config.NotePaper.comments.order }}"></section>
 	{% endif %}
 
+	{# Footer #}
 	<footer>
 		{% if config.NotePaper.copyright %}<h2 class="copyright">{{ config.NotePaper.copyright }}</h2>{% endif %}
 		{# Feel free to comment out this line #}<h3 class="credit"><a href="http://development.sjmcdougall.com/pico-themes/NotePaper/">NotePaper Theme</a> by <a href="malto:simon@sjmcdougall.com">Simon McDougall</a>.<br><a href="http://github.com/smcdougall/NotePaper">Contribute on GitHub</a>.</h3>
 	</footer>
+
 </body>
 </html>

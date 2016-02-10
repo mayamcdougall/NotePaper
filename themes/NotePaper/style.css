@@ -67,6 +67,22 @@ hr {
 	color: #ccc;
 }
 
+.yaml_error {
+	background: #D10505 linear-gradient(#D10505 20%, #A00B0B 80%);
+	margin: 0 -8px;
+	border-bottom: 1px solid black;
+	padding: 1em;
+}
+
+.yaml_error:first-of-type {
+	margin-top: -8px;
+}
+
+.yaml_error:last-of-type {
+	margin-bottom: 8px;
+	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.75);
+}
+
 /* Content Area */
 
 nav h2 {
