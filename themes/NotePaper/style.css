@@ -6,9 +6,7 @@ http://github.com/smcdougall/NotePaper
 
 /* Global */
 body {
-	background-color: #222222;
-	background: url(images/body-background.jpg);
-	background-attachment: fixed;
+	background: #222222 url(images/body-background.jpg) fixed;
 }
 
 a {
@@ -95,8 +93,7 @@ nav,.menu {
 	width: 250px;
 	margin-bottom: 15px;
 	clear: both;
-	background: linear-gradient(PaleGoldenrod 20%,Khaki 80%);
-	background-color: Khaki;
+	background: Khaki linear-gradient(PaleGoldenrod 20%,Khaki 80%);
 	border-radius: 2px;
 	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.75);
 	transform: rotate(-1deg);
@@ -114,7 +111,6 @@ nav.doodle {
 	width: 206px;
 	margin-left: -15px;
 	background: none;
-	background-color: transparent;
 	border-radius: initial;
 	box-shadow: none;
 }
@@ -152,8 +148,7 @@ main, .comments {
 	display: block; /* Main Support Fix */
 	max-width: 850px;
 	margin: 0 auto;
-	background-color: #f1f1f1;
-	background: url(images/main-background.jpg);
+	background: #f1f1f1 url(images/main-background.jpg);
 	border: 1px solid black;
 	border-radius: 5px;
 	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.75);
@@ -175,9 +170,6 @@ main, .comments {
 	display: block !important;
 }
 
-.overlay {
-	background: url(images/article-overlay.png);
-}
 article header {
 	margin: 25px auto 20px auto;
 	min-height: 50px;
