@@ -206,7 +206,7 @@ http://github.com/smcdougall/NotePaper
 			{# Tag Data #}
 			{% if config.NotePaper.tags.list or config.NotePaper.tags.cloud %}
 				{% set tag_cloud = {} %}
-				{% for page in np_pages if not page.meta.blog and page.meta.tags %}
+				{% for page in np_pages if page.meta.tags %}
 					{% for tag in page.meta.tags|split(',') %}
 						{% set tag_cloud = tag_cloud|merge({(tag): (tag_cloud[tag] + 1)}) %}
 					{% endfor %}
