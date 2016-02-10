@@ -144,6 +144,11 @@ nav.toc ul ul ul {
 	text-align: center;
 }
 
+.bottom_links hr {
+	width: 30%;
+	margin: 2em auto;
+}
+
 main, .comments {
 	display: block; /* Main Support Fix */
 	max-width: 850px;

@@ -479,23 +479,28 @@ http://github.com/smcdougall/NotePaper
 				{% if secondresult > numresults %}
 					{% set secondresult = numresults %}
 				{% endif %}
-				<section class="bottom_links">
-				{% if numresults %}
-					Showing
-					{% if firstresult != secondresult %}
-						{{ firstresult }} - {{ secondresult }}
-					{% else %}
-					{{ firstresult }}
-					{% endif %}
-					of {{ numresults }} results.
-				{% else %}
-					No Results =(
-				{% endif %}
-			</section>{# Make Proper Tag and Class.  Also some kind of hr or separator. #}
 			{% endif %}
 
 			{# Render Bottom Links #}
 			<section class="bottom_links">
+				<hr>
+
+				{# Number of Search Results #}
+				{% if numresults and is_front_page %}
+					<p>
+						Showing
+						{% if firstresult != secondresult %}
+							{{ firstresult }} - {{ secondresult }}
+						{% else %}
+						{{ firstresult }}
+						{% endif %}
+						of {{ numresults }} results.
+					</p><hr style="width: 30%; margin: 2em auto;">
+				{% elseif is_front_page and TwigGetUrl.search %}
+					<p>No Results =(</p><hr>
+				{% endif %}
+
+				{# Links #}
 				{% for key,link in url if link.text and key != "separator" %}
 					{% if loop.index == 1 %}
 						{% set precount = "" %}
