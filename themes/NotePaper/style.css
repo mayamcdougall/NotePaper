@@ -31,7 +31,7 @@ hr {
 /* Header & Footer */
 
 .site_title, footer {
-	width: 902px;
+	max-width: 902px;
 	margin: 0 auto;
 	color: white;
 }
@@ -150,7 +150,7 @@ nav.toc ul ul ul {
 
 main, .comments {
 	display: block; /* Main Support Fix */
-	width: 850px;
+	max-width: 850px;
 	margin: 0 auto;
 	background-color: #f1f1f1;
 	background: url(images/main-background.jpg);
@@ -165,7 +165,8 @@ main, .comments {
 }
 
 .comments {
-	width: 750px;
+	max-width: 750px;
+	width: 76%;
 	padding: 50px 26px 10px 26px;
 	margin-top: -20px;
 	min-height: 200px;
@@ -262,7 +263,7 @@ article header {
 article img {
 	border-radius: 5px;
 	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.75);
-	max-width: 635px;
+	max-width: 70%;
 }
 
 article pre {
