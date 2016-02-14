@@ -19,8 +19,8 @@ http://github.com/smcdougall/NotePaper
 	<link href='https://fonts.googleapis.com/css?family=Source+Code+Pro%7CForum%7CKalam:400,700' rel='stylesheet' type='text/css'>
 
 	{# Custom Fonts #}
-	{% if config.NotePaper.fonts %}
-		{% for url in config.NotePaper.fonts %}
+	{% if config.NotePaper.css.fonts %}
+		{% for url in config.NotePaper.css.fonts %}
 			<link href='{{ url }}' rel='stylesheet' type='text/css'>
 		{% endfor %}
 	{% endif %}
@@ -29,15 +29,15 @@ http://github.com/smcdougall/NotePaper
 	<link rel="stylesheet" href="{{ theme_url }}/style.css" type="text/css">
 
 	{# Custom NotePaper Themes #}
-	{% if config.NotePaper.css_theme and not meta.theme %}
-		<link rel="stylesheet" href="{{ base_url }}/assets/NotePaper_Themes/{{ config.NotePaper.css_theme }}/theme.css" type="text/css">
+	{% if config.NotePaper.css.theme and not meta.theme %}
+		<link rel="stylesheet" href="{{ base_url }}/assets/NotePaper_Themes/{{ config.NotePaper.css.theme }}/theme.css" type="text/css">
 	{% elseif meta.theme and meta.theme != "default" %}
 		<link rel="stylesheet" href="{{ base_url }}/assets/NotePaper_Themes/{{ meta.theme }}/theme.css" type="text/css">
 	{% endif %}
 
 	{# User Style Overrides #}
-	{% if config.NotePaper.css_override %}
-		<link rel="stylesheet" href="{{ base_url }}/{{ config.NotePaper.css_override }}" type="text/css">
+	{% if config.NotePaper.css.override %}
+		<link rel="stylesheet" href="{{ base_url }}/{{ config.NotePaper.css.override }}" type="text/css">
 	{% endif %}
 
 	{# Modernizr #}
@@ -153,7 +153,7 @@ http://github.com/smcdougall/NotePaper
 			{% for nToC in next_level %}
 							<li class="menu-header">
 								{{ nToC|split('/')|last|replace({"_": " "})|title }}
-								<ul class="menu{% if sticky_num is odd %} odd{% endif %}{% if config.NotePaper.mirrorwidgets %} mirrorwidgets{% endif %}">
+								<ul class="menu{% if sticky_num is odd %} odd{% endif %}{% if config.NotePaper.css.mirrorwidgets %} mirrorwidgets{% endif %}">
 									<li class="menu-title"><h2>{{ nToC|split('/')|last|replace({"_": " "})|title }}</h2></li>
 									{{ macros.rfol(nToC,np_pages,sticky_num,config) }}
 								</ul>
@@ -177,11 +177,11 @@ http://github.com/smcdougall/NotePaper
 		{# Widgets Sidebar #}
 
 		{# Navigation #}
-		<section class="widgets{% if config.NotePaper.mirrorwidgets %} mirrorwidgets{% endif %}">
-			{% if config.NotePaper.mirrorwidgets %}
+		<section class="widgets{% if config.NotePaper.css.mirrorwidgets %} mirrorwidgets{% endif %}">
+			{% if config.NotePaper.css.mirrorwidgets %}
 				{% set sticky_num = 1 %}
 			{% endif %}
-			{% if not config.NotePaper.toc.disabled %}
+			{% if not config.NotePaper.disable.toc %}
 				<nav class="toc{% if sticky_num is odd %} odd{% endif %}">
 					{% set sticky_num = sticky_num + 1 %}
 					{% if config.NotePaper.toc.text %}<h2>{{ config.NotePaper.toc.text }}</h2>{% endif %}
@@ -354,9 +354,9 @@ http://github.com/smcdougall/NotePaper
 				{% endif %}
 				<article>
 					{% if loop.index > offset + 1 %}<hr>{% endif %}
-					{% if not config.NotePaper.disable_header %}
+					{% if not config.NotePaper.disable.header %}
 						<header>
-							{% if _context[pagetype].date and not config.NotePaper.disable_date %}<h4 class="date{% if config.NotePaper.mirrorwidgets %} mirrordate{% endif %}">{{ _context[pagetype].date|date("F<\\b\\r>jS") }}</h4>{% endif %}
+							{% if _context[pagetype].date and not config.NotePaper.disable.date %}<h4 class="date{% if config.NotePaper.css.mirrorwidgets %} mirrordate{% endif %}">{{ _context[pagetype].date|date("F<\\b\\r>jS") }}</h4>{% endif %}
 							{% if _context[pagetype].title %}
 								<h2 class="title"><a href="{{ _context[pagetype].url }}">{{ _context[pagetype].title }}</a></h2>
 								{% if _context[pagetype].author %}<h3 class="author"> by: {{ _context[pagetype].author }}</h3>{% endif %}
