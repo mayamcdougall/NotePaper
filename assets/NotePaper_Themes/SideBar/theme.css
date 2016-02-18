@@ -1,0 +1,109 @@
+/*
+SideBar, Why use Stickies when you can have a SideBar?
+NotePaper v1.5
+http://development.sjmcdougall.com/pico-themes/NotePaper
+http://github.com/smcdougall/NotePaper
+*/
+
+body {
+	background: #595878 url(body-background.jpg) fixed;
+}
+
+.site_title {
+	width: auto;
+	max-width: 1252px;
+}
+
+.site_title h1 {
+	z-index: 2;
+	width: 240px;
+	position: absolute;
+	font-size: 2.5em;
+	text-align: center;
+}
+
+.widgets {
+	color: white;
+	background: #333;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	margin-top: -1px;
+	margin-left: -1px;
+	padding-right: 0;
+	padding-left: 0;
+	box-shadow: 5px 0px 5px rgba(0, 0, 0, 0.35);
+	border-radius: 5px 0 0 5px;
+/*border-radius: 5px 75px 75px 5px;*/
+	border: 1px solid black;
+/*padding-top: 25px;*/
+}
+
+.widgets a {
+	color: white;
+}
+
+.widgets a:hover{
+	color: #ccc;
+}
+
+.widgets nav:first-of-type {
+	margin-top: 180px;
+}
+
+nav,.menu {
+	background: transparent;
+	transform: none;
+	box-shadow: none;
+	font-family: 'Source Code Pro', sans-serif;
+	font-size: 1em;
+}
+
+nav.odd,.menu.odd {
+	transform: none;
+}
+
+nav.doodle {
+	transform: none;
+	width: 250px;
+	margin-left: 0px;
+	float: none;
+}
+
+main, .comments {
+	background: #f1f1f1;
+}
+
+main {
+	width: auto;
+	max-width: 1200px;
+}
+
+article, .bottom_links {
+	margin-left: 276px;
+}
+
+article img {
+	border-radius: none;
+	box-shadow: none;
+}
+
+.comments {
+	margin-top: 5px;
+	position: relative;
+	left: 136px;
+}
+
+.menu {
+	color: white;
+	margin-left: 15px;
+	background: #333;
+	border-radius: 5px;
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.35);
+	border: 1px solid black;
+}
+
+.menu-header:hover {
+	color: #ccc;
+}
