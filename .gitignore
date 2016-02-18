@@ -18,6 +18,7 @@ desktop.ini
 # Include NotePaper Files
 !/content/sample-widgets/*
 !/themes/NotePaper/*
+!/assets/NotePaper_Themes/
 !/README.md
 !/LICENSE.md
 !/.gitignore
