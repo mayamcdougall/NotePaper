@@ -165,6 +165,10 @@ nav.toc ul ul ul {
 	margin: 2em auto;
 }
 
+.clear_widgets {
+	clear: both;
+}
+
 main, .comments {
 	display: block; /* Main Support Fix */
 	max-width: 850px;
