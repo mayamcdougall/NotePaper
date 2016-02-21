@@ -153,7 +153,7 @@ http://github.com/smcdougall/NotePaper
 			{% for nToC in next_level %}
 							<li class="menu-header">
 								{{ nToC|split('/')|last|replace({"_": " "})|title }}
-								<ul class="menu{% if sticky_num is odd %} odd{% endif %}{% if config.NotePaper.css.mirrorwidgets %} mirrorwidgets{% endif %}">
+								<ul class="menu{% if sticky_num is odd %} odd{% endif %}">
 									<li class="menu-title"><h2>{{ nToC|split('/')|last|replace({"_": " "})|title }}</h2></li>
 									{{ macros.rfol(nToC,np_pages,sticky_num,config) }}
 								</ul>

@@ -312,7 +312,7 @@ article pre {
 	transform: rotate(-2deg);
 }
 
-.menu.mirrorwidgets {
+.mirrorwidgets .menu {
 	margin-left: 5px;
 }
 
