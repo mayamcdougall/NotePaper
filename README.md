@@ -19,7 +19,7 @@ If you're viewing this on GitHub, please check out the [NotePaper Site](http://d
 
 ### Widgets
 
-The biggest feature I've brought to this theme is Widget Support.  By defining a custom Meta Header in your markdown files, you can generate themed widgets that run down the right side of the page.  There are two types of widgets, named Stickies and Doodles, as well as a third, "disabled" option for those you'd like to hide temporarily.  Sticky Widgets are themed as sticky notes, while Doodle widgets are depicted as if they were drawn onto the page.  To make a widget, add "Widget: Sticky", "Widget: Doodle", or "Widget: Disabled" to the header of any markdown file in your content folder.
+The biggest feature I've brought to this theme is Widget Support.  By defining a custom meta variable in your markdown files, you can generate themed widgets that run down the right side of the page.  There are two types of widgets, named Stickies and Doodles, as well as a third, "disabled" option for those you'd like to hide temporarily.  Sticky Widgets are themed as sticky notes, while Doodle widgets are depicted as if they were drawn onto the page.  To make a widget, add "Widget: Sticky", "Widget: Doodle", or "Widget: Disabled" to the header of any markdown file in your content folder.
 
 Widgets are organized by Pico's built-in page ordering.  If, for example, you sort your content by ascending date, then I would recommend organizing your widgets using date values (Date: 1001, Date: 1002, Date: 1003) to organize your widgets.  If you're using alphabetical page ordering, you could order them by changing the meta names of the widgets to start with letters (A,B,C).  If your pages are in descending order, then just reverse the numbering or lettering you use (C,B,A / Z,Y,X / 1003, 1002, 1001 / etc).
 
@@ -29,18 +29,18 @@ Image locations (or any other paths) within widgets must be defined with an abso
 
 Like regular pages, widgets can be written in markdown, html, or a combination of the two.  Just make sure they end in ".md" (or the file extension you chose in your config) so Pico can find them.
 
-Be careful not to make widgets longer than your page content.  If you do, they'll break out of the frame and continue on their own.  I haven't yet been able to code them in a way that restricts them to the length of the main content (without making them look worse in the process).
+* **Note:** The SideBar theme's widgets can sometimes continue outside of the main content area on short pages.  This behavior has been fixed in the default NotePaper theme, but requires a small rewrite of SideBar.  It will be fixed in the next release.
 
 ### Front Page
 
-I've also included a rudimentary blog-style front page feature.  If enabled in your Pico config, the theme will ignore your main index.md.  Instead, it will import the first few content files it finds into one long page.  Depending on what you've set Pico's "pages_order" setting to be, the front page will be your most recent pages, your very first pages, your first pages alphabetically, or your last pages alphabetically.  By default, it will import five pages, though you can change this with a config setting.
+I've also included a rudimentary blog-style front page feature.  If enabled in your Pico config, the theme will ignore your main index.md.  Instead, it will import the first few content files it finds into one long page.  Depending on what you've set Pico's "pages_order" setting to be, the front page will be your most recent pages, your very first pages, your first pages alphabetically, or your last pages alphabetically.  By default, it will import five pages, though you can change this with a config option.
 
-There's also a "blog mode" Meta Header.  If this header is defined in your markdown (eg "Blog: Yes" or "Blog: anything"), your page will be hidden from the main navigation and only accessible through the front page or first/prev/next/last buttons.
+The Front Page Mode can also have pagination support, allowing you to navigate through multiple pages of results after the initial limit.  At present, this feature requires an [optional plugin](#plugin), though this will hopefully change in the future.
 
-At the moment this feature is a bit limited though.  There is currently no way to "load more" pages after the initially defined limit.  In the future, I'll expand more on this feature or replace it with Pico's Pagination Plugin.  Unfortunately, NotePaper's widget system makes it incompatible with this plugin in it's current state.
+There's also a "blog mode" meta variable.  If you add "Blog: True" to your meta header, your page will be hidden from the main navigation and only accessible through the front page or first/prev/next/last buttons.
 
 ### Sub-Navigation
-This feature takes a Markdown table of contents and generates a sub-navigation for the current page.  This table of contents is defined as a Meta Header named "toc" in your markdown file.  This is an experimental feature at the moment.  Use it with caution, as it **will break your site if you format the toc incorrectly**.  (A future version will hopefully address this issue and/or supply an error message instead of breaking entirely).  The formatting is simple: Using spaces, indent each item of the toc by the same amount.  Tabs will *not* work, and will cause your site to break.  The header of each item must match the name of its corresponding html anchor, but its value can be anything you want.  This value will become the text displayed for your link.  You may also have a second level of items, indented further, within another item.  Just label the first entry of the second level "&#95;title".  Here is an example of the proper formatting, as used in this readme.  Note that I added a second level under "installation" for the sake of the example.
+This feature takes a YAML table of contents and generates a sub-navigation for the current page.  This table of contents is defined as a meta variable named "toc" in your markdown file.  The formatting is simple: Using spaces, indent each item of the toc by the same amount.  Tabs will *not* work, and will cause your page to throw an exception.  The key of each item must match the name of its corresponding html anchor, but its value can be anything you want.  This value will become the text displayed for your link.  You may also have a second level of items, indented further, within another item.  Just label the first entry of the second level "&#95;title".  Here is an example of the proper formatting, as used in this readme.  Note that I added a second level under "installation" for the sake of the example.
 
 ```
 toc:
@@ -56,15 +56,51 @@ toc:
 ```
 
 ### Bottom Navigation Links
-There are optional navigation links you can enable for the bottom of your page.  These are enabled using a custom config option, and are incredibly customizable.  There are five links total, First, Prev, Back to Top, Next, and Last.  You can set the text or an image for each one, or disable them individually.  You can also define a text character or image to use as a separator between them.
+There are optional navigation links you can enable for the bottom of your page.  These are enabled using a custom config option, and are incredibly customizable.  There are five links total, First, Prev, Back to Top, Next, and Last.  You can set the text or an image for each one, or disable them individually.  You can also define a text character or image to use as a separator between them.  A set of default images for these buttons is included in NotePaper.
 
-### Disqus comments
+### Comments
 
-I've integrated Disqus comments into the theme.  They can be enabled them in your Pico config.  There's also an option of whether or not to display them on your front page.
+I've integrated Disqus and Facebook comments into the theme.  They can be enabled in your Pico config.  There's also an option of whether or not to display them on your front page, and various settings to customize their appearance.
 
-### Custom Styles
+### Custom Themes
 
-You can override the default CSS styles of the theme by specifying an overriding stylesheet in your Pico config.  Your stylesheet will be linked after the theme's original stylesheet, so you only need to style the elements you'd like to change.
+NotePaper has support for full custom CSS themes.  These themes reside in "assets/NotePaper_Themes/".  NotePaper themes can be defined globally using config options, but can also be assigned on a page-by-page basis using the "Theme" meta variable.  The theme defined in your metadata will always overrule the theme defined in your config.  You can also set a page to use NotePaper's default theme instead of the one defined in your config.  To do this, simply set your metadata theme value to "default" (e.g. "Theme: default").
+
+Two sample themes are included with NotePaper:
+	* WritingDesk is a simple palette swap of NotePaper, providing a lighter color scheme.
+	* SideBar is a more full-featured theme, which trades Sticky Notes and Doodles for a sidebar.
+
+These themes will be updated with NotePaper in the future, and more may be added as well.  Feel free to create your own themes as well.  You can even use the one of the sample themes as a base for your own!
+
+The structure of these themes is simple:  The theme "name" is just the name of the folder, and your CSS file should be named "theme.css" and placed inside it.  You should place any other assets in the folder as well and access them in your CSS as needed.
+
+### Override Styles
+
+You can override the default CSS styles of the theme by specifying an overriding stylesheet in your Pico config.  Your stylesheet will be linked after both NotePaper's default stylesheet and any Theme's stylesheet, so you only need to style the elements you'd like to change.
+
+Override Styles are best used if you have one or two elements that you want to change about NotePaper (or one of its themes).  If you'd like to do a major overhaul of its appearance, try creating a custom "NotePaper Theme" instead.  This will give you more flexibility when choosing the appearance of your site, and will save the Override stylesheet for when you might need to override a few elements of your own theme.
+
+### Search
+
+### Tag Widgets
+
+NotePaper includes two optional, tag-based widgets.  These widgets operate by reading a "Tags" meta variable from every page.  Tags should be a list of items, separated by commas.  Spaces in tag names are not yet supported, but will be added in the future.  A properly formatted tag list would look like this: "Tags: One,Two,Red,Blue".
+
+The Tag List widget will display all tags in a list.  The Tag Cloud widget will display a block of tags, with more common tags appearing larger than less common tags.
+
+Both widgets have the option to display the number of occurrences in parentheses next to the tag name.  They can be sorted either alphabetically or numerically (by number of occurrences).  If you don't specify a sorting method, they'll be displayed in rather chaotically, in the order Pico discovers them (dependent on your Pico config and the order you've written them in).  They can also be ordered in reverse order.  The heading text of either widget can be specified in the config as well.
+
+Clicking on a tag in either widget will do a search for all pages labeled with that tag.
+
+* **Note:** While the Tag Widgets do not themselves require it, the [optional plugin](#plugin) *is* required in order to make the tags searchable.  This will hopefully change in the future.
+
+### Folder Navigation (Experimental)
+
+Folder Navigation will break up your Table of Contents into separate widgets based on your folder structure.  Pages in the root of your content folder will appear as normal in the Table of Contents.  Pages inside folders will be organized into separate widgets based on this first level of folder.  Any deeper folders will be rendered as pop-up menus when you hover on their name.
+
+* This feature is labeled as **Experimental** due to one major bug: The menus it generates often get rendered underneath other widgets on default theme.  Themes that do not use Transformations on widgets (such as SideBar), do not suffer from this issue.  This is really the only issue I've found with it, and the only thing keeping me from labeling it "Stable".  If this issue doesn't effect your use-case, feel free to try it out.
+	* The issue is caused due to how browsers render Transformations (of the Sticky Notes), pulling them out of the regular z-index context.
+	* There is a partial workaround coded, but at the moment it's only working in Firefox.
 
 ## Download {#download}
 You can download the NotePaper theme [on GitHub](https://github.com/smcdougall/NotePaper/releases).
@@ -80,59 +116,21 @@ Finally, don't forget to update your config.php to use the NotePaper theme.  It 
 
 While you're at it, you'll likely want to add in the custom variables discussed below.  They aren't required for the theme, but I do recommend checking them out as they add quite a few levels of extra customization.
 
+### Plugin {#plugin}
+
+Several of the features of this theme require the use of a small plugin.  The purpose of this plugin is to pass the Query String variables along to Twig, something that Pico does not do by default.  This will hopefully change in the future.
+
+* **Disclaimer :** Despite writing this plugin, I am *not* a plugin developer.  This plugin is incredibly basic, and should work perfectly fine.  I am not a PHP developer however, so I am unable to provide support for this plugin in any way.  I'm providing it because, in my testing and development, it worked just fine.
+
+The plugin does two things, and *only* two things.  First, it passes on Query String data to Twig in a variable named "TwigGetUrl".  Next, it defines a new variable "TwigGetUrlEnabled" as True.  This second variable is used to determine whether the plugin is active or not.
+
+There is a small possibility that the use of this plugin could create a security risk.  In my tests, I have been unable to break anything with it.  I am not a security expert however and do not know all the ins and outs of Pico, PHP, and Twig.  As far as I can tell, there should be *no* added risk to running this plugin, but I unfortunately cannot guarantee this.
+
+In the future, I will be searching for a better way to accomplish these features, hopefully without needing a plugin.
+
 ### Custom Config Variables
 
 Here is a list of all the custom Pico config options you can utilize in this theme.  The config options are arranged in a series of nested arrays for readability and ease of use.  I'd recommended adding this entire block to the end of your Pico "config.php" file, then modifying it to fit your preferences.  You can comment out any options you don't wish to use by adding a `//` to the beginning of the line or by wrapping a section in `/* */`.  If you comment out one of the nested arrays, be sure to comment out that *entire array* and not just the header.  Also, please note that date_format is now ignored in this theme.  The date format is instead hard-coded to work around the lack of ordinal suffixes in strftime (used by Pico 0.9 and later).
-
-<pre style="overflow-x: scroll;"><code>
-$config['NotePaper'] = array(
-	#Basic Config
-	'site_logo'      => 'assets/site_logo.png',	// Site logo, reletive to base_url.
-	'og_image'       => 'assets/site_logo_og.png',	// Facebook "Open Graph" Image.  Specify an image to be used when sharing a link on Facebook.  Provides a nice workaround for light logos not displaying on Facebook.
-	'toc'            => 'Table of Contents',	// Text for the "Table of Contents" header.
-	'copyright'      => 'Copyright © 20XX - Your Name',	// Copyright or other text for page footer.
-	'css_override'    => 'assets/override.css',	// Override theme styles with custom stylesheet, relative to base_url.
-
-	#Front Page Mode
-	'front_page'     => array(
-		'enabled'    => '',	// If defined, your index.md will be ignored for a blog-style front page.
-		'limit'      => 5	// Limit the number of items in Front Page Mode. Defaults to 5 if undefined.
-		),
-	#Disqus
-	'disqus'         => array(
-		'enabled'    => 'yes',	// Enable Disqus. Use "front" if you want Disqus on your front page as well.  Blank is disabled.  Any other value will enabled.
-		'shortname'  => 'your-shortname-here'	// The unique identifier given to you by Disqus.
-		),
-	#Bottom Links
-	'bottom_links'   => array(
-		'enabled'    => 'yes',	// Adds links to page bottoms: First, Prev, Back to Top, Next, Last.  Use "Blog" to only display on pages with meta.blog set.  Blank is disabled. Any other value will enabled.
-		'first'      => array(
-			'text'   => '&amp;lt;&amp;lt; First',	//Text for "First" button at the bottom of the page.  Blank to disable any given button.
-			'image'  => 'default'	//Image for "First" button, relative to base_url.  If defined, the "text" variables will instead be used as Alt and Title attributes.  Use "default" for internal button images.
-		),
-		'prev'       => array(
-			'text'   => '&amp;lt; Prev',	//Text for "Prev" button.
-			'image'  => 'default',	//Image for "Prev" button.
-		),
-		'next'       => array(
-			'text'   => 'Next &amp;gt;',	//Text for "Next" button.
-			'image'  => 'default',	//Image for "Next" button.
-		),
-		'last'       => array(
-			'text'   => 'Last &amp;gt;&amp;gt;',	//Text for "Last" button.
-			'image'  => 'default', //Image for "Last" button.
-		),
-		'top'        => array(
-			'text'   => 'Back to Top',	//Text for the "Back to Top" button.
-			'image'  => 'default',	//Image for the "Back to Top" button.
-		),
-		'separator'  => array(
-			'text'   => '|',	//Character to use as a separator between buttons.
-			'image'  => 'default'	//Image to use as a separator between buttons.
-		)
-	)
-);
-</code></pre>
 
 #### site_logo
 If this variable is defined, your site's title will be replaced with this image file.  It must be defined as an absolute path from your base_url (eg "assets/site_logo.png").
@@ -147,9 +145,9 @@ Table of Contents.  This is the text that will display above your navigation (th
 This text string will be displayed in the footer of your website.
 
 #### css_override
-You can override the default styles of this theme by entering in the path to a custom CSS stylesheet.  This must be also defined as an absolute path from your base_url (eg "assets/override.css").
+You can override the default styles of this theme by entering in the path to a custom CSS stylesheet.  This must be defined as an absolute path from your base_url (eg "assets/override.css").  The CSS Override file is applied last, after both the default NotePaper styles and the CSS Theme.  This means that it can override any styles in either of those files.
 
-For example, you could try changing the page background using CSS.  By doing this in the override file, you don't have to overwrite the original background image.  I'd recommend trying any of the wood textures [here](http://webtreats.mysitemyway.com/8-tileable-dark-wood-texture-patterns/) or [here](http://webtreats.mysitemyway.com/tileable-light-wood-textures/) for and quick and seamless change.  One of them is already being used as the default background.  You may also want to resave them with a higher level of jpg compression, as they're quite large.
+For example, you could try changing the page background using CSS.  By doing this in the override file, you don't have to overwrite the original background image.  I'd recommend trying any of the wood textures [here](http://webtreats.mysitemyway.com/8-tileable-dark-wood-texture-patterns/) or [here](http://webtreats.mysitemyway.com/tileable-light-wood-textures/) for and quick and seamless change.  One of them is already being used as the default background.  You may also want to re-save them with a higher level of jpg compression, as they're quite large.
 
 #### front_page
 
@@ -161,15 +159,43 @@ For example, you could try changing the page background using CSS.  By doing thi
 
 	This is the number of articles that will be displayed on your front page, should you use the optional front page feature.
 
-#### disqus
+#### comments
 
-* **enabled**
+* **type**
 
-	If this variable is defined, Disqus support will be enabled.  If this variable is set to "front", Disqus will also be enabled on your front page.  This works regardless of whether you are using a normal front page or the front page mode feature.  Leaving this variable blank will disable Disqus integration.
+	Set this to either 'disqus' for disqus comments or 'facebook' for facebook comments.  Leave it blank to disable comments altogether.
 
-* **shortname**
+* **front**
+
+	If this variable is defined, comments will also be displayed on your front page.  This works regardless of whether you are using a normal front page or the front page mode feature.
+
+* **Discus Options**
+
+	* **shortname**
 
 	This is a unique identifier given to you by Disqus.  Enter it here to link your site to your Discus account.  You don't need to copy any other code that Disqus provides you with, it is already included in the theme.
+
+* **Facebook Options**
+
+	* **limit**
+
+	This is the number of comments to display by default, without having to click "Load More Comments"
+
+	* **admin_type**
+
+	Type of comments administration.  You can use either multiple Facebook User ID's or a single Facebook App ID to moderate your comments.  Set this to "user" if using User ID's or "app" if using an App ID.
+
+	* **admin_id**
+
+	Here you can specify the moderators for your comments.  This option uses an array, so make sure to place your input inside the parentheses.  If you're using User ID's, wrap each ID in quotes and separate them with commas.  If you're using an App ID, just place it in quotes inside the parentheses.
+
+	* **colorscheme**
+
+	The default color scheme for Facebook comments is "light".  Here, you can optionally set them to "dark" if it's a better match for your website
+
+	* **order**
+
+	This is the order to display comments in.  Your options are "social", "time", and "reverse_time".  Social displays comments by popularity, in a "top comment" fashion. "time" displays them in chronological order, with the oldest at the top.  "reverse_time" displays the newest comments first.  Will default to "social" if left undefined.
 
 #### bottom_links
 
@@ -187,7 +213,37 @@ For example, you could try changing the page background using CSS.  By doing thi
 
 		You can optionally provide an image for each button, relative to base_url.  If defined, the "text" variables will instead be used as Alt and Title attributes of your image.  If you use the value of "default", NotePaper will use it's own internal button images.
 
+#### disable
+
+* **header, date, toc, front_page_buttons**
+
+	You can disable each of these elements by defining their respective variable.  Disabling the Header will remove the Title, Author, and Date from showing at the top of the page.  Disabling the Date will hide just the Date Ribbon.  ToC hides the table of contents.  Front Page Buttons will hide the navigation buttons from the bottom of the front page, which normally show even if Bottom_Links are disabled.
+
 ## Changelog {#changelog}
+
+### 1.5.0 - Sometime Soon
+* Many Config Changes, see new Sample Config file.
+* Many new Config options, including:
+	* Ability to disable various page components.
+	* Ability to embed custom fonts.
+* Option to flip Widgets to left side of the page.
+* Support for full CSS themes, in addition to regular overrides.
+* Ability to select a different CSS theme for every file using a meta variable.
+* Two sample themes:
+	* WritingDesk, a recolor of NotePaper's default theme.
+	* SideBar, a redesigned layout with a sidebar instead of stickies and doodles.
+* Option to use Facebook comments instead of Disqus.
+* Better Open Graph support.
+* Many rewrites and under-the-hood changes.
+* More "Responsive Design" on small screens.
+* YAML Error Message Handling
+* Recursive ToC's for pages.  Sub-Navigation will go as many levels deep as you write.
+* Many other code refinements.
+* Experimental Folder Navigation.
+* New Features, Requiring Plugin (For now; Subject to Change in Pico 1.1):
+	* Tag List and Tag Cloud
+	* Front Page Mode Pagination
+	* Search function and widget.
 
 ### 1.4.0 - 12/03/15
 * Updated for Pico 1.0.  Older versions unsupported, stick to 1.3.2.
