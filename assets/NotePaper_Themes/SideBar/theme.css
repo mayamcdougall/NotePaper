@@ -6,7 +6,7 @@ http://github.com/smcdougall/NotePaper
 */
 
 body {
-	background: #595878 url(body-background.jpg) fixed;
+	background: #3C4E58 url(body-background.jpg) fixed;
 }
 
 .site_title {
@@ -35,9 +35,7 @@ body {
 	padding-left: 0;
 	box-shadow: 5px 0px 5px rgba(0, 0, 0, 0.35);
 	border-radius: 5px 0 0 5px;
-/*border-radius: 5px 75px 75px 5px;*/
 	border: 1px solid black;
-/*padding-top: 25px;*/
 }
 
 .widgets a {
@@ -106,4 +104,36 @@ article img {
 
 .menu-header:hover {
 	color: #ccc;
+}
+
+.date {
+	box-shadow: none;
+	border-radius: 	0;
+	z-index: -1;
+	text-shadow: 0px 1px 2px #5272B4;
+	background-color: #536489;
+}
+
+.date:before {
+	width: 0;
+	left: auto;
+	right: -40px;
+	border-color: #536489 transparent #536489 #536489;
+	top: 0;
+	border-radius: 0;
+	border-width: 26px 20px;
+}
+
+.date:after {
+	content: "";
+	bottom: 0px;
+	border: none;
+	width: 155px;
+	height: 1px;
+	top: auto;
+	border-radius: 0;
+	z-index: -2;
+	border: none;
+	box-shadow: -2px 1px 1px rgba(0, 0, 0, 0.75);
+
 }
