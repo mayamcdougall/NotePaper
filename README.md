@@ -225,6 +225,12 @@ For example, you could try changing the page background using CSS.  By doing thi
 
 	You can disable each of these elements by defining their respective variable.  Disabling the Header will remove the Title, Author, and Date from showing at the top of the page.  Disabling the Date will hide just the Date Ribbon.  ToC hides the table of contents.  Front Page Buttons will hide the navigation buttons from the bottom of the front page, which normally show even if Bottom_Links are disabled.
 
+### Updating
+
+If you're updating from a previous version of NotePaper, the best way to update is to replace your old NotePaper config array with the contents of the new Sample Config file and then migrate your old config values into the new fields.
+
+This is because NotePaper is constantly improving and the structure of the NotePaper config array is continuously changing to make room for new options and refine old ones.  Replacing the old array with the new one ensures that any changes made since the last version will not cause problems for your website.
+
 ## Changelog {#changelog}
 
 ### 1.5.0 - Sometime Soon
