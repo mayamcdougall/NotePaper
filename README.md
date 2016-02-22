@@ -62,6 +62,12 @@ There are optional navigation links you can enable for the bottom of your page. 
 
 I've integrated Disqus and Facebook comments into the theme.  They can be enabled in your Pico config.  There's also an option of whether or not to display them on your front page, and various settings to customize their appearance.
 
+Please note that both Disqus and Facebook pull in a a large number of extra scripts and resources.  These extra scripts are part of how these comment systems work, but can have an impact on the performance of your website.
+
+These comment systems also have privacy implications for your users as both (Facebook especially) are known to track users across the web (sometimes even if they are not logged in!).  These comment engines are provided as a convenience, however if you feel they might infringe on your users' privacy, simply disable them.
+
+All comments code is contained within an "if" statement in NotePaper's Twig template.  Twig is processed on the server through PHP, so if you have comments disabled, **no scripts or other resources will be pulled in or sent to your users!**  This also helps keep NotePaper modular and stops it from being slowed down by disabled features.
+
 ### Custom Themes
 
 NotePaper has support for full custom CSS themes.  These themes reside in "assets/NotePaper_Themes/".  NotePaper themes can be defined globally using config options, but can also be assigned on a page-by-page basis using the "Theme" meta variable.  The theme defined in your metadata will always overrule the theme defined in your config.  You can also set a page to use NotePaper's default theme instead of the one defined in your config.  To do this, simply set your metadata theme value to "default" (e.g. "Theme: default").
@@ -86,7 +92,7 @@ Override Styles are best used if you have one or two elements that you want to c
 
 NotePaper includes two optional, tag-based widgets.  These widgets operate by reading a "Tags" meta variable from every page.  Tags should be a list of items, separated by commas.  Spaces in tag names are not yet supported, but will be added in the future.  A properly formatted tag list would look like this: "Tags: One,Two,Red,Blue".
 
-The Tag List widget will display all tags in a list.  The Tag Cloud widget will display a block of tags, with more common tags appearing larger than less common tags.
+The Tag List widget will display all tags in a list.  The Tag Cloud widget will display a block of tags, with more common tags appearing larger than less common tags.  Text sizes start at 2em and are reduced from there.  You can specify how many size increments to use in your config file.
 
 Both widgets have the option to display the number of occurrences in parentheses next to the tag name.  They can be sorted either alphabetically or numerically (by number of occurrences).  If you don't specify a sorting method, they'll be displayed in rather chaotically, in the order Pico discovers them (dependent on your Pico config and the order you've written them in).  They can also be ordered in reverse order.  The heading text of either widget can be specified in the config as well.
 
