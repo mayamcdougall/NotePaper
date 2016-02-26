@@ -6,6 +6,7 @@ toc:
   features: Features
   download: Download
   installation: Installation
+  upgrade: Upgrading
   changelog: Changelog
   license: License
 ---
@@ -88,6 +89,12 @@ Override Styles are best used if you have one or two elements that you want to c
 
 ### Search
 
+NotePaper includes a very basic search function that can search page titles, descriptions, and content for a single search term.  At the moment, the search is treated as a solid string, so if you search for multiple words, it will only find them *exactly* as you typed them.
+
+There is a sample search widget included with NotePaper.  You may use it as is, modify it, or create your own version.
+
+The search feature requires the [optional plugin](#plugin) in order to function.
+
 ### Tag Widgets
 
 NotePaper includes two optional, tag-based widgets.  These widgets operate by reading a "Tags" meta variable from every page.  Tags should be a list of items, separated by commas.  Spaces in tag names are not yet supported, but will be added in the future.  A properly formatted tag list would look like this: "Tags: One,Two,Red,Blue".
@@ -114,10 +121,10 @@ You can download the NotePaper theme [on GitHub](https://github.com/smcdougall/N
 
 ## Installation {#installation}
 
-Selectively extract the contents of the download into your Pico folder.  Everything in the "themes" folder is required for the theme to function.  The "content" folder holds the sample widgets you see here.  You can install these as well and use them as a template for your own widgets, or you can leave them out and write yours from scratch.
+Selectively extract the contents of the download into your Pico folder.  Everything in the "themes" folder is required for the theme to function.  The "content" folder holds the sample widgets you see here.  You can install these as well and use them as a template for your own widgets, or you can leave them out and write yours from scratch.  The "assets/NotePaper_Themes" folder contains the additional sample themes.  The "config" folder contains a sample config snippet you can insert into your own Pico "config.php".
 
 Finally, don't forget to update your config.php to use the NotePaper theme.  It should read:
-
+<!-- Revise for includes -->
 `$config['theme'] = 'NotePaper';`
 
 While you're at it, you'll likely want to add in the custom variables discussed below.  They aren't required for the theme, but I do recommend checking them out as they add quite a few levels of extra customization.
@@ -144,16 +151,79 @@ If this variable is defined, your site's title will be replaced with this image 
 #### og_image
 "Open Graph" Image.  You can specify an image to be used when sharing a link on Facebook and other sites that support it.  Since this theme has a dark background by default, this provides a nice workaround for light logos not displaying against Facebook's white background.  You can use Facebook's [Debugging Tool](https://developers.facebook.com/tools/debug/) to help diagnose any issues using these features.
 
-#### toc
-Table of Contents.  This is the text that will display above your navigation (the sticky note in the top right).
-
 #### copyright
 This text string will be displayed in the footer of your website.
 
-#### css_override
-You can override the default styles of this theme by entering in the path to a custom CSS stylesheet.  This must be defined as an absolute path from your base_url (eg "assets/override.css").  The CSS Override file is applied last, after both the default NotePaper styles and the CSS Theme.  This means that it can override any styles in either of those files.
+#### description_length
 
-For example, you could try changing the page background using CSS.  By doing this in the override file, you don't have to overwrite the original background image.  I'd recommend trying any of the wood textures [here](http://webtreats.mysitemyway.com/8-tileable-dark-wood-texture-patterns/) or [here](http://webtreats.mysitemyway.com/tileable-light-wood-textures/) for and quick and seamless change.  One of them is already being used as the default background.  You may also want to re-save them with a higher level of jpg compression, as they're quite large.
+The Search and Tag views use meta.description for listing search results.  Here, you can define the Character length of automatic descriptions for files that are lacking a meta.description.  The automatic descriptions will be rounded down to the previous space so as to not truncate any words.  An ellipsis is also added to the end of the description.
+
+#### css
+
+* **theme**
+
+	Here you can specify a custom CSS Theme for NotePaper to use.  The theme name is simply the name of the folder.  Two extra themes are included by default, WritingDesk and SideBar.
+
+* **override**
+
+	You can override the default styles of this theme by entering in the path to a custom CSS stylesheet.  This must be defined as an absolute path from your base_url (eg "assets/override.css").  The CSS Override file is applied last, after both the default NotePaper styles and the CSS Theme.  This means that it can override any styles in either of those files.
+
+	For example, you could try changing the page background using CSS.  By doing this in the override file, you don't have to overwrite the original background image.  I'd recommend trying any of the wood textures [here](http://webtreats.mysitemyway.com/8-tileable-dark-wood-texture-patterns/) or [here](http://webtreats.mysitemyway.com/tileable-light-wood-textures/) for and quick and seamless change.  One of them is already being used as the default background.  You may also want to re-save them with a higher level of jpg compression, as they're quite large.
+
+* **fonts**
+
+	You can add custom fonts to NotePaper by adding them here.  Inside the array parentheses, enter the urls to your font's stylesheet, in quotes and separated by commas.
+
+	An easy way to include custom fonts is to use Google Fonts, but you can also link to your own stylesheets.
+
+	As an example, your config should look like this:
+	```
+	'fonts'  => array('https://fonts.googleapis.com/css?family=Roboto','https://fonts.googleapis.com/css?family=Ubuntu'),
+	```
+
+* **mirrorwidgets**
+
+	By default, NotePaper's widgets are placed on the right side of the page.  If defined, this option flips widgets to the left side of the page instead.
+
+#### toc
+
+* **text**
+
+Table of Contents.  This is the text that will display above your navigation (the sticky note in the top right).
+
+* **folder**
+
+Experimental Folder Navigation.  If defined, your Table of Contents will be broken up into categories based on your folder structure.
+
+#### tags
+
+* **sort**
+
+	* **method**
+
+	Sorts tags by name or occurrence. Use 'alphabetical' to sort by name, 'numerical' to sort by occurrence, or leave blank.  Blank doesn't sort, causing tags to be in the order they first appear as Pico reads your files (which is rather chaotic).
+
+	* **reverse**
+
+	This will reverse the sorting order.  Alphabetical will start at Z and Numerical will start with the most used tag.
+
+* **list,cloud**
+
+	* **enabled**
+
+		If defined, enables the individual widget.
+
+	* **title**
+
+		Text to use for the header of the individual widget.
+
+	* **total**
+
+		If defined, tags will display the total number of occurrences in parentheses.
+
+	* **levels**
+
+		Only for Tag Cloud.  Number of text sizes to use when sorting tags.  The more levels however, the less variation there will be between one size and the next.  Text size starts at 2em and goes down by increments based on the number of levels.
 
 #### front_page
 
@@ -225,9 +295,9 @@ For example, you could try changing the page background using CSS.  By doing thi
 
 	You can disable each of these elements by defining their respective variable.  Disabling the Header will remove the Title, Author, and Date from showing at the top of the page.  Disabling the Date will hide just the Date Ribbon.  ToC hides the table of contents.  Front Page Buttons will hide the navigation buttons from the bottom of the front page, which normally show even if Bottom_Links are disabled.
 
-### Updating
+## Upgrading {#upgrade}
 
-If you're updating from a previous version of NotePaper, the best way to update is to replace your old NotePaper config array with the contents of the new Sample Config file and then migrate your old config values into the new fields.
+If you're upgrading from a previous version of NotePaper, the best way to upgrade is to replace your old NotePaper config array with the contents of the new Sample Config file and then migrate your old config values into the new fields.
 
 This is because NotePaper is constantly improving and the structure of the NotePaper config array is continuously changing to make room for new options and refine old ones.  Replacing the old array with the new one ensures that any changes made since the last version will not cause problems for your website.
 
