@@ -240,7 +240,7 @@ http://github.com/smcdougall/NotePaper
 						{% for tag,total in tag_cloud|sort %}
 							{% set tag_cloud_numerical = tag_cloud_numerical|merge({(tag): total }) %}
 							{% if loop.last %}
-								{% if not config.NotePaper.tags.sort.reverse %}
+								{% if config.NotePaper.tags.sort.reverse %}
 									{% set tag_cloud = tag_cloud_numerical %}
 								{% else %}
 									{% set tag_cloud = tag_cloud_numerical|reverse %}

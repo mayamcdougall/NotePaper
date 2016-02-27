@@ -210,7 +210,7 @@ Experimental Folder Navigation.  If enabled, your Table of Contents will be brok
 
 	* **reverse**
 
-	This will reverse the sorting order.  Alphabetical will start at Z and Numerical will start with the most used tag.
+	This will reverse the sorting order.  Alphabetical will start at Z and Numerical will start with the least used tag.
 
 * **list,cloud**
 
