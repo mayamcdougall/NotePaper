@@ -72,7 +72,7 @@ All comments code is contained within an "if" statement in NotePaper's Twig temp
 
 ### Custom Themes
 
-NotePaper has support for full custom CSS themes.  These themes reside in "assets/NotePaper_Themes/".  NotePaper themes can be defined globally using config options, but can also be assigned on a page-by-page basis using the "Theme" meta variable.  The theme defined in your metadata will always overrule the theme defined in your config.  You can also set a page to use NotePaper's default theme instead of the one defined in your config.  To do this, simply set your metadata theme value to "default" (e.g. "Theme: default").
+NotePaper has support for full custom CSS themes.  These themes reside in "assets/NotePaper_Themes/".  NotePaper themes can be defined globally using config options, but can also be assigned on a page-by-page basis using the "Theme" meta variable.  The theme defined in your metadata will always overrule the theme defined in your config.  You can also set a page to use NotePaper's default theme instead of the one defined in your config.  To do this, simply set your metadata theme value to "Default" (e.g. "Theme: Default").
 
 Two sample themes are included with NotePaper:
 	* WritingDesk is a simple palette swap of NotePaper, providing a lighter color scheme.
