@@ -562,7 +562,7 @@ http://github.com/smcdougall/NotePaper
 				fjs.parentNode.insertBefore(js, fjs);
 			}(document, 'script', 'facebook-jssdk'));
 		</script>
-		<section class="fb-comments comments" data-colorscheme="{{ config.NotePaper.comments.colorscheme }}" data-href="{{ current_page.url }}" data-width="100%" data-numposts="{{ config.NotePaper.comments.limit }}" data-order-by="{{ config.NotePaper.comments.order }}"></section>
+		<section class="fb-comments comments" data-colorscheme="{% if config.NotePaper.comments.dark %}dark{% endif %}" data-href="{{ current_page.url }}" data-width="100%" data-numposts="{{ config.NotePaper.comments.limit }}" data-order-by="{{ config.NotePaper.comments.order }}"></section>
 	{% endif %}
 
 	{# Footer #}
