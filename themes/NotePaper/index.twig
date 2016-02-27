@@ -254,7 +254,7 @@ http://github.com/smcdougall/NotePaper
 
 			{# Tag List #}
 			{% if config.NotePaper.tags.list.enabled %}
-				<nav class="{% if sticky_num is odd %}odd{% endif %}">
+				<nav class="tag_list{% if sticky_num is odd %} odd{% endif %}">
 					{% set sticky_num = sticky_num + 1 %}
 					{% if config.NotePaper.tags.list.title %}<h2>{{ config.NotePaper.tags.list.title }}</h2>{% endif %}
 					<ul>
@@ -279,14 +279,14 @@ http://github.com/smcdougall/NotePaper
 					{% set levels = config.NotePaper.tags.cloud.levels %}
 				{% endif %}
 				{% set level_range = (max(tag_cloud) / levels)|round(0,'ceil') %}
-				<nav class="{% if sticky_num is odd %}odd{% endif %}">
+				<nav class="tag_cloud{% if sticky_num is odd %} odd{% endif %}">
 					{% set sticky_num = sticky_num + 1 %}
 					{% if config.NotePaper.tags.cloud.title %}<h2>{{ config.NotePaper.tags.cloud.title }}</h2>{% endif %}
 					<ul>
 						{% for tag,total in tag_cloud %}
 							{% for i in range(levels, 0) %}
 								{% if total in range(max(tag_cloud) - (level_range * (loop.index0)), max(tag_cloud) - (level_range * (loop.index)) + 1) %}
-									<li class="tag_cloud" style="font-size:{{ 2 - (loop.index0 * (1.5 / levels)) }}em;">
+									<li style="font-size:{{ 2 - (loop.index0 * (1.5 / levels)) }}em;">
 										<a href="{% if TwigGetUrlEnabled %}{{ base_url ~ '?tag=' ~ tag }}{% endif %}">{{ tag }}
 											{% if config.NotePaper.tags.cloud.total %}
 												({{ total }})

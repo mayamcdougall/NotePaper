@@ -339,7 +339,11 @@ article pre {
 	margin-top: 0;
 }
 
-.tag_cloud {
+.tag_list li{
+	list-style-type: none;
+}
+
+.tag_cloud li{
 	list-style-type: none;
 	display: inline-block;
 }
