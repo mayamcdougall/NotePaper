@@ -7,6 +7,7 @@ toc:
   download: Download
   installation: Installation
   upgrade: Upgrading
+  configuration: Configuration
   changelog: Changelog
   license: License
 ---
@@ -121,13 +122,17 @@ You can download the NotePaper theme [on GitHub](https://github.com/smcdougall/N
 
 ## Installation {#installation}
 
-Selectively extract the contents of the download into your Pico folder.  Everything in the "themes" folder is required for the theme to function.  The "content" folder holds the sample widgets you see here.  You can install these as well and use them as a template for your own widgets, or you can leave them out and write yours from scratch.  The "assets/NotePaper_Themes" folder contains the additional sample themes.  The "config" folder contains a sample config snippet you can insert into your own Pico "config.php".
+Selectively extract the contents of the download into your Pico folder.
+* Everything in the "themes" folder is required for the theme to function.
+* The "content" folder holds the sample widgets you see here.  You can install these as well and use them as a template for your own widgets, or you can leave them out and write yours from scratch.
+* The "assets/NotePaper_Themes" folder contains the additional sample themes.
+* The "config" folder contains a sample NotePaper config.  The easiest way to configure NotePaper is to place the sample config, `NotePaper-Config.php.sample` in your config folder, and rename it `NotePaper-Config.php`.  Then add "`include 'NotePaper-Config.php';`" to the bottom of your Pico config.  Alternatively, you can copy the NotePaper array from the sample file and paste it into your pico config (just be sure not to copy the first "`<?php`" line).
 
-Finally, don't forget to update your config.php to use the NotePaper theme.  It should read:
-<!-- Revise for includes -->
+Finally, don't forget to update your config.php to use the NotePaper Theme.  It should read:
+
 `$config['theme'] = 'NotePaper';`
 
-While you're at it, you'll likely want to add in the custom variables discussed below.  They aren't required for the theme, but I do recommend checking them out as they add quite a few levels of extra customization.
+While you're at it, you'll likely want to customize the config options [discussed below](#configuration).  They add quite a few levels of extra customization.
 
 ### Plugin {#plugin}
 
@@ -141,9 +146,9 @@ There is a small possibility that the use of this plugin could create a security
 
 In the future, I will be searching for a better way to accomplish these features, hopefully without needing a plugin.
 
-### Custom Config Variables
+## Configuration {#configuration}
 
-Here is a list of all the custom Pico config options you can utilize in this theme.  The config options are arranged in a series of nested arrays for readability and ease of use.  I'd recommended adding this entire block to the end of your Pico "config.php" file, then modifying it to fit your preferences.  You can comment out any options you don't wish to use by adding a `//` to the beginning of the line or by wrapping a section in `/* */`.  If you comment out one of the nested arrays, be sure to comment out that *entire array* and not just the header.  Also, please note that date_format is now ignored in this theme.  The date format is instead hard-coded to work around the lack of ordinal suffixes in strftime (used by Pico 0.9 and later).
+Here is a list of all the custom configuration options you can utilize in this theme.  The config options are arranged in a series of nested arrays for readability and ease of use.  You can comment out any options you don't wish to use by adding a `//` to the beginning of the line or by wrapping a section in `/* */`.  If you comment out one of the nested arrays, be sure to comment out that *entire array* and not just the header.  Also, please note that date_format is now ignored in this theme.  The date format is instead hard-coded to work around the lack of ordinal suffixes in strftime (used by Pico 0.9 and later).
 
 #### site_logo
 If this variable is defined, your site's title will be replaced with this image file.  It must be defined as an absolute path from your base_url (eg "assets/site_logo.png").
@@ -183,7 +188,7 @@ The Search and Tag views use meta.description for listing search results.  Here,
 
 * **mirrorwidgets**
 
-	By default, NotePaper's widgets are placed on the right side of the page.  If defined, this option flips widgets to the left side of the page instead.
+	By default, NotePaper's widgets are placed on the right side of the page.  This option flips widgets to the left side of the page instead.
 
 #### toc
 
@@ -193,7 +198,7 @@ Table of Contents.  This is the text that will display above your navigation (th
 
 * **folder**
 
-Experimental Folder Navigation.  If defined, your Table of Contents will be broken up into categories based on your folder structure.
+Experimental Folder Navigation.  If enabled, your Table of Contents will be broken up into categories based on your folder structure.
 
 #### tags
 
@@ -211,7 +216,7 @@ Experimental Folder Navigation.  If defined, your Table of Contents will be brok
 
 	* **enabled**
 
-		If defined, enables the individual widget.
+		Enables the individual widget.
 
 	* **title**
 
@@ -219,7 +224,7 @@ Experimental Folder Navigation.  If defined, your Table of Contents will be brok
 
 	* **total**
 
-		If defined, tags will display the total number of occurrences in parentheses.
+		If enabled, tags will display the total number of occurrences in parentheses.
 
 	* **levels**
 
@@ -229,11 +234,11 @@ Experimental Folder Navigation.  If defined, your Table of Contents will be brok
 
 * **enabled**
 
-	If this variable is defined, your site's main index.md will be ignored in favor of a blog-style front page.
+	If enabled, your site's main index.md will be ignored in favor of a blog-style front page.
 
 * **limit**
 
-	This is the number of articles that will be displayed on your front page, should you use the optional front page feature.
+	This is the number of articles that will be displayed on your front page, should you use the front page feature.
 
 #### comments
 
@@ -243,7 +248,7 @@ Experimental Folder Navigation.  If defined, your Table of Contents will be brok
 
 * **front**
 
-	If this variable is defined, comments will also be displayed on your front page.  This works regardless of whether you are using a normal front page or the front page mode feature.
+	If enabled, comments will also be displayed on your front page.  This works regardless of whether you are using a normal front page or the front page mode feature.
 
 * **Discus Options**
 
@@ -277,7 +282,7 @@ Experimental Folder Navigation.  If defined, your Table of Contents will be brok
 
 * **enabled**
 
-	Enables additional navigation links (First, Prev, Back to Top, Next, Last) at the bottom of pages.  At the moment, due to the lack of proper pagination, these are not enabled on the Front Page when using Front Page Mode. Use "Blog" to only display on pages with meta.blog set.  Blank is disabled. Any other value will enabled.
+	Enables additional navigation links (First, Prev, Back to Top, Next, Last) at the bottom of pages.  Use 'Blog' to only display on pages with meta.blog set.   Bottom Links are always enabled on Front Page Mode unless explicitly disabled below, and always enabled for Search results and Tag search results.
 
 * **first, prev, next, last, top, separator**
 
@@ -293,13 +298,13 @@ Experimental Folder Navigation.  If defined, your Table of Contents will be brok
 
 * **header, date, toc, front_page_buttons**
 
-	You can disable each of these elements by defining their respective variable.  Disabling the Header will remove the Title, Author, and Date from showing at the top of the page.  Disabling the Date will hide just the Date Ribbon.  ToC hides the table of contents.  Front Page Buttons will hide the navigation buttons from the bottom of the front page, which normally show even if Bottom_Links are disabled.
+	Here, you can disable each of these individual page elements.  Disabling the Header will remove the Title, Author, and Date from showing at the top of the page.  Disabling the Date will hide just the Date Ribbon.  ToC hides the table of contents.  Front Page Buttons will hide the navigation buttons from the bottom of the front page, which normally show even if Bottom_Links are disabled.
 
 ## Upgrading {#upgrade}
 
-If you're upgrading from a previous version of NotePaper, the best way to upgrade is to replace your old NotePaper config array with the contents of the new Sample Config file and then migrate your old config values into the new fields.
+If you're upgrading from a previous version of NotePaper, the best way to upgrade is to replace your old `NotePaper-Config.php` file (or array) with the new version and then migrate your old config values into the new fields.
 
-This is because NotePaper is constantly improving and the structure of the NotePaper config array is continuously changing to make room for new options and refine old ones.  Replacing the old array with the new one ensures that any changes made since the last version will not cause problems for your website.
+This is because NotePaper is constantly improving and the structure of NotePaper's config array is continuously changing to make room for new options and refine old ones.  Replacing the old file (or array) with the new one ensures that any changes made since the last version will not cause problems for your website.
 
 ## Changelog {#changelog}
 
