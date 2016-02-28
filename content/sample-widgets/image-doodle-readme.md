@@ -12,4 +12,4 @@ Originally, this example was an actual image, however it was easier to just repl
 ![doodle](%base_url%/assets/sample-widgets/doodle.png)
 -->
 
-<p style="transform: rotateZ(90deg); font-size: 10em; width: 175px; margin-top: 85px; margin-bottom: 125px;">XP</p>
+<p style="transform: rotateZ(90deg); font-size: 10em; width: 175px; margin-top: 85px; margin-bottom: 125px; font-family: Kalam, cursive;">XP</p>
