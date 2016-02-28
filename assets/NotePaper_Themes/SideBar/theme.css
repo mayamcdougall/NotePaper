@@ -121,7 +121,8 @@ article img {
 	border-color: #536489 transparent #536489 #536489;
 	top: 0;
 	border-radius: 0;
-	border-width: 26px 20px;
+	/* border-width: 26px 20px; */
+	border-width: 26.6px 21px; /* Partial Fix for Browser Zoom */
 }
 
 .date:after {
