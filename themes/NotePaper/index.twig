@@ -272,13 +272,20 @@ http://github.com/smcdougall/NotePaper
 			{% endif %}
 
 			{# Tag Cloud #}
-			{% if config.NotePaper.tags.cloud.enabled %}{# Protects against too few tag instances #}
-				{% if max(tag_cloud) < config.NotePaper.tags.cloud.levels %}
-					{% set levels = max(tag_cloud) %}
+			{% if config.NotePaper.tags.cloud.enabled %}
+
+			{# Levels Validation #}
+				{% if config.NotePaper.tags.cloud.levels < 1 %}
+					{% set levels = 5 %}
 				{% else %}
 					{% set levels = config.NotePaper.tags.cloud.levels %}
 				{% endif %}
+				{% if max(tag_cloud) < levels %}
+					{% set levels = max(tag_cloud) %}
+				{% endif %}
 				{% set level_range = (max(tag_cloud) / levels)|round(0,'ceil') %}
+
+				{# Render Tag Cloud #}
 				<nav class="tag_cloud{% if sticky_num is odd %} odd{% endif %}">
 					{% set sticky_num = sticky_num + 1 %}
 					{% if config.NotePaper.tags.cloud.title %}<h2>{{ config.NotePaper.tags.cloud.title }}</h2>{% endif %}
