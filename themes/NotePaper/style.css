@@ -216,7 +216,7 @@ article header {
 .date {
 	position: absolute;
 	width: 100px;
-	min-height: 46px;
+	height: 46px;
 	background-color: #A00B0B;
 	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.75);
 	text-align: right;
