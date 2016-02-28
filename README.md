@@ -98,7 +98,7 @@ The search feature requires the [optional plugin](#plugin) in order to function.
 
 ### Tag Widgets
 
-NotePaper includes two optional, tag-based widgets.  These widgets operate by reading a "Tags" meta variable from every page.  Tags should be a list of items, separated by commas.  Spaces in tag names are not yet supported, but will be added in the future.  A properly formatted tag list would look like this: "Tags: One,Two,Red,Blue".
+NotePaper includes two optional, tag-based widgets.  These widgets operate by reading a "Tags" meta variable from every page.  Tags should be a list of items, separated by commas.  Spaces in tag names are not yet supported, but will be added in the future.  A properly formatted tag list would look like this: "Tags: One,Two,Red,Blue".  Note that even if the tag widgets are enabled, they will not display if no tags are found in your content.
 
 The Tag List widget will display all tags in a list.  The Tag Cloud widget will display a block of tags, with more common tags appearing larger than less common tags.  Text sizes start at 2em and are reduced from there.  You can specify how many size increments to use in your config file.
 

@@ -253,7 +253,7 @@ http://github.com/smcdougall/NotePaper
 			{% endif %}
 
 			{# Tag List #}
-			{% if config.NotePaper.tags.list.enabled %}
+			{% if config.NotePaper.tags.list.enabled and tag_cloud %}
 				<nav class="tag_list{% if sticky_num is odd %} odd{% endif %}">
 					{% set sticky_num = sticky_num + 1 %}
 					{% if config.NotePaper.tags.list.title %}<h2>{{ config.NotePaper.tags.list.title }}</h2>{% endif %}
@@ -272,7 +272,7 @@ http://github.com/smcdougall/NotePaper
 			{% endif %}
 
 			{# Tag Cloud #}
-			{% if config.NotePaper.tags.cloud.enabled %}
+			{% if config.NotePaper.tags.cloud.enabled and tag_cloud %}
 
 			{# Levels Validation #}
 				{% if config.NotePaper.tags.cloud.levels < 1 %}
