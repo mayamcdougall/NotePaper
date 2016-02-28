@@ -17,9 +17,17 @@ body {
 .site_title h1 {
 	z-index: 2;
 	width: 240px;
+	height: 108px;
 	position: absolute;
 	font-size: 2.5em;
 	text-align: center;
+	overflow: hidden;
+}
+
+.site_title img {
+	max-width: 240px;
+	max-height: 144px;
+	vertical-align: bottom;
 }
 
 .widgets {
