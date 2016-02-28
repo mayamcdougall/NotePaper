@@ -112,6 +112,8 @@ Clicking on a tag in either widget will do a search for all pages labeled with t
 
 Folder Navigation will break up your Table of Contents into separate widgets based on your folder structure.  Pages in the root of your content folder will appear as normal in the Table of Contents.  Pages inside folders will be organized into separate widgets based on this first level of folder.  Any deeper folders will be rendered as pop-up menus when you hover on their name.
 
+Folder names will be automatically converted into Title Case (allowing you to use lowercase folder names) and any underscores "&#95;" will be converted to spaces.  This name converting scheme is hard-coded at the moment, but I will likely add customization in the future.
+
 * This feature is labeled as **Experimental** due to one major bug: The menus it generates often get rendered underneath other widgets on default theme.  Themes that do not use Transformations on widgets (such as SideBar), do not suffer from this issue.  This is really the only issue I've found with it, and the only thing keeping me from labeling it "Stable".  If this issue doesn't effect your use-case, feel free to try it out.
 	* The issue is caused due to how browsers render Transformations (of the Sticky Notes), pulling them out of the regular z-index context.
 	* There is a partial workaround coded, but at the moment it's only working in Firefox.
