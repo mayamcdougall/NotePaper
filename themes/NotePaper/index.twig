@@ -1,27 +1,90 @@
 {#
-NotePaper v1.4.0
+NotePaper v1.5
 http://development.sjmcdougall.com/pico-themes/NotePaper
 http://github.com/smcdougall/NotePaper
 #}
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
+
+	{# Metadata #}
 	<meta charset="utf-8">
 	<title>{% if meta.title and not (is_front_page and config.NotePaper.front_page.enabled) %}{{ meta.title }} | {% endif %}{{ site_title }}</title>
-		{% if meta.description %}<meta name="description" content="{{ meta.description }}">{% endif %}
-		{% if meta.robots %}<meta name="robots" content="{{ meta.robots }}">{% endif %}
-		{% if config.NotePaper.og_image %}<meta property="og:image" content="{{ base_url }}/{{ config.NotePaper.og_image }}">{% endif %}
-		{# Replace with included version of font? #}
-		<link href='http://fonts.googleapis.com/css?family=Source+Code+Pro%7CForum%7CKalam:400,700' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" href="{{ theme_url }}/style.css" type="text/css">
-		{% if config.NotePaper.css_override %}
-		<link rel="stylesheet" href="{{ base_url }}/{{ config.NotePaper.css_override }}" type="text/css">
-		{% endif %}
+	{% if meta.description %}<meta name="description" content="{{ meta.description }}">{% endif %}
+	{% if meta.robots %}<meta name="robots" content="{{ meta.robots }}">{% endif %}
+
+	{# Styles #}
+
+	{# Google Fonts #}
+	<link href='https://fonts.googleapis.com/css?family=Source+Code+Pro%7CForum%7CKalam:400,700' rel='stylesheet' type='text/css'>
+
+	{# Custom Fonts #}
+	{% if config.NotePaper.css.fonts %}
+		{% for url in config.NotePaper.css.fonts %}
+			<link href='{{ url }}' rel='stylesheet' type='text/css'>
+		{% endfor %}
+	{% endif %}
+
+	{# Main Stylesheet #}
+	<link rel="stylesheet" href="{{ theme_url }}/style.css" type="text/css">
+
+	{# Custom NotePaper Themes #}
+	{% if config.NotePaper.css.theme and not meta.theme %}
+		<link rel="stylesheet" href="{{ base_url }}/assets/NotePaper_Themes/{{ config.NotePaper.css.theme }}/theme.css" type="text/css">
+	{% elseif meta.theme and meta.theme != "Default" %}
+		<link rel="stylesheet" href="{{ base_url }}/assets/NotePaper_Themes/{{ meta.theme }}/theme.css" type="text/css">
+	{% endif %}
+
+	{# User Style Overrides #}
+	{% if config.NotePaper.css.override %}
+		<link rel="stylesheet" href="{{ base_url }}/{{ config.NotePaper.css.override }}" type="text/css">
+	{% endif %}
+
+	{# Modernizr #}
 	<script src="{{ theme_url }}/scripts/modernizr.js"></script>
+
+	{# Description Length #}
+	{% if config.NotePaper.description_length %}
+		{% set description_length = config.NotePaper.description_length %}
+	{% else %}
+		{% set description_length = 255 %}
+	{% endif %}
+
+	{# Open Graph #}
+	<meta property="og:url" content="{{ current_page.url }}">
+	<meta property="og:site_name" content="{{ site_title }}">
+	<meta property="og:type" content="website">
+	{% if meta.title and not (is_front_page and config.NotePaper.front_page.enabled) %}<meta property="og:title" content="{{ meta.title }}">{% endif %}
+	{% if meta.description %}
+		<meta property="og:description" content="{{ meta.description }}">
+	{% elseif not (is_front_page and config.NotePaper.front_page.enabled) %}
+		<meta property="og:description" content="{{ content|striptags|slice(0,255)|split(' ',-1)|join(' ') ~ "..." }}">
+	{% endif %}
+	{% if config.NotePaper.og_image %}<meta property="og:image" content="{{ base_url }}/{{ config.NotePaper.og_image }}">{% endif %}
+
+	{# Facebook Coments Administration #}
+	{% if config.NotePaper.comments.type == "facebook" %}
+		{% if config.NotePaper.comments.admin_type == "user" %}
+			{% for users in config.NotePaper.comments.admin_id %}
+				<meta property="fb:admins" content="{{ users }}">
+			{% endfor %}
+		{% elseif config.NotePaper.comments.admin_type == "app" %}
+			<meta property="fb:app_id" content="{{ config.NotePaper.comments.admin_id }}">
+		{% endif %}
+		<noscript><style>.fb-comments:before {content: 'Please enable JavaScript to view the Facebook Comments.';} .fb-comments {text-align: center;}</style></noscript>
+	{% endif %}
+
 </head>
 <body>
-	<header>
-		<h1 class="site_title">
+
+	{# Show YAML Errors #}
+	{% for page in pages if page.meta.YAML_ParseError %}
+		<p class="yaml_error">Header Error in <a href="{{ page.url }}">{{ page.id }}</a>, {{ page.meta.YAML_ParseError }}</p>
+	{% endfor %}
+
+	{# Header #}
+	<header class="site_title">
+		<h1>
 			<a href="{{ base_url }}">
 				{% if config.NotePaper.site_logo %}
 					<img src="{{ base_url }}/{{ config.NotePaper.site_logo }}" alt="{{ site_title }}">
@@ -33,155 +96,458 @@ http://github.com/smcdougall/NotePaper
 	</header>
 	<main>
 
-		{# Widgets Sidebar #}
-		<section class="widgets">
-			<nav>
-				{% if config.NotePaper.toc %}<h2>{{ config.NotePaper.toc }}</h2>{% endif %}
-				<ul>
-					{% for page in pages if not page.meta.widget and not page.meta.blog and not (config.NotePaper.front_page.enabled and page.id == "index") %}
-						<li>
-							<a {% if page.id == current_page.id %}class="current_page"{% endif %} href="{{ page.url }}">{{ page.title }}</a>
-							{# meta.toc processing code #}
-							{% if page.id == current_page.id and page.meta.toc %}
-								<ul>
-									{% for anchor, name in page.meta.toc %}
-										<li>
-											{% if name._title %}
-												<a href="#{{ anchor }}">{{ name._title }}</a>
-												<ul>
-													{% for sub_anchor, sub_name in name if sub_anchor != "_title" %}
-														<li><a href="#{{ sub_anchor }}">{{ sub_name }}</a></li>
-													{% endfor %}
-												</ul>
-											{% else %}
-												<a href="#{{ anchor }}">{{ name }}</a>
-											{% endif %}
-										</li>
-									{% endfor %}
-								</ul>
-							{% endif %}
-						</li>
-					{% endfor %}
-				</ul>
-			</nav>
+		{# NotePaper Pages #}
+		{% set np_pages = [] %}
+		{% for page in pages if not page.meta.widget and not (config.NotePaper.front_page.enabled and page.id == "index") %}
+			{% set np_pages = np_pages|merge([page]) %}
+		{% endfor %}
 
+		{# Experimental Folder Navigation - First Level Calculation #}
+		{% if config.NotePaper.toc.folder %}
+			{% set first_level = [] %}
+			{% for page in np_pages if not page.meta.blog %}
+				{% if '/' in page.id and (page.id|split('/')|first) not in first_level %}
+					{% set first_level = first_level|merge([page.id|split('/')|first]) %}
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+
+		{# Macros #}
+
+		{# Recursive Navigation #}
+		{% import _self as macros %}
+		{% macro rnav(toc,is_child) %}
+			{% import _self as macros %}
+			<ul>
+				{% for sectionKey, section in toc %}
+					{% if section is iterable %}
+						<li>
+							<a href="#{{ sectionKey }}">{{ section|first }}</a>
+							{{ macros.rnav(section,true) }}
+						</li>
+					{% elseif not (is_child and loop.first) %}
+						<li>
+							<a href="#{{ sectionKey }}">{{ section }}</a>
+						</li>
+					{% endif %}
+				{% endfor %}
+			</ul>
+		{% endmacro %}
+
+		{# Experimental Recursive Folder Navigation #}
+		{% macro rfol(ToC,np_pages,sticky_num,config) %}
+			{% import _self as macros %}
+			{% set sticky_num = sticky_num + 1 %}
+			{% set next_level = [] %}
+			{% set current_level = [] %}
+			{% for page in np_pages if not page.meta.blog and page.id starts with ToC %}
+				{% set current_level = current_level|merge([page.id|slice(ToC|length + 1)]) %}
+			{% endfor %}
+
+			{% for page in current_level %}
+				{% if '/' in page and (ToC ~ '/' ~ page|split('/')|first) not in next_level %}
+					{% set next_level = next_level|merge([ToC ~ '/' ~ page|split('/')|first]) %}
+				{% endif %}
+			{% endfor %}
+
+			{% for nToC in next_level %}
+							<li class="menu-header">
+								{{ nToC|split('/')|last|replace({"_": " "})|title }}
+								<ul class="menu{% if sticky_num is odd %} odd{% endif %}">
+									<li class="menu-title"><h2>{{ nToC|split('/')|last|replace({"_": " "})|title }}</h2></li>
+									{{ macros.rfol(nToC,np_pages,sticky_num,config) }}
+								</ul>
+							</li>
+			{% endfor %}
+			{% for page in np_pages if not page.meta.blog and page.id starts with ToC %}
+				{% if next_level %}
+					{% set pass = true %}
+					{% for nToC in next_level %}
+						{% if (page.id starts with nToC) %}{% set pass = false %}{% endif %}
+					{% endfor %}
+					{% if pass == true %}
+						<li><a href="{{ page.url }}">{{ page.title }}</a></li>
+					{% endif %}
+				{% else %}
+					<li><a href="{{ page.url }}">{{ page.title }}</a></li>
+				{% endif %}
+			{% endfor %}
+		{% endmacro %}
+
+		{# Widgets Sidebar #}
+
+		{# Navigation #}
+		<section class="widgets{% if config.NotePaper.css.mirrorwidgets %} mirrorwidgets{% endif %}">
+			{% if config.NotePaper.css.mirrorwidgets %}
+				{% set sticky_num = 1 %}
+			{% endif %}
+			{% if not config.NotePaper.disable.toc %}
+				<nav class="toc{% if sticky_num is odd %} odd{% endif %}">
+					{% set sticky_num = sticky_num + 1 %}
+					{% if config.NotePaper.toc.text %}<h2>{{ config.NotePaper.toc.text }}</h2>{% endif %}
+					<ul>
+						{% for page in np_pages if not page.meta.blog and not (config.NotePaper.toc.folder and page.id|split('/')|first in first_level) %}
+							<li>
+								<a {% if page.id == current_page.id %}class="current_page"{% endif %} href="{{ page.url }}">{{ page.title }}</a>
+								{% if page.id == current_page.id and page.meta.toc %}
+									{{ macros.rnav(page.meta.toc) }}
+								{% endif %}
+							</li>
+						{% endfor %}
+					</ul>
+				</nav>
+			{% endif %}
+
+			{# Experimental Folder Navigation #}
+			{% if config.NotePaper.toc.folder %}
+				{% for ToC in first_level %}
+					<nav class="toc foldertoc{% if sticky_num is odd %} odd{% endif %}">
+						{% set sticky_num = sticky_num + 1 %}
+						<h2>{{ ToC|replace({"_": " "})|title }}</h2>
+						<ul>
+							{{ macros.rfol(ToC,np_pages,sticky_num,config) }}
+						</ul>
+					</nav>
+				{% endfor %}
+			{% endif %}
+
+			{# Tag Data #}
+			{% if config.NotePaper.tags.list or config.NotePaper.tags.cloud %}
+				{% set tag_cloud = {} %}
+				{% for page in np_pages if page.meta.tags %}
+					{% for tag in page.meta.tags|split(',') %}
+						{% set tag_cloud = tag_cloud|merge({(tag): (tag_cloud[tag] + 1)}) %}
+					{% endfor %}
+
+					{# Alphabetical Order #}
+					{% if config.NotePaper.tags.sort.method == 'alphabetical' %}
+						{% set tag_cloud_alphabetical = {} %}
+						{% for tag in tag_cloud|keys|sort %}
+							{% set tag_cloud_alphabetical = tag_cloud_alphabetical|merge({(tag): tag_cloud[tag] }) %}
+							{% if loop.last %}
+								{% if not config.NotePaper.tags.sort.reverse %}
+									{% set tag_cloud = tag_cloud_alphabetical %}
+								{% else %}
+									{% set tag_cloud = tag_cloud_alphabetical|reverse %}
+								{% endif %}
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+
+					{# Numerical Order #}
+					{% if config.NotePaper.tags.sort.method == 'numerical' %}
+						{% set tag_cloud_numerical = {} %}
+						{% for tag,total in tag_cloud|sort %}
+							{% set tag_cloud_numerical = tag_cloud_numerical|merge({(tag): total }) %}
+							{% if loop.last %}
+								{% if config.NotePaper.tags.sort.reverse %}
+									{% set tag_cloud = tag_cloud_numerical %}
+								{% else %}
+									{% set tag_cloud = tag_cloud_numerical|reverse %}
+								{% endif %}
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+
+				{% endfor %}
+			{% endif %}
+
+			{# Tag List #}
+			{% if config.NotePaper.tags.list.enabled and tag_cloud %}
+				<nav class="tag_list{% if sticky_num is odd %} odd{% endif %}">
+					{% set sticky_num = sticky_num + 1 %}
+					{% if config.NotePaper.tags.list.title %}<h2>{{ config.NotePaper.tags.list.title }}</h2>{% endif %}
+					<ul>
+						{% for tag,total in tag_cloud %}
+							<li>
+								<a href="{% if TwigGetUrlEnabled %}{{ base_url ~ '?tag=' ~ tag }}{% endif %}">{{ tag }}
+									{% if config.NotePaper.tags.list.total %}
+										({{ total }})
+									{% endif %}
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</nav>
+			{% endif %}
+
+			{# Tag Cloud #}
+			{% if config.NotePaper.tags.cloud.enabled and tag_cloud %}
+
+			{# Levels Validation #}
+				{% if config.NotePaper.tags.cloud.levels < 1 %}
+					{% set levels = 5 %}
+				{% else %}
+					{% set levels = config.NotePaper.tags.cloud.levels %}
+				{% endif %}
+				{% if max(tag_cloud) < levels %}
+					{% set levels = max(tag_cloud) %}
+				{% endif %}
+				{% set level_range = (max(tag_cloud) / levels)|round(0,'ceil') %}
+
+				{# Render Tag Cloud #}
+				<nav class="tag_cloud{% if sticky_num is odd %} odd{% endif %}">
+					{% set sticky_num = sticky_num + 1 %}
+					{% if config.NotePaper.tags.cloud.title %}<h2>{{ config.NotePaper.tags.cloud.title }}</h2>{% endif %}
+					<ul>
+						{% for tag,total in tag_cloud %}
+							{% for i in range(levels, 0) %}
+								{% if total in range(max(tag_cloud) - (level_range * (loop.index0)), max(tag_cloud) - (level_range * (loop.index)) + 1) %}
+									<li style="font-size:{{ 2 - (loop.index0 * (1.5 / levels)) }}em;">
+										<a href="{% if TwigGetUrlEnabled %}{{ base_url ~ '?tag=' ~ tag }}{% endif %}">{{ tag }}
+											{% if config.NotePaper.tags.cloud.total %}
+												({{ total }})
+											{% endif %}
+										</a>
+									</li>
+								{% endif %}
+							{% endfor %}
+						{% endfor %}
+					</ul>
+				</nav>
+			{% endif %}
+
+			{# Widgets #}
 			{% for page in pages if page.meta.widget and page.meta.widget != "Disabled" %}
-				{% if page.meta.widget == "Sticky" %}{% set sticky_num = sticky_num + 1 %}{% endif %}
 				<nav class="{% if page.meta.widget == "Sticky" and sticky_num is odd %}odd {% endif %}{% if page.meta.widget == "Doodle" %}doodle{% endif %}">
+					{% if page.meta.widget == "Sticky" %}{% set sticky_num = sticky_num + 1 %}{% endif %}
 					{{ page.id|content }}
 				</nav>
 			{% endfor %}
 		</section>
-	{# Front Page Code #}
-	{% if is_front_page and config.NotePaper.front_page.enabled %}
-		{% for page in pages if not page.meta.widget and not stop and not (config.NotePaper.front_page.enabled and page.id == "index") %}
-			<article>
-				{% if loop.index > 1 %}<hr class="separator">{% endif %}
-				{% if page.date %}<h4 class="date">{{ page.date|date("F<\\b\\r>jS") }}</h4>{% endif %}
-				{% if page.title %}
-					<h2 class="title"><a href="{{page.url}}">{{ page.title }}</a></h2>
-					{% if page.author %}<h3 class="author"> by: {{ page.author }}</h3>{% endif %}
-					<hr>
-				{% endif %}
-				{{ page.id|content }}
-				{% if loop.index == config.NotePaper.front_page.limit %}{% set stop = true %}{% endif %}
-			</article>
-		{% endfor %}
 
-	{# Regular Page Code #}
-		{% else %}
+		{# Content Rendering #}
 
-			<article>
-				{% if meta.date %}<h4 class="date">{{ meta.date|date("F<\\b\\r>jS") }}</h4>{% endif %}
-				{% if meta.title %}
-					<h2 class="title"><a href="{{meta.url}}">{{ meta.title }}</a></h2>
-					{% if meta.author %}<h3 class="author"> by: {{ meta.author }}</h3>{% endif %}
-					<hr>
-				{% endif %}
-				{{ content }}
-			</article>
+		{# Pagination Math #}
+		{% if is_front_page and (config.NotePaper.front_page.enabled or TwigGetUrl.search or TwigGetUrl.tag) %}
 
-			{# Bottom Links Code #}
-			{% if (config.NotePaper.bottom_links.enabled and config.NotePaper.bottom_links.enabled != "Blog") or (config.NotePaper.bottom_links.enabled == "Blog" and meta.blog) %}
-				{% set url = "" %}
-				{% for page in pages if not page.meta.widget and not (config.NotePaper.front_page.enabled and page.id == "index") %}
-					{% if loop.index == 1 %}
-						{% set first_url = page.url %}
-					{% elseif page.id == current_page.id %}
-						{% set prev_url = buffer.url %}
-					{% elseif buffer.id == current_page.id %}
-						{% set next_url = page.url %}
-					{% endif %}
-					{% set last_url = page.url %}
-					{% set buffer = {id: page.id, url: page.url} %}
-					{% set url = {
-						first: {
-							url: first_url,
-							text: config.NotePaper.bottom_links.first.text,
-							image: config.NotePaper.bottom_links.first.image
-						},
-						prev: {
-							url: prev_url,
-							text: config.NotePaper.bottom_links.prev.text,
-							image: config.NotePaper.bottom_links.prev.image
-						},
-						top: {
-							url: "#",
-							text: config.NotePaper.bottom_links.top.text,
-							image: config.NotePaper.bottom_links.top.image
-						},
-						next: {
-							url: next_url,
-							text: config.NotePaper.bottom_links.next.text,
-							image: config.NotePaper.bottom_links.next.image
-						},
-						last: {
-							url: last_url,
-							text: config.NotePaper.bottom_links.last.text,
-							image: config.NotePaper.bottom_links.last.image
-						},
-						separator: {
-							text: config.NotePaper.bottom_links.separator.text,
-							image: config.NotePaper.bottom_links.separator.image
-						}
-					} %}
-				{% endfor %}
+			{# Page Count #}
+			{% set total_pages = '' %}
+			{% for page in np_pages if (not TwigGetUrl.search or TwigGetUrl.search and (TwigGetUrl.search|lower in page.title|lower or TwigGetUrl.search|lower in page.description|lower or TwigGetUrl.search|lower in page.id|content|lower)) and (not TwigGetUrl.tag or TwigGetUrl.tag in page.meta.tags|split(',')) %}
+				{% set total_pages = (loop.index / config.NotePaper.front_page.limit)|round(0,'ceil') %}
+			{% endfor %}
 
-				{% for key,link in url if link.image == "default" %}
-					{% set url = url|merge({(key): link|merge({image: theme_url|slice(base_url|length) ~ "/images/buttons/button_" ~ key ~ ".png"})}) %}
-				{% endfor %}
+			{# Out of Bounds Check #}
+			{% if TwigGetUrl and TwigGetUrl.page not in range(2, total_pages) %}
+				{% set TwigGetUrl = TwigGetUrl|merge({page: ''}) %}
+			{% endif %}
 
-				<section class="bottom_links">
-					{% for key,link in url if link.text and key != "separator" %}
-						{% if loop.index == 1 %}
-							{% set precount = "" %}
-							{% for key,link in url if link.text and key != "separator" %}{% set precount = precount + 1 %}{% endfor %}
-						{% endif %}
-						{% set count = count + 1 %}
-						{% if link.image %}
-							<a href="{{ link.url }}"><img src="{{ base_url }}/{{ link.image }}" alt="{{ link.text }}" title="{{ link.text }}"></a>
-						{% else %}
-							<a href="{{ link.url }}">{{ link.text }}</a>
-						{% endif %}
-						{% if count < precount %}
-							{% if url.separator.image %}
-								<img src="{{ base_url }}/{{ url.separator.image }}" alt="{{ url.separator.text }}">
-							{% else %}
-								{{ url.separator.text }}
-							{% endif %}
-						{% endif %}
-					{% endfor %}
-				</section>
+			{# Page Offset #}
+			{% if TwigGetUrl.page > 0 %}
+				{% set offset = config.NotePaper.front_page.limit * (TwigGetUrl.page - 1) %}
+			{% else %}
+				{% set offset = 0 %}
 			{% endif %}
 		{% endif %}
 
+		{# Search and Tag - Number of Results #}
+		{% if TwigGetUrl.search or TwigGetUrl.tag %}
+			{% set numresults = '' %}
+			{% for page in np_pages if (not TwigGetUrl.search or TwigGetUrl.search|lower in page.title|lower or TwigGetUrl.search|lower in page.description|lower or TwigGetUrl.search|lower in page.id|content|lower) and (not TwigGetUrl.tag or TwigGetUrl.tag in page.meta.tags|split(','))  %}
+				{% set numresults = loop.index %}
+			{% endfor %}
+		{% endif %}
+
+		{# Loop #}
+		{% set regularpage = '' %}
+		{% for page in np_pages if not regularpage and (not is_front_page or (not TwigGetUrl.search or TwigGetUrl.search and (TwigGetUrl.search|lower in page.title|lower or TwigGetUrl.search|lower in page.description|lower or TwigGetUrl.search|lower in page.id|content|lower)) and (not TwigGetUrl.tag or TwigGetUrl.tag in page.meta.tags|split(','))) %}
+			{% if loop.index > offset and count < config.NotePaper.front_page.limit %}
+				{% set count = count + 1 %}
+				{% if not is_front_page or is_front_page and not (config.NotePaper.front_page.enabled or TwigGetUrl.search or TwigGetUrl.tag) %}
+					{% set pagetype = 'meta' %}
+					{% set regularpage = true %}
+				{% else %}
+					{% set pagetype = 'page' %}
+				{% endif %}
+				<article>
+					{% if loop.index > offset + 1 %}<hr>{% endif %}
+					{% if not config.NotePaper.disable.header %}
+						<header>
+							{% if _context[pagetype].date and not config.NotePaper.disable.date %}<h4 class="date{% if config.NotePaper.css.mirrorwidgets %} mirrordate{% endif %}">{{ _context[pagetype].date|date("F<\\b\\r>jS") }}</h4>{% endif %}
+							{% if _context[pagetype].title %}
+								<h2 class="title"><a href="{{ _context[pagetype].url }}">{{ _context[pagetype].title }}</a></h2>
+								{% if _context[pagetype].author %}<h3 class="author"> by: {{ _context[pagetype].author }}</h3>{% endif %}
+							{% endif %}
+						</header>
+						{% if _context[pagetype].title %}<hr>{% endif %}
+					{% endif %}
+					{% if pagetype == "page" and not TwigGetUrl.search and not TwigGetUrl.tag %}
+						{{ page.id|content }}
+					{% elseif is_front_page and (TwigGetUrl.search or TwigGetUrl.tag) %}
+						{% if page.description %}
+							{{ page.description }}
+						{% else %}
+							{{ page.id|content|striptags|slice(0,description_length)|split(' ',-1)|join(' ') ~ "..." }}
+						{% endif %}
+					{% else %}
+						{{ content }}
+					{% endif %}
+				</article>
+			{% endif %}
+		{% endfor %}
+
+		{# Bottom Links #}
+		{% if ((config.NotePaper.bottom_links.enabled and config.NotePaper.bottom_links.enabled != "blog") or (config.NotePaper.bottom_links.enabled == "blog" and meta.blog)) and regularpage or is_front_page and ((config.NotePaper.front_page.enabled and TwigGetUrlEnabled and not config.NotePaper.disable.front_page_buttons) or TwigGetUrl.search or TwigGetUrl.tag) %}
+			{% set url = "" %}
+			{% for page in np_pages if config.NotePaper.bottom_links.enabled != "blog" or (config.NotePaper.bottom_links.enabled == "blog" and meta.blog and page.meta.blog) or is_front_page %}
+				{% if loop.index == 1 %}
+					{% set first_url = page.url %}
+				{% elseif page.id == current_page.id %}
+					{% set prev_url = buffer.url %}
+				{% elseif buffer.id == current_page.id %}
+					{% set next_url = page.url %}
+				{% endif %}
+				{% set last_url = page.url %}
+				{% set buffer = {id: page.id, url: page.url} %}
+				{% set url = {
+					first: {
+						url: first_url,
+						text: config.NotePaper.bottom_links.first.text,
+						image: config.NotePaper.bottom_links.first.image
+					},
+					prev: {
+						url: prev_url,
+						text: config.NotePaper.bottom_links.prev.text,
+						image: config.NotePaper.bottom_links.prev.image
+					},
+					top: {
+						url: "#",
+						text: config.NotePaper.bottom_links.top.text,
+						image: config.NotePaper.bottom_links.top.image
+					},
+					next: {
+						url: next_url,
+						text: config.NotePaper.bottom_links.next.text,
+						image: config.NotePaper.bottom_links.next.image
+					},
+					last: {
+						url: last_url,
+						text: config.NotePaper.bottom_links.last.text,
+						image: config.NotePaper.bottom_links.last.image
+					},
+					separator: {
+						text: config.NotePaper.bottom_links.separator.text,
+						image: config.NotePaper.bottom_links.separator.image
+					}
+				} %}
+			{% endfor %}
+
+			{# Load Default Images #}
+			{% for key,link in url if link.image == "default" %}
+				{% set url = url|merge({(key): link|merge({image: theme_url|slice(base_url|length) ~ "/images/buttons/button_" ~ key ~ ".png"})}) %}
+			{% endfor %}
+
+			{# Front Page URLs #}
+			{% if is_front_page and (config.NotePaper.front_page.enabled or TwigGetUrl.search or TwigGetUrl.tag) %}
+
+				{# Search Query #}
+				{% if TwigGetUrl.search %}
+					{% set search = 'search=' ~ TwigGetUrl.search %}
+				{% endif %}
+
+				{# Tag Query #}
+				{% if TwigGetUrl.tag %}
+					{% set tag = 'tag=' ~ TwigGetUrl.tag %}
+				{% endif %}
+
+				{# Page Math #}
+				{% if TwigGetUrl.page > 2 %}
+					{% set prev_url = 'page=' ~ (TwigGetUrl.page - 1) %}
+				{% endif %}
+
+				{% if (TwigGetUrl.page + 1) < total_pages %}
+					{% if TwigGetUrl.page < 2 %}
+						{% set next_url = 'page=' ~ (TwigGetUrl.page + 2) %}
+					{% else %}
+						{% set next_url = 'page=' ~ (TwigGetUrl.page + 1) %}
+					{% endif %}
+				{% else %}
+					{% set next_url = 'page=' ~ total_pages %}
+				{% endif %}
+
+				{% set last_url = 'page=' ~ total_pages %}
+
+				{# Set URLs #}
+				{% for key,link in url if key != "separator" and key != "top" %}
+					{% if _context[key ~ '_url'] or search or tag %}
+						{% set operand = '?' %}
+					{% endif %}
+					{% if _context[key ~ '_url'] and search %}
+						{% set ampersand = '&' %}
+					{% endif %}
+					{% if _context[key ~ '_url'] and tag %}
+						{% set ampersand2 = '&' %}{# Kind of awful #}
+					{% endif %}
+					{% set url = url|merge({(key): url[key]|merge({url: (base_url ~ operand ~ _context[key ~ '_url'] ~ ampersand ~ search ~ ampersand2 ~ tag) })}) %}
+				{% endfor %}
+			{% endif %}
+
+			{# Search Result And Tag Math #}
+			{% if TwigGetUrl.search or TwigGetUrl.tag %}
+				{% if TwigGetUrl.page < 2 %}
+					{% set firstresult = 1 %}
+					{% set secondresult = config.NotePaper.front_page.limit %}
+				{% else %}
+					{% set firstresult = config.NotePaper.front_page.limit * (TwigGetUrl.page - 1)+ 1 %}
+					{% set secondresult = config.NotePaper.front_page.limit * (TwigGetUrl.page - 1) + config.NotePaper.front_page.limit %}
+				{% endif %}
+				{% if secondresult > numresults %}
+					{% set secondresult = numresults %}
+				{% endif %}
+			{% endif %}
+
+			{# Render Bottom Links #}
+			<section class="bottom_links">
+				<hr>
+
+				{# Number of Search Results #}
+				{% if numresults and is_front_page %}
+					<p>
+						Showing
+						{% if firstresult != secondresult %}
+							{{ firstresult }} - {{ secondresult }}
+						{% else %}
+						{{ firstresult }}
+						{% endif %}
+						of {{ numresults }} results.
+					</p><hr style="width: 30%; margin: 2em auto;">
+				{% elseif is_front_page and TwigGetUrl.search %}
+					<p>No Results =(</p><hr>
+				{% endif %}
+
+				{# Links #}
+				{% for key,link in url if link.text and key != "separator" %}
+					{% if loop.index == 1 %}
+						{% set precount = "" %}
+						{% for key,link in url if link.text and key != "separator" %}{% set precount = precount + 1 %}{% endfor %}
+					{% endif %}
+					{% set count = count + 1 %}
+					{% if link.image %}
+						<a href="{{ link.url }}"><img src="{{ base_url }}/{{ link.image }}" alt="{{ link.text }}" title="{{ link.text }}"></a>
+					{% else %}
+						<a href="{{ link.url }}">{{ link.text }}</a>
+					{% endif %}
+					{% if count < precount %}
+						{% if url.separator.image %}
+							<img src="{{ base_url }}/{{ url.separator.image }}" alt="{{ url.separator.text }}">
+						{% else %}
+							{{ url.separator.text }}
+						{% endif %}
+					{% endif %}
+				{% endfor %}
+			</section>
+		{% endif %}
+
+		<br class="clear_widgets">
+
 	</main>
-	{# Disqus Code #}
-		{% if config.NotePaper.disqus.enabled and not is_front_page or "front" in config.NotePaper.disqus.enabled %}
-			<section id="disqus_thread">
+
+	{# Disqus Comments #}
+	{% if config.NotePaper.comments.type == "disqus" and (not is_front_page or config.NotePaper.comments.front) %}
+		<section id="disqus_thread" class="comments">
 			<script type="text/javascript">
 			/* * * CONFIGURATION VARIABLES * * */
-				var disqus_shortname = '{{ config.NotePaper.disqus.shortname }}';
+				var disqus_shortname = '{{ config.NotePaper.comments.shortname }}';
 			/* * * DON'T EDIT BELOW THIS LINE * * */
 				(function() {
 					var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -191,11 +557,26 @@ http://github.com/smcdougall/NotePaper
 			</script>
 			<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 		</section>
-		{% endif %}
 
+	{# Facebook Comments #}
+	{% elseif config.NotePaper.comments.type == "facebook" and (not is_front_page or config.NotePaper.comments.front) %}
+		<script>
+			(function(d, s, id) {
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) return;
+				js = d.createElement(s); js.id = id;
+				js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+				fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
+		</script>
+		<section class="fb-comments comments" data-colorscheme="{% if config.NotePaper.comments.dark %}dark{% endif %}" data-href="{{ current_page.url }}" data-width="100%" data-numposts="{{ config.NotePaper.comments.limit }}" data-order-by="{{ config.NotePaper.comments.order }}"></section>
+	{% endif %}
+
+	{# Footer #}
 	<footer>
 		{% if config.NotePaper.copyright %}<h2 class="copyright">{{ config.NotePaper.copyright }}</h2>{% endif %}
 		{# Feel free to comment out this line #}<h3 class="credit"><a href="http://development.sjmcdougall.com/pico-themes/NotePaper/">NotePaper Theme</a> by <a href="malto:simon@sjmcdougall.com">Simon McDougall</a>.<br><a href="http://github.com/smcdougall/NotePaper">Contribute on GitHub</a>.</h3>
 	</footer>
+
 </body>
 </html>

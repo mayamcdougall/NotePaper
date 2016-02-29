@@ -1,0 +1,105 @@
+<?php
+/*
+* NotePaper v1.5
+* http://development.sjmcdougall.com/pico-themes/NotePaper
+* http://github.com/smcdougall/NotePaper
+*/
+
+$config['NotePaper'] = array(
+
+	#Basic Config
+	'site_logo'                 => '',	// Site logo, reletive to base_url. (Example: 'assets/site_logo.png').
+	'og_image'                  => '',	// Facebook "Open Graph" Image.  Specify an image to be used when sharing a link on Facebook.  Provides a nice workaround for light logos not displaying on Facebook. (Example: 'assets/site_logo_og.png').
+	'copyright'                 => '',	// Copyright or other text for page footer. (Example: 'Copyright © 20XX - Your Name').
+	'description_length'        => '500',	// Character length of automatic descriptions for files lacking a meta description (used in search and tag views).
+
+	#CSS Config
+	'css'                       => array(
+		'theme'                   => '',	// NotePaper theme folder to use. (Example: 'SideBar').
+		'override'                => '',  // Override theme styles with custom stylesheet, relative to base_url. (Example: 'assets/override.css').
+		'fonts'                   => array(),	// Add custom fonts using stylesheets or Google Fonts. Use comma separated urls in quotes. (Example: 'https://fonts.googleapis.com/css?family=Roboto','https://fonts.googleapis.com/css?family=Ubuntu').
+		'mirrorwidgets'           => false,	// Flips widgets to the left side of the page.
+	),
+
+	#Table of Contents
+	'toc'                       => array(
+		'text'                    => 'Table of Contents',	// Text for the "Table of Contents" header.
+		'folder'                  => false,	// Enables Experimental Folder Navigation.
+	),
+
+	#Tag List and Tag Cloud
+	'tags'                      => array(
+		'sort'                    => array(
+			'method'                => 'alphabetical',	// Sorts tags by name or occurrence. Use 'alphabetical', 'numerical', or leave blank.  Blank doesn't sort, causing tags to be in the order they first appear as Pico reads your files.
+			'reverse'               => false,	// Reverse sorting order.
+		),
+		'list'                    => array(	// Options for Tag List Widget.
+			'enabled'               => false,	// Enables Tag List.
+			'title'                 => 'Tags',	// Header Text for widget.
+			'total'                 => false,	// If enabled, tags will display their total number of occurrences in parentheses.
+		),
+		'cloud'                   => array(
+			'enabled'               => false,	// Enables Tag Cloud Widget.
+			'title'                 => 'Tag Cloud',	// Header Text for widget.
+			'total'                 => false,	// If enabled, tags will display their total number of occurrences in parentheses.
+			'levels'                => 5,	// Number of different text sizes to use for tags. (Starts at 2em and goes down by increments).
+		)
+	),
+
+	#Front Page Mode
+	'front_page'                => array(
+		'enabled'                 => false,	// If enabled, your index.md will be ignored for a blog-style front page.
+		'limit'                   => 5,	// Limit the number of items in Front Page Mode. Defaults to 5 if undefined.
+	),
+
+	#Comments
+	'comments'                  => array(
+		'type'                    => '',	// Type of comments to use, 'disqus' or 'facebook'. Leave blank to disable comments.
+		'front'                   => false,	// If enabled, comments will display on your front page as well.
+		#Disqus Options
+		'shortname'               => '',	// The unique identifier given to you by Disqus.
+		#Facebook Options
+		'limit'                   => 5,	// Number of comments to display by default.
+		'admin_type'              => '',	// Type of administration, 'user' (ID) or 'app' (ID).
+		'admin_id'                => array(),	// List of usernames, separated by commas or a single App ID allowed to moderate comments.
+		'dark'                    => false,	// Switchs Facebook comments to a Dark Color Scheme.
+		'order'                   => '',	// Comment order, "social", "time" (oldest at the top), or "reverse_time" (newest  at the top). Defaults to Social aka top comments.
+	),
+
+	#Bottom Links
+	'bottom_links'              => array(
+		'enabled'                 => true,	// Adds links to page bottoms: First, Prev, Back to Top, Next, Last.  Use 'Blog' to only display on pages with meta.blog set.  Blank is disabled. Any other value will enabled.  Always enabled on Front Page Mode (unless explicitly disabled), Search, and Tags.
+		'first'                   => array(
+			'text'                  => '&lt;&lt; First',	//Text for "First" button at the bottom of the page.  Blank to disable any given button.
+			'image'                 => 'default',	//Image for "First" button, relative to base_url.  If defined, the "text" variables will instead be used as Alt and Title attributes.  Use "default" for internal theme images.
+		),
+		'prev'                    => array(
+			'text'                  => '&lt; Prev',	//Text for "Prev" button.
+			'image'                 => 'default',	//Image for "Prev" button.
+		),
+		'next'                    => array(
+			'text'                  => 'Next &gt;',	//Text for "Next" button.
+			'image'                 => 'default',	//Image for "Next" button.
+		),
+		'last'                    => array(
+			'text'                  => 'Last &gt;&gt;',	//Text for "Last" button.
+			'image'                 => 'default', //Image for "Last" button.
+		),
+		'top'                     => array(
+			'text'                  => 'Back to Top',	//Text for the "Back to Top" button.
+			'image'                 => 'default',	//Image for the "Back to Top" button.
+		),
+		'separator'               => array(
+			'text'                  => '|',	//Character to use as a separator between buttons.
+			'image'                 => 'default',	//Image to use as a separator between buttons.
+		)
+	),
+
+	#Disable Elements
+	'disable'                   => array(
+		'header'                  => false,	// If enabled, page header (Title, Author, and Date) will be disabled.
+		'date'                    => false,	// If enabled, the date ribbon will be disabled.
+		'toc'                     => false,	// If enabled, Table of Contents (Navigation) widget will be disabled.
+		'front_page_buttons'      => false,	// If enabled, bottom_links buttons will be disabled in Front Page Mode.
+	),
+);

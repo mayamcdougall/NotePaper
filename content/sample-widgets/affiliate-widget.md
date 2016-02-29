@@ -5,8 +5,8 @@ Date: 1005
 Widget: Sticky
 ---
 
-<p style='text-align: center;'>
-Check out my<br>
-other website at:<br>
-<a href="http://example.com">Some Cool Site!</a>
-</p>
+<div style='text-align: center;' markdown="1">
+Check out my  
+other website at:  
+[Some Cool Site!](http://example.com)
+</div>

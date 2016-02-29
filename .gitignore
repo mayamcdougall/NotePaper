@@ -12,10 +12,13 @@ desktop.ini
 
 # Ignore Pico Files
 /*
+/content/*
+/themes/*
 
-# Inclue NotePaper Files
+# Include NotePaper Files
 !/content/sample-widgets/*
 !/themes/NotePaper/*
+!/assets/NotePaper_Themes/
 !/README.md
 !/LICENSE.md
 !/.gitignore
