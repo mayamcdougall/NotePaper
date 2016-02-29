@@ -1,4 +1,10 @@
 <?php
+/*
+* NotePaper v1.5
+* http://development.sjmcdougall.com/pico-themes/NotePaper
+* http://github.com/smcdougall/NotePaper
+*/
+
 $config['NotePaper'] = array(
 
 	#Basic Config

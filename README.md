@@ -24,7 +24,7 @@ If you're viewing this on GitHub, please check out the [NotePaper Site](http://d
 
 The biggest feature I've brought to this theme is Widget Support.  By defining a custom meta variable in your markdown files, you can generate themed widgets that run down the right side of the page.  There are two types of widgets, named Stickies and Doodles, as well as a third, "disabled" option for those you'd like to hide temporarily.  Sticky Widgets are themed as sticky notes, while Doodle widgets are depicted as if they were drawn onto the page.  To make a widget, add "Widget: Sticky", "Widget: Doodle", or "Widget: Disabled" to the header of any markdown file in your content folder.
 
-Widgets are organized by Pico's built-in page ordering.  If, for example, you sort your content by ascending date, then I would recommend organizing your widgets using date values (Date: 1001, Date: 1002, Date: 1003) to organize your widgets.  If you're using alphabetical page ordering, you could order them by changing the meta names of the widgets to start with letters (A,B,C).  If your pages are in descending order, then just reverse the numbering or lettering you use (C,B,A / Z,Y,X / 1003, 1002, 1001 / etc).
+Widgets are organized by Pico's built-in page ordering.  If, for example, you sort your content by ascending date, then I would recommend organizing your widgets using date values (Date: 1001, Date: 1002, Date: 1003) to organize your widgets.  If you're using alphabetical page ordering, you could order them by changing the metadata names of the widgets to start with letters (A,B,C).  If your pages are in descending order, then just reverse the numbering or lettering you use (C,B,A / Z,Y,X / 1003, 1002, 1001 / etc).
 
 The "Doodle" area is 200px wide, and works great for images, just be sure to size them accordingly.  If your image is less than 200px wide, you may want to pad the image to 200px or use html + css to center it.
 
@@ -36,7 +36,7 @@ Like regular pages, widgets can be written in markdown, html, or a combination o
 
 ### Front Page
 
-I've also included a rudimentary blog-style front page feature.  If enabled in your Pico config, the theme will ignore your main index.md.  Instead, it will import the first few content files it finds into one long page.  Depending on what you've set Pico's "pages_order" setting to be, the front page will be your most recent pages, your very first pages, your first pages alphabetically, or your last pages alphabetically.  By default, it will import five pages, though you can change this with a config option.
+I've also included a simple blog-style front page feature.  If enabled in your Pico config, the theme will ignore your main index.md.  Instead, it will import the first few content files it finds into one long page.  Depending on what you've set Pico's "pages_order" setting to be, the front page will be your most recent pages, your very first pages, your first pages alphabetically, or your last pages alphabetically.  By default, it will import five pages, though you can change this with a config option.
 
 The Front Page Mode can also have pagination support, allowing you to navigate through multiple pages of results after the initial limit.  At present, this feature requires an [optional plugin](#plugin), though this will hopefully change in the future.
 
@@ -137,13 +137,13 @@ Finally, don't forget to update your config.php to use the NotePaper Theme.  It 
 
 `$config['theme'] = 'NotePaper';`
 
-While you're at it, you'll likely want to customize the config options [discussed below](#configuration).  They add quite a few levels of extra customization.
+While you're at it, you'll likely want to modify the config options [discussed below](#configuration).  They add quite a few levels of extra customization.
 
 ### Plugin {#plugin}
 
 Several of the features of this theme require the use of a small plugin.  The purpose of this plugin is to pass the Query String variables along to Twig, something that Pico does not do by default.  This will hopefully change in the future.
 
-* **Disclaimer :** Despite writing this plugin, I am *not* a plugin developer.  This plugin is incredibly basic, and should work perfectly fine.  I am not a PHP developer however, so I am unable to provide support for this plugin in any way.  I'm providing it because, in my testing and development, it worked just fine.
+* **Disclaimer:** Despite writing this plugin, I am *not* a plugin developer.  This plugin is incredibly basic, and should work perfectly fine.  I am not a PHP developer however, so I am unable to provide support for this plugin in any way.  I'm providing it because, in my testing and development, it worked just fine.
 
 The plugin does two things, and *only* two things.  First, it passes on Query String data to Twig in a variable named "TwigGetUrl".  Next, it defines a new variable "TwigGetUrlEnabled" as True.  This second variable is used to determine whether the plugin is active or not.
 
@@ -159,14 +159,14 @@ Here is a list of all the custom configuration options you can utilize in this t
 If this variable is defined, your site's title will be replaced with this image file.  It must be defined as an absolute path from your base_url (e.g. "assets/site_logo.png").
 
 #### og_image
-"Open Graph" Image.  You can specify an image to be used when sharing a link on Facebook and other sites that support it.  Since this theme has a dark background by default, this provides a nice workaround for light logos not displaying against Facebook's white background.  You can use Facebook's [Debugging Tool](https://developers.facebook.com/tools/debug/) to help diagnose any issues using these features.
+"Open Graph" Image.  You can specify an image to be used when sharing a link on Facebook and other sites that support it.  Since this theme has a dark background by default, this provides a nice workaround for light logos not displaying against Facebook's white background.  You can use Facebook's [Debugging Tool](https://developers.facebook.com/tools/debug/) to help diagnose any issues using this feature.
 
 #### copyright
 This text string will be displayed in the footer of your website.
 
 #### description_length
 
-The Search and Tag views use meta.description for listing search results.  Here, you can define the Character length of automatic descriptions for files that are lacking a meta.description.  The automatic descriptions will be rounded down to the previous space so as to not truncate any words.  An ellipsis is also added to the end of the description.
+The Search and Tag views use meta.description for listing search results.  Here, you can define the character length of automatic descriptions for files that are lacking a meta.description.  The automatic descriptions will be rounded down to the previous space so as to not truncate any words.  An ellipsis is also added to the end of the description.
 
 #### css
 
@@ -233,7 +233,7 @@ Experimental Folder Navigation.  If enabled, your Table of Contents will be brok
 
 	* **levels**
 
-		Only for Tag Cloud.  Number of text sizes to use when sorting tags.  The more levels however, the less variation there will be between one size and the next.  Text size starts at 2em and goes down by increments based on the number of levels.
+		Only for Tag Cloud.  Number of text sizes to use when sorting tags.  The more levels however, the less variation there will be between one size and the next.  Text size starts at 2em and goes down by increments based on the number of levels.  If there are fewer tag occurrences than you've specified for levels, the number of levels is automatically reduced to match the largest number of tag occurrences.
 
 #### front_page
 
@@ -275,9 +275,9 @@ Experimental Folder Navigation.  If enabled, your Table of Contents will be brok
 
 	Here you can specify the moderators for your comments.  This option uses an array, so make sure to place your input inside the parentheses.  If you're using User ID's, wrap each ID in quotes and separate them with commas.  If you're using an App ID, just place it in quotes inside the parentheses.
 
-	* **colorscheme**
+	* **dark**
 
-	The default color scheme for Facebook comments is "light".  Here, you can optionally set them to "dark" if it's a better match for your website
+	The default color scheme for Facebook comments is "light".  Enabling this will set them to use their "dark" theme, if you find it's a better match for your website.
 
 	* **order**
 
@@ -309,11 +309,13 @@ Experimental Folder Navigation.  If enabled, your Table of Contents will be brok
 
 If you're upgrading from a previous version of NotePaper, the best way to upgrade is to replace your old `NotePaper-Config.php` file (or array) with the new version and then migrate your old config values into the new fields.
 
-This is because NotePaper is constantly improving and the structure of NotePaper's config array is continuously changing to make room for new options and refine old ones.  Replacing the old file (or array) with the new one ensures that any changes made since the last version will not cause problems for your website.
+This is because NotePaper is constantly improving and the structure of NotePaper's config array is continuously changing to make room for new options and to refine old ones.  Replacing the old file (or array) with the new one ensures that any changes made since the last version will not cause problems for your website.
+
+All other NotePaper files can just be removed/replaced as usual.  You may want to remove your old NotePaper files first, just in case some of them have moved around since the last version.
 
 ## Changelog {#changelog}
 
-### 1.5.0 - Sometime Soon
+### 1.5.0 - 02/29/16
 * Many Config Changes, see new Sample Config file.
 * Many new Config options, including:
 	* Ability to disable various page components.
@@ -330,6 +332,7 @@ This is because NotePaper is constantly improving and the structure of NotePaper
 * More "Responsive Design" on small screens.
 * YAML Error Message Handling
 * Recursive ToC's for pages.  Sub-Navigation will go as many levels deep as you write.
+	* "&#95;title" is no longer needed. Child menus are detected automatically.
 * Many other code refinements.
 * Experimental Folder Navigation.
 * New Features, Requiring Plugin (For now; Subject to Change in Pico 1.1):
