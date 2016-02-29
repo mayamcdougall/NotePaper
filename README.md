@@ -28,7 +28,7 @@ Widgets are organized by Pico's built-in page ordering.  If, for example, you so
 
 The "Doodle" area is 200px wide, and works great for images, just be sure to size them accordingly.  If your image is less than 200px wide, you may want to pad the image to 200px or use html + css to center it.
 
-Image locations (or any other paths) within widgets must be defined with an absolute path from your base_url (eg "&#37;base_url&#37;/assets/doodle.png").  Because of how Pico imports content, relative paths are not recommend and are known to cause issues.  See Pico's [Documentation](http://picocms.org/docs.html) for additional information about file paths.
+Image locations (or any other paths) within widgets must be defined with an absolute path from your base_url (e.g. "&#37;base_url&#37;/assets/doodle.png").  Because of how Pico imports content, relative paths are not recommend and are known to cause issues.  See Pico's [Documentation](http://picocms.org/docs.html) for additional information about file paths.
 
 Like regular pages, widgets can be written in markdown, html, or a combination of the two.  Just make sure they end in ".md" (or the file extension you chose in your config) so Pico can find them.
 
@@ -43,7 +43,7 @@ The Front Page Mode can also have pagination support, allowing you to navigate t
 There's also a "blog mode" meta variable.  If you add "Blog: True" to your meta header, your page will be hidden from the main navigation and only accessible through the front page or first/prev/next/last buttons.
 
 ### Sub-Navigation
-This feature takes a YAML table of contents and generates a sub-navigation for the current page.  This table of contents is defined as a meta variable named "toc" in your markdown file.  The formatting is simple: Using spaces, indent each item of the toc by the same amount.  Tabs will *not* work, and will cause your page to throw an exception.  The key of each item must match the name of its corresponding html anchor, but its value can be anything you want.  This value will become the text displayed for your link.  You may also have a second level of items, indented further, within another item.  Just label the first entry of the second level "&#95;title".  Here is an example of the proper formatting, as used in this readme.  Note that I added a second level under "installation" for the sake of the example.
+This feature takes a YAML table of contents and generates a sub-navigation for the current page.  This table of contents is defined as a meta variable named "toc" in your markdown file.  The formatting is simple: Using spaces, indent each item of the toc by the same amount.  Tabs will *not* work, and will cause your page to throw an exception.  The key of each item must match the name of its corresponding html anchor, but its value can be anything you want.  This value will become the text displayed for your link.  You may also have a second level of items, indented further, within another item.  The first item of a new level is used to title its parent.  In the example below, its key is "&#95;title", but it doesn't matter what you use.  Here is an example of the proper formatting, as used in this readme.  Note that I added a second level under "installation" for the sake of the example.
 
 ```
 toc:
@@ -54,6 +54,8 @@ toc:
     step-1: Step 1
     step-2: Step 2
     step-3: Step 3
+  upgrade: Upgrading
+  configuration: Configuration
   changelog: Changelog
   license: License
 ```
@@ -154,7 +156,7 @@ In the future, I will be searching for a better way to accomplish these features
 Here is a list of all the custom configuration options you can utilize in this theme.  The config options are arranged in a series of nested arrays for readability and ease of use.  You can comment out any options you don't wish to use by adding a `//` to the beginning of the line or by wrapping a section in `/* */`.  If you comment out one of the nested arrays, be sure to comment out that *entire array* and not just the header.  Also, please note that date_format is now ignored in this theme.  The date format is instead hard-coded to work around the lack of ordinal suffixes in strftime (used by Pico 0.9 and later).
 
 #### site_logo
-If this variable is defined, your site's title will be replaced with this image file.  It must be defined as an absolute path from your base_url (eg "assets/site_logo.png").
+If this variable is defined, your site's title will be replaced with this image file.  It must be defined as an absolute path from your base_url (e.g. "assets/site_logo.png").
 
 #### og_image
 "Open Graph" Image.  You can specify an image to be used when sharing a link on Facebook and other sites that support it.  Since this theme has a dark background by default, this provides a nice workaround for light logos not displaying against Facebook's white background.  You can use Facebook's [Debugging Tool](https://developers.facebook.com/tools/debug/) to help diagnose any issues using these features.
@@ -174,7 +176,7 @@ The Search and Tag views use meta.description for listing search results.  Here,
 
 * **override**
 
-	You can override the default styles of this theme by entering in the path to a custom CSS stylesheet.  This must be defined as an absolute path from your base_url (eg "assets/override.css").  The CSS Override file is applied last, after both the default NotePaper styles and the CSS Theme.  This means that it can override any styles in either of those files.
+	You can override the default styles of this theme by entering in the path to a custom CSS stylesheet.  This must be defined as an absolute path from your base_url (e.g. "assets/override.css").  The CSS Override file is applied last, after both the default NotePaper styles and the CSS Theme.  This means that it can override any styles in either of those files.
 
 	For example, you could try changing the page background using CSS.  By doing this in the override file, you don't have to overwrite the original background image.  I'd recommend trying any of the wood textures [here](http://webtreats.mysitemyway.com/8-tileable-dark-wood-texture-patterns/) or [here](http://webtreats.mysitemyway.com/tileable-light-wood-textures/) for and quick and seamless change.  One of them is already being used as the default background.  You may also want to re-save them with a higher level of jpg compression, as they're quite large.
 
