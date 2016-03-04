@@ -1,7 +1,7 @@
 ---
 Title: NotePaper Theme
 Author: Simon McDougall
-Date: 2015/02/29
+Date: 2016/02/29
 toc:
   features: Features
   download: Download
