@@ -58,7 +58,7 @@ http://github.com/smcdougall/NotePaper
 	{% if meta.description %}
 		<meta property="og:description" content="{{ meta.description }}">
 	{% elseif not (is_front_page and config.NotePaper.front_page.enabled) %}
-		<meta property="og:description" content="{{ content|striptags|slice(0,255)|split(' ',-1)|join(' ') ~ "..." }}">
+		<meta property="og:description" content="{{ content|striptags|slice(0,description_length))|split(' ',-1)|join(' ') ~ "..." }}">
 	{% endif %}
 	{% if config.NotePaper.og_image %}<meta property="og:image" content="{{ base_url }}/{{ config.NotePaper.og_image }}">{% endif %}
 
