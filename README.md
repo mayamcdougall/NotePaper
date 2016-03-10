@@ -1,7 +1,7 @@
 ---
 Title: NotePaper Theme
 Author: Simon McDougall
-Date: 2016/02/29
+Date: 2016/03/10
 toc:
   features: Features
   download: Download
@@ -314,6 +314,11 @@ This is because NotePaper is constantly improving and the structure of NotePaper
 All other NotePaper files can just be removed/replaced as usual.  You may want to remove your old NotePaper files first, just in case some of them have moved around since the last version.
 
 ## Changelog {#changelog}
+
+### 1.5.1 - 03/10/16
+Fixed two minor papercuts:
+* Made automatically generated `og:description` use the value of `description_length`.
+* Removed `overflow: hidden;` from SideBar's `.site_title h1`, as it was cutting off the descenders of letters like j, g, y, etc.
 
 ### 1.5.0 - 02/29/16
 * Many Config Changes, see new Sample Config file.
