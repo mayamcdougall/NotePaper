@@ -287,7 +287,7 @@ Experimental Folder Navigation.  If enabled, your Table of Contents will be brok
 
 * **enabled**
 
-	Enables additional navigation links (First, Prev, Back to Top, Next, Last) at the bottom of pages.  Use 'Blog' to only display on pages with meta.blog set.   Bottom Links are always enabled on Front Page Mode unless explicitly disabled below, and always enabled for Search results and Tag search results.
+	Enables additional navigation links (First, Prev, Back to Top, Next, Last) at the bottom of pages.  Use 'blog' to only display on pages with meta.blog set.   Bottom Links are always enabled on Front Page Mode unless explicitly disabled below, and always enabled for Search results and Tag search results.
 
 * **first, prev, next, last, top, separator**
 

@@ -68,7 +68,7 @@ $config['NotePaper'] = array(
 
 	#Bottom Links
 	'bottom_links'              => array(
-		'enabled'                 => true,	// Adds links to page bottoms: First, Prev, Back to Top, Next, Last.  Use 'Blog' to only display on pages with meta.blog set.  Always enabled on Front Page Mode (unless explicitly disabled), Search, and Tags.
+		'enabled'                 => true,	// Adds links to page bottoms: First, Prev, Back to Top, Next, Last.  Use 'blog' to only display on pages with meta.blog set.  Always enabled on Front Page Mode (unless explicitly disabled), Search, and Tags.
 		'first'                   => array(
 			'text'                  => '&lt;&lt; First',	//Text for "First" button at the bottom of the page.  Blank to disable any given button.
 			'image'                 => 'default',	//Image for "First" button, relative to base_url.  If defined, the "text" variables will instead be used as Alt and Title attributes.  Use "default" for internal theme images.
