@@ -387,7 +387,7 @@ http://github.com/smcdougall/NotePaper
 		{% endfor %}
 
 		{# Bottom Links #}
-		{% if ((config.NotePaper.bottom_links.enabled and config.NotePaper.bottom_links.enabled ~ '' != "blog") or (config.NotePaper.bottom_links.enabled ~ '' == "blog" and meta.blog)) and regularpage or is_front_page and ((config.NotePaper.front_page.enabled and TwigGetUrlEnabled and not config.NotePaper.disable.front_page_buttons) or TwigGetUrl.search or TwigGetUrl.tag) %}
+		{% if ((config.NotePaper.bottom_links.enabled and config.NotePaper.bottom_links.enabled ~ '' != "blog") or (config.NotePaper.bottom_links.enabled ~ '' == "blog" and meta.blog)) and regularpage and not (is_front_page and config.NotePaper.disable.front_page_buttons) or is_front_page and ((config.NotePaper.front_page.enabled and TwigGetUrlEnabled and not config.NotePaper.disable.front_page_buttons) or TwigGetUrl.search or TwigGetUrl.tag) %}
 			{% set url = "" %}
 			{% for page in np_pages if config.NotePaper.bottom_links.enabled ~ '' != "blog" or (config.NotePaper.bottom_links.enabled ~ '' == "blog" and meta.blog and page.meta.blog) or is_front_page %}
 				{% if loop.index == 1 %}

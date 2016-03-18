@@ -100,6 +100,6 @@ $config['NotePaper'] = array(
 		'header'                  => false,	// If enabled, page header (Title, Author, and Date) will be disabled.
 		'date'                    => false,	// If enabled, the date ribbon will be disabled.
 		'toc'                     => false,	// If enabled, Table of Contents (Navigation) widget will be disabled.
-		'front_page_buttons'      => false,	// If enabled, bottom_links buttons will be disabled in Front Page Mode.
+		'front_page_buttons'      => false,	// If enabled, bottom_links buttons will be disabled on the Front Page.
 	),
 );

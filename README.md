@@ -303,7 +303,7 @@ Experimental Folder Navigation.  If enabled, your Table of Contents will be brok
 
 * **header, date, toc, front_page_buttons**
 
-	Here, you can disable each of these individual page elements.  Disabling the Header will remove the Title, Author, and Date from showing at the top of the page.  Disabling the Date will hide just the Date Ribbon.  ToC hides the table of contents.  Front Page Buttons will hide the navigation buttons from the bottom of the front page, which normally show even if Bottom_Links are disabled.
+	Here, you can disable each of these individual page elements.  Disabling the Header will remove the Title, Author, and Date from showing at the top of the page.  Disabling the Date will hide just the Date Ribbon.  ToC hides the table of contents.  Front Page Buttons will hide the navigation buttons from the bottom of the front page, which normally show in Front Page Mode even if Bottom_Links are disabled.
 
 ## Upgrading {#upgrade}
 
