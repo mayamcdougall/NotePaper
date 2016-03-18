@@ -1,7 +1,7 @@
 ---
 Title: NotePaper Theme
 Author: Simon McDougall
-Date: 2016/03/10
+Date: 2016/03/18
 toc:
   features: Features
   download: Download
@@ -314,6 +314,11 @@ This is because NotePaper is constantly improving and the structure of NotePaper
 All other NotePaper files can just be removed/replaced as usual.  You may want to remove your old NotePaper files first, just in case some of them have moved around since the last version.
 
 ## Changelog {#changelog}
+
+### 1.5.2 - 03/18/16
+* Made `disable.front_page_buttons` also affect buttons on a regular front page.
+* Fixed a bug where Bottom Links would always behave as if set to 'blog'.
+* Fixed a bug where the page header would still occupy space even if empty.
 
 ### 1.5.1 - 03/10/16
 Fixed two minor papercuts:
