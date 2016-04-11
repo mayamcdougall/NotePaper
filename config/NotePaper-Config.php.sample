@@ -19,6 +19,7 @@ $config['NotePaper'] = array(
 		'override'                => '',  // Override theme styles with custom stylesheet, relative to base_url. (Example: 'assets/override.css').
 		'fonts'                   => array(),	// Add custom fonts using stylesheets or Google Fonts. Use comma separated urls in quotes. (Example: 'https://fonts.googleapis.com/css?family=Roboto','https://fonts.googleapis.com/css?family=Ubuntu').
 		'mirrorwidgets'           => false,	// Flips widgets to the left side of the page.
+		'animations'              => false,	// Enables animations.
 	),
 
 	#Table of Contents

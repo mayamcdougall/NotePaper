@@ -27,6 +27,7 @@ http://github.com/smcdougall/NotePaper
 
 	{# Main Stylesheet #}
 	<link rel="stylesheet" href="{{ theme_url }}/style.css" type="text/css">
+	{% if config.NotePaper.css.animations %}<link rel="stylesheet" href="{{ theme_url }}/animations.css" type="text/css">{% endif %}
 
 	{# Custom NotePaper Themes #}
 	{% if config.NotePaper.css.theme and not meta.theme %}
@@ -38,6 +39,9 @@ http://github.com/smcdougall/NotePaper
 	{# User Style Overrides #}
 	{% if config.NotePaper.css.override %}
 		<link rel="stylesheet" href="{{ base_url }}/{{ config.NotePaper.css.override }}" type="text/css">
+	{% endif %}
+	{% if meta.css_override %}
+		<link rel="stylesheet" href="{{ base_url }}/{{ meta.css_override }}" type="text/css">
 	{% endif %}
 
 	{# Modernizr #}

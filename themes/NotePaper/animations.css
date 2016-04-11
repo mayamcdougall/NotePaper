@@ -1,0 +1,66 @@
+@keyframes main {
+	from {
+		transform: translateY(50px);
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0px);
+	}
+}
+
+@keyframes sticky {
+	0% {
+		transform: translateX(-50px);
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(0px) rotate(-1deg);
+	}
+}
+
+@keyframes sticky-odd {
+	0% {
+		transform: translateX(50px);
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(0px) rotate(1deg);
+	}
+}
+
+@keyframes date {
+	0% {
+		transform: translateX(-50px);
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(0px);
+	}
+}
+
+main, .comments {
+	animation: main 0.5s ease 0s 1;
+}
+
+nav {
+	animation: sticky 1s ease 0s 1;
+}
+
+nav.odd {
+	animation: sticky-odd 1s ease 0s 1;
+}
+
+nav.doodle{
+	animation: none;
+}
+
+.date {
+	animation: date 1s ease 0s 1;
+}
