@@ -4,12 +4,12 @@ http://development.sjmcdougall.com/pico-themes/NotePaper
 http://github.com/smcdougall/NotePaper
 #}
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en">
 <head>
 
 	{# Metadata #}
 	<meta charset="utf-8">
-	<title>{% if meta.title and not (is_front_page and config.NotePaper.front_page.enabled) %}{{ meta.title }} | {% endif %}{{ site_title }}</title>
+	<title>{% if meta.title and not ((is_front_page and config.NotePaper.front_page.enabled) or TwigGetUrl.search or TwigGetUrl.tag) %}{{ meta.title }} | {% endif %}{{ site_title }}</title>
 	{% if meta.description %}<meta name="description" content="{{ meta.description }}">{% endif %}
 	{% if meta.robots %}<meta name="robots" content="{{ meta.robots }}">{% endif %}
 
@@ -58,11 +58,15 @@ http://github.com/smcdougall/NotePaper
 	<meta property="og:url" content="{{ current_page.url }}">
 	<meta property="og:site_name" content="{{ site_title }}">
 	<meta property="og:type" content="website">
-	{% if meta.title and not (is_front_page and config.NotePaper.front_page.enabled) %}<meta property="og:title" content="{{ meta.title }}">{% endif %}
+	{% if meta.title and not ((is_front_page and config.NotePaper.front_page.enabled) or TwigGetUrl.search or TwigGetUrl.tag) %}<meta property="og:title" content="{{ meta.title }}">{% endif %}
 	{% if meta.description %}
 		<meta property="og:description" content="{{ meta.description }}">
-	{% elseif not (is_front_page and config.NotePaper.front_page.enabled) %}
-		<meta property="og:description" content="{{ content|striptags|slice(0,description_length)|split(' ',-1)|join(' ') ~ "..." }}">
+	{% elseif not ((is_front_page and config.NotePaper.front_page.enabled) or TwigGetUrl.search or TwigGetUrl.tag) %}
+		{% if content|striptags|length > description_length %}
+			<meta property="og:description" content="{{ content|striptags|slice(0,description_length)|split(' ',-1)|join(' ') ~ "..." }}">
+		{% else %}
+			<meta property="og:description" content="{{ content|striptags }}">
+		{% endif %}
 	{% endif %}
 	{% if config.NotePaper.og_image %}<meta property="og:image" content="{{ base_url }}/{{ config.NotePaper.og_image }}">{% endif %}
 
@@ -381,7 +385,11 @@ http://github.com/smcdougall/NotePaper
 						{% if page.description %}
 							{{ page.description }}
 						{% else %}
-							{{ page.id|content|striptags|slice(0,description_length)|split(' ',-1)|join(' ') ~ "..." }}
+							{% if page.id|content|striptags|length > description_length %}
+								{{ page.id|content|striptags|slice(0,description_length)|split(' ',-1)|join(' ') ~ "..." }}
+							{% else %}
+								{{ page.id|content|striptags }}
+							{% endif %}
 						{% endif %}
 					{% else %}
 						{{ content }}
