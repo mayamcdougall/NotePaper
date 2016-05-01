@@ -1,7 +1,7 @@
 ---
 Title: NotePaper Theme
 Author: Simon McDougall
-Date: 2016/03/18
+Date: 2016/05/01
 toc:
   features: Features
   download: Download
@@ -90,6 +90,8 @@ The structure of these themes is simple:  The theme "name" is just the name of t
 You can override the default CSS styles of the theme by specifying an overriding stylesheet in your Pico config.  Your stylesheet will be linked after both NotePaper's default stylesheet and any Theme's stylesheet, so you only need to style the elements you'd like to change.
 
 Override Styles are best used if you have one or two elements that you want to change about NotePaper (or one of its themes).  If you'd like to do a major overhaul of its appearance, try creating a custom "NotePaper Theme" instead.  This will give you more flexibility when choosing the appearance of your site, and will save the Override stylesheet for when you might need to override a few elements of your own theme.
+
+You can also specify a per-page css override by adding `css_override: path/to/override.css` to your page's metadata.
 
 ### Search
 
@@ -314,6 +316,12 @@ This is because NotePaper is constantly improving and the structure of NotePaper
 All other NotePaper files can just be removed/replaced as usual.  You may want to remove your old NotePaper files first, just in case some of them have moved around since the last version.
 
 ## Changelog {#changelog}
+
+### 1.5.3 - 05/01/16
+* Added Animations on page load.  Enable in config.
+* Per-Page CSS Overrides by adding `css_override: path/to/override.css` to metadata.
+* Fixed a bug where Search/Tag pages displayed the index's Title and OG properties.
+* Check length of automatic descriptions and only add ellipsis if too long.
 
 ### 1.5.2 - 03/18/16
 * Made `disable.front_page_buttons` also affect buttons on a regular front page.
