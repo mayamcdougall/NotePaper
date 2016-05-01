@@ -32,8 +32,10 @@ http://github.com/smcdougall/NotePaper
 	{# Custom NotePaper Themes #}
 	{% if config.NotePaper.css.theme and not meta.theme %}
 		<link rel="stylesheet" href="{{ base_url }}/assets/NotePaper_Themes/{{ config.NotePaper.css.theme }}/theme.css" type="text/css">
+		{% if config.NotePaper.css.animations %}<link rel="stylesheet" href="{{ base_url }}/assets/NotePaper_Themes/{{ config.NotePaper.css.theme }}/animations.css" type="text/css">{% endif %}
 	{% elseif meta.theme and meta.theme != "Default" %}
 		<link rel="stylesheet" href="{{ base_url }}/assets/NotePaper_Themes/{{ meta.theme }}/theme.css" type="text/css">
+		{% if config.NotePaper.css.animations %}<link rel="stylesheet" href="{{ base_url }}/assets/NotePaper_Themes/{{ meta.theme }}/animations.css" type="text/css">{% endif %}
 	{% endif %}
 
 	{# User Style Overrides #}
