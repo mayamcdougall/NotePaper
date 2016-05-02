@@ -197,6 +197,10 @@ The Search and Tag views use meta.description for listing search results.  Here,
 
 	By default, NotePaper's widgets are placed on the right side of the page.  This option flips widgets to the left side of the page instead.
 
+* **animations**
+
+	NotePaper has some optional animations that will display when the page is first loaded.  You can enable them here.
+
 #### toc
 
 * **text**
