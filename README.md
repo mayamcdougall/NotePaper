@@ -83,7 +83,7 @@ Two sample themes are included with NotePaper:
 
 These themes will be updated with NotePaper in the future, and more may be added as well.  Feel free to create your own themes as well.  You can even use the one of the sample themes as a base for your own!
 
-The structure of these themes is simple:  The theme "name" is just the name of the folder, and your CSS file should be named "theme.css" and placed inside it.  You should place any other assets in the folder as well and access them in your CSS as needed.
+The structure of these themes is simple:  The theme "name" is just the name of the folder, and your CSS file should be named `theme.css` and placed inside it.  You should place any other assets in the folder as well and access them in your CSS as needed.  You can also add an `animations.css` file if you'd like to support animations.  Please note that if animations are enabled, NotePaper will attempt to load this file regardless of whether it exists.
 
 ### Override Styles
 
