@@ -1,5 +1,5 @@
 {#
-NotePaper v1.5.3
+NotePaper v1.5.4
 http://development.sjmcdougall.com/pico-themes/NotePaper
 http://github.com/smcdougall/NotePaper
 #}
@@ -532,7 +532,7 @@ http://github.com/smcdougall/NotePaper
 				{# Links #}
 				{% for key,link in url if link.text and key != "separator" %}
 					{% if loop.index == 1 %}
-						{% set precount = "" %}
+						{% set precount = "0" %}
 						{% for key,link in url if link.text and key != "separator" %}{% set precount = precount + 1 %}{% endfor %}
 					{% endif %}
 					{% set count = count + 1 %}
