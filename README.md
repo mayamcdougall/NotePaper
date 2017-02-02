@@ -1,7 +1,7 @@
 ---
 Title: NotePaper Theme
 Author: Simon McDougall
-Date: 2016/05/01
+Date: 2017/02/02
 toc:
   features: Features
   download: Download
@@ -320,6 +320,10 @@ This is because NotePaper is constantly improving and the structure of NotePaper
 All other NotePaper files can just be removed/replaced as usual.  You may want to remove your old NotePaper files first, just in case some of them have moved around since the last version.
 
 ## Changelog {#changelog}
+
+### 1.5.4 - 02/02/17
+
+* Small Bugfix for PHP 7.1 (`A non-numeric value encountered`)
 
 ### 1.5.3 - 05/01/16
 * Added Animations on page load.  Enable in config.
