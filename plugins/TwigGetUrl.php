@@ -2,7 +2,7 @@
 /**
  * TwigGetUrl - A small plugin to forward Query String data to Twig.
  *
- * NotePaper v1.5.3
+ * NotePaper v1.5.4
  * http://development.sjmcdougall.com/pico-themes/NotePaper
  * http://github.com/smcdougall/NotePaper
  *
