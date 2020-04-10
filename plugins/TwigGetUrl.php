@@ -4,7 +4,7 @@
  *
  * NotePaper v1.5.4
  * http://development.mayamcdougall.me/pico-themes/NotePaper
- * http://github.com/smcdougall/NotePaper
+ * http://github.com/mayamcdougall/NotePaper
  *
  * @author  Maya McDougall
  * @link    http://development.mayamcdougall.me/pico-themes/NotePaper
