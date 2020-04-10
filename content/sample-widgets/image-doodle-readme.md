@@ -1,6 +1,6 @@
 ---
 Title: Image doodle
-Author: Simon McDougall
+Author: Maya McDougall
 Date: 1006
 Widget: Doodle
 ---

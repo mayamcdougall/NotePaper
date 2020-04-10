@@ -1,6 +1,6 @@
 ---
 Title: Intro Widget
-Author: Simon McDougall
+Author: Maya McDougall
 Date: 1001
 Widget: Sticky
 ---

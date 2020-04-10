@@ -1,6 +1,6 @@
 ---
 Title: Search Widget
-Author: Simon McDougall
+Author: Maya McDougall
 Date: 0999
 Widget: Sticky
 ---

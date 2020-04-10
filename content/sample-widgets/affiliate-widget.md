@@ -1,6 +1,6 @@
 ---
 Title: Affiliate Widget
-Author: Simon McDougall
+Author: Maya McDougall
 Date: 1005
 Widget: Sticky
 ---

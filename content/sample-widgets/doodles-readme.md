@@ -1,6 +1,6 @@
 ---
 Title: Doodle Readme
-Author: Simon McDougall
+Author: Maya McDougall
 Date: 1004
 Widget: Doodle
 ---

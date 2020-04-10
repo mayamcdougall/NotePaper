@@ -1,6 +1,6 @@
 ---
 Title: Stickies Readme One
-Author: Simon McDougall
+Author: Maya McDougall
 Date: 1002
 Widget: Sticky
 ---

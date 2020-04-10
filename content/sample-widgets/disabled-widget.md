@@ -1,6 +1,6 @@
 ---
 Title: Disabled Widget
-Author: Simon McDougall
+Author: Maya McDougall
 Date: 1000
 Widget: Disabled
 ---

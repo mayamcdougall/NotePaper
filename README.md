@@ -14,9 +14,9 @@ Tags: Documentation
 ---
 ## NotePaper Theme
 
-Thank you for using my [NotePaper](http://development.sjmcdougall.com/pico-themes/NotePaper) theme for [Pico](http://picocms.org/).  This theme was originally inspired by the [Anarcho Notepad](https://wordpress.org/themes/anarcho-notepad/) theme for WordPress.  This is my first Pico theme, so the coding might be rough in spots, but overall I'm pleased with how it's turned out.  If you have any suggestions on how I can improve this theme, or if you discover any bugs, please create a [New Issue](https://github.com/smcdougall/NotePaper/issues) on GitHub.
+Thank you for using my [NotePaper](http://development.mayamcdougall.me/pico-themes/NotePaper) theme for [Pico](http://picocms.org/).  This theme was originally inspired by the [Anarcho Notepad](https://wordpress.org/themes/anarcho-notepad/) theme for WordPress.  This is my first Pico theme, so the coding might be rough in spots, but overall I'm pleased with how it's turned out.  If you have any suggestions on how I can improve this theme, or if you discover any bugs, please create a [New Issue](https://github.com/smcdougall/NotePaper/issues) on GitHub.
 
-If you're viewing this on GitHub, please check out the [NotePaper Site](http://development.sjmcdougall.com/pico-themes/NotePaper) for a live example of the theme.
+If you're viewing this on GitHub, please check out the [NotePaper Site](http://development.mayamcdougall.me/pico-themes/NotePaper) for a live example of the theme.
 
 ## Features {#features}
 
