@@ -1,6 +1,6 @@
 ---
 Title: NotePaper Theme
-Author: Simon McDougall
+Author: Maya McDougall
 Date: 2017/02/02
 toc:
   features: Features
