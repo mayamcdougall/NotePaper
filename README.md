@@ -14,9 +14,9 @@ Tags: Documentation
 ---
 ## NotePaper Theme
 
-Thank you for using my [NotePaper](http://development.mayamcdougall.me/pico-themes/NotePaper) theme for [Pico](http://picocms.org/).  This theme was originally inspired by the [Anarcho Notepad](https://wordpress.org/themes/anarcho-notepad/) theme for WordPress.  This is my first Pico theme, so the coding might be rough in spots, but overall I'm pleased with how it's turned out.  If you have any suggestions on how I can improve this theme, or if you discover any bugs, please create a [New Issue](https://github.com/mayamcdougall/NotePaper/issues) on GitHub.
+Thank you for using my [NotePaper](http://notepaper.mayamcdougall.me/) theme for [Pico](http://picocms.org/).  This theme was originally inspired by the [Anarcho Notepad](https://wordpress.org/themes/anarcho-notepad/) theme for WordPress.  This is my first Pico theme, so the coding might be rough in spots, but overall I'm pleased with how it's turned out.  If you have any suggestions on how I can improve this theme, or if you discover any bugs, please create a [New Issue](https://github.com/mayamcdougall/NotePaper/issues) on GitHub.
 
-If you're viewing this on GitHub, please check out the [NotePaper Site](http://development.mayamcdougall.me/pico-themes/NotePaper) for a live example of the theme.
+If you're viewing this on GitHub, please check out the [NotePaper Site](http://notepaper.mayamcdougall.me) for a live example of the theme.
 
 ## Features {#features}
 
@@ -133,11 +133,11 @@ Selectively extract the contents of the download into your Pico folder.
 * Everything in the "themes" folder is required for the theme to function.
 * The "content" folder holds the sample widgets you see here.  You can install these as well and use them as a template for your own widgets, or you can leave them out and write yours from scratch.
 * The "assets/NotePaper_Themes" folder contains the additional sample themes.
-* The "config" folder contains a sample NotePaper config.  The easiest way to configure NotePaper is to place the sample config, `NotePaper-Config.php.sample` in your config folder, and rename it `NotePaper-Config.php`.  Then add "`include 'NotePaper-Config.php';`" to the bottom of your Pico config.  Alternatively, you can copy the NotePaper array from the sample file and paste it into your pico config (just be sure not to copy the first "`<?php`" line).
+* The "config" folder contains a sample NotePaper config.  The easiest way to configure NotePaper is to place the sample config, `NotePaper.yml.sample` in your config folder, and rename it `NotePaper.yml`.
 
-Finally, don't forget to update your config.php to use the NotePaper Theme.  It should read:
+Finally, don't forget to update your config.yml to use the NotePaper Theme.  This value will probably be case-sensitive on most filesystems, so be sure to match the folder name:
 
-`$config['theme'] = 'NotePaper';`
+`theme: NotePaper`
 
 While you're at it, you'll likely want to modify the config options [discussed below](#configuration).  They add quite a few levels of extra customization.
 
@@ -155,7 +155,7 @@ In the future, I will be searching for a better way to accomplish these features
 
 ## Configuration {#configuration}
 
-Here is a list of all the custom configuration options you can utilize in this theme.  The config options are arranged in a series of nested arrays for readability and ease of use.  You can comment out any options you don't wish to use by adding a `//` to the beginning of the line or by wrapping a section in `/* */`.  If you comment out one of the nested arrays, be sure to comment out that *entire array* and not just the header.  Also, please note that date_format is now ignored in this theme.  The date format is instead hard-coded to work around the lack of ordinal suffixes in strftime (used by Pico 0.9 and later).
+Here is a list of all the custom configuration options you can utilize in this theme.  The config options are written as YAML, and a sample file is provided for ease of use.  Also, please note that date_format is now ignored in this theme.  The date format is instead hard-coded to work around the lack of ordinal suffixes in strftime (used by Pico 0.9 and later).
 
 #### site_logo
 If this variable is defined, your site's title will be replaced with this image file.  It must be defined as an absolute path from your base_url (e.g. "assets/site_logo.png").
@@ -184,13 +184,15 @@ The Search and Tag views use meta.description for listing search results.  Here,
 
 * **fonts**
 
-	You can add custom fonts to NotePaper by adding them here.  Inside the array parentheses, enter the urls to your font's stylesheet, in quotes and separated by commas.
+	You can add custom fonts to NotePaper by adding them here.  Add the quoted URLs to your stylesheets on their own lines, indented and prefaced by a dash and space: "- ".
 
 	An easy way to include custom fonts is to use Google Fonts, but you can also link to your own stylesheets.
 
 	As an example, your config should look like this:
 	```
-	'fonts'  => array('https://fonts.googleapis.com/css?family=Roboto','https://fonts.googleapis.com/css?family=Ubuntu'),
+	fonts:
+	  - 'https://fonts.googleapis.com/css?family=Roboto'
+	  - 'https://fonts.googleapis.com/css?family=Ubuntu'
 	```
 
 * **mirrorwidgets**
@@ -279,7 +281,9 @@ Experimental Folder Navigation.  If enabled, your Table of Contents will be brok
 
 	* **admin_id**
 
-	Here you can specify the moderators for your comments.  This option uses an array, so make sure to place your input inside the parentheses.  If you're using User ID's, wrap each ID in quotes and separate them with commas.  If you're using an App ID, just place it in quotes inside the parentheses.
+	Here you can specify the moderators for your comments.  If you're specifying multiple User ID's, place them each in quotes, on their own lines, indented and prefaced by a dash and space: "- ".
+	
+	If you're only using a single App ID, you can just place it in quotes after the colon.
 
 	* **dark**
 
@@ -313,13 +317,22 @@ Experimental Folder Navigation.  If enabled, your Table of Contents will be brok
 
 ## Upgrading {#upgrade}
 
-If you're upgrading from a previous version of NotePaper, the best way to upgrade is to replace your old `NotePaper-Config.php` file (or array) with the new version and then migrate your old config values into the new fields.
+If you're upgrading from a previous version of NotePaper, the best way to upgrade is to backup and replace your old `NotePaper.yml` file with the new version and then migrate your old config values into the new fields.
 
-This is because NotePaper is constantly improving and the structure of NotePaper's config array is continuously changing to make room for new options and to refine old ones.  Replacing the old file (or array) with the new one ensures that any changes made since the last version will not cause problems for your website.
+This is because NotePaper is constantly improving and the structure of NotePaper's config is continuously changing to make room for new options and to refine old ones.  Replacing the old file with the new one ensures that any changes made since the last version will not cause problems for your website.
 
 All other NotePaper files can just be removed/replaced as usual.  You may want to remove your old NotePaper files first, just in case some of them have moved around since the last version.
 
 ## Changelog {#changelog}
+
+### 1.5.5 - 02/17/21
+
+* This is an overdue maintenence release that fixes some issues that have cropped up in the last couple years.
+* Fixed a display error with the page date ("#lt;br#gt;" was being displayed on the page instead of being rendered as HTML)
+* Pagination was generating a YAML error due to defaulting to a blank value, '', instead of '0'.
+* Search Sample-Widget was causing a YAML error due to a leading '0'.
+* Whitespace issue with search result pagination numbers.
+* Updated URLs and restored the demo site, which hadn't been accessible.
 
 ### 1.5.4 - 02/02/17
 
