@@ -327,8 +327,8 @@ All other NotePaper files can just be removed/replaced as usual.  You may want t
 
 ### 1.5.5 - 02/17/21
 
-* This is an overdue maintenence release that fixes some issues that have cropped up in the last couple years.
-* Fixed a display error with the page date ("#lt;br#gt;" was being displayed on the page instead of being rendered as HTML)
+* This is an overdue maintenance release that fixes some issues that have cropped up in the last couple years.
+* Fixed a display error with the page date ("&lt;br&gt;" was being displayed on the page instead of being rendered as HTML).
 * Pagination was generating a YAML error due to defaulting to a blank value, '', instead of '0'.
 * Search Sample-Widget was causing a YAML error due to a leading '0'.
 * Whitespace issue with search result pagination numbers.
